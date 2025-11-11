@@ -1,7 +1,0 @@
----
-title: "trial_script"
-format: html
-editor: visual
----
-
-## Trial script
