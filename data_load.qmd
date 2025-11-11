@@ -1,0 +1,32 @@
+---
+title: "Data_load"
+format: html
+editor: visual
+---
+
+## Data load
+
+```{r}
+#Loading libraries
+library(tidyverse)
+```
+
+```{r}
+#creating raw file
+raw_dir <- "data/_raw/"
+```
+
+```{r}
+raw_dir <- "data/_raw/"
+
+if( !dir.exists(raw_dir) ){
+  dir.create(path = raw_dir)
+}
+
+data_url <- "https://archive.ics.uci.edu/static/public/565/bone+marrow+transplant+children.zip"
+
+download.file(
+    url = data_url,
+    destfile = str_c("data/_raw/","bone-marrow.arff")
+    )
+```
