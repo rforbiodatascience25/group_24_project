@@ -20,7 +20,7 @@ library("tidyverse")
 
 ```{r}
 # Get variable names and clean them
-raw_data <- read_lines("bone-marrow.arff")
+raw_data <- read_lines("data/_raw/bone-marrow.arff")
 var_names <- raw_data |>
   str_subset("^@attribute") |>
   str_remove_all(pattern = "@attribute|\\{.*\\}|numeric|\\s")
