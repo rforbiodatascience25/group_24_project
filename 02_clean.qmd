@@ -29,7 +29,7 @@ var_names <- raw_data |>
 data_start <- which(str_detect(raw_data, pattern = "^@data"))+1
 
 # Create tibble
-data_clean <- read_delim("bone-marrow.arff", 
+data_clean <- read_delim("data/_raw/bone-marrow.arff", 
                       delim = ",", 
                       skip = data_start,
                       col_names = var_names,
