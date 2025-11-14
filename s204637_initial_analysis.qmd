@@ -1,7 +1,0 @@
----
-title: "s204637_initial_analysis"
-format: html
-editor: visual
----
-
-## Bone Marrow Transplant: Children data set
