@@ -1,0 +1,56 @@
+---
+title: "s204637_test"
+format: html
+editor: visual
+---
+
+## s204637 test document
+
+## Data load
+
+Loading libraries:
+
+```{r}
+library(tidyverse) 
+library(foreign)
+```
+
+Loading the data from URL into existing or created data folder
+
+```{r}
+data_url <- "https://archive.ics.uci.edu/static/public/565/bone+marrow+transplant+children.zip"
+
+#Creating folder for data if not already done
+raw_dir <- "data/_raw/"
+if( !dir.exists(raw_dir) ){
+  dir.create(path = "data")
+  dir.create(path = raw_dir)
+}
+
+#Reading data file, if it has not been done before
+if( !file.exists(str_c(raw_dir, "bone-marrow.arff")) ){
+  download.file(
+      url = data_url,
+      destfile = str_c(raw_dir,"bone-marrow.arff")
+      )
+}
+
+```
+
+Load file
+
+```{r}
+#Loading the .arff file into R using the foreign library
+bm_data <- read.arff("data/_raw/bone-marrow.arff")
+
+#Removing the last line, which does not contain data
+bm_data <- bm_data |> 
+  filter(Stemcellsource != "")
+```
+
+Load file using read_csv
+
+```{r}
+bm_data
+
+```
