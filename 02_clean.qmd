@@ -35,10 +35,10 @@ data_clean <- read_delim("bone-marrow.arff",
                       col_names = var_names,
                       na = "?",
                       col_types = "i"
-                      ) |>
-  mutate(Disease = factor(Disease))
+                      )  |>
+  mutate(across(c(1:2, 4:22, 24:28, 37), factor))
 
 # write data to gzip tsv file 
-data_clean |> write_tsv("data/bone-marrow-clean.tsv.gz")
+data_clean |> write_tsv("data/02_dat_clean.tsv.gz")
 
 ```
