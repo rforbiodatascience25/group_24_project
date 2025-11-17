@@ -1,0 +1,65 @@
+---
+title: "Draft_1"
+author: "inma"
+format: html
+editor: visual
+---
+
+## possible analysis
+
+identify the clinic factors that affect survival and any complications after a transplant of bone-marrow based in the NGS profile of the donor and the receptor.
+
+## Load libraries
+
+```{r}
+
+library(tidyverse)
+library(purrr)
+library(ggplot2)
+library(survival)
+library(survminer)
+library(broom)
+```
+
+## Load data
+
+```{r}
+df <- read_tsv('data/bone-marrow-clean.tsv.gz')
+
+
+```
+
+## Data wrangling
+
+```{r}
+df_clean <- df |>
+  mutate(
+    Gendermatch = factor(Gendermatch, labels = c('Mismatch','Match')),
+    ABOmatch = factor(ABOmatch, labels = c('Mismatch', 'Match')),
+    Stemcellsource = factor(Stemcellsource, labels = c('Bone marrow', 'Pheripheral Blood')),
+    SurvivalGroup = if_else(survival_time > median(survival_time, na.rm = TRUE), 'Long Survival', 'Short Survival')
+  )
+
+```
+
+## Data visualization
+
+#### Boxplot survival according to ABO match
+
+```{r}
+ggplot(df_clean |> filter(!is.na(ABOmatch)),
+         aes(ABOmatch, survival_time
+)) +
+  geom_boxplot() + 
+  labs(tittle = 'Survival time vs ABO match')
+```
+
+#### Effect of CD34 on survival
+
+```{r}
+ggplot(df_clean, aes(CD34kgx10d6, survival_time))+ 
+  geom_point(alpha=0.7) + 
+  geom_smooth(method = 'lm')
+```
+
+#### 
