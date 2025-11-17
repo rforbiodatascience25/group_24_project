@@ -13,10 +13,8 @@ Initial analysis of bone-marrow data
 library(tidyverse)
 library(broom)
 
-bm_data <- read_tsv(file = "/data/bone-marrow-clean.tsv.gz", show_col_types = FALSE )  |>
-  mutate(across(c(1:2, 4:22, 24:28, 37), factor))
-
-## Should binary variables be changed in aug, so variable type doesn't have to be specified when loading data?
+bm_data <- read_tsv(file = "data/03_dat_aug.tsv.gz", show_col_types = FALSE )  |>
+  mutate(across(c(1:2, 4:22, 24:26, 35), factor))
 ```
 
 ```{r}
@@ -35,7 +33,7 @@ pca_fit |>
   ggplot(aes(.fittedPC1, .fittedPC2, colour = survival_status)) +
   geom_point(size = 1.5) +
   scale_color_manual(
-    values = c("0" = "#D55E00", "1" = "#0072B2")
+    values = c("Alive" = "#D55E00", "Dead" = "#0072B2")
   ) 
 ```
 
