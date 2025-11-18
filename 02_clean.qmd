@@ -22,16 +22,19 @@ library("tidyverse")
 # Get variable names and clean them
 raw_data <- read_lines("data/_raw/bone-marrow.arff")
 var_names <- raw_data |>
-  str_subset("^@attribute") |>
+  str_subset("@attribute") |>
   str_remove_all(pattern = "@attribute|\\{.*\\}|numeric|\\s")
 
-# Find line where data begins
-data_start <- which(str_detect(raw_data, pattern = "^@data"))+1
+# get meta data and clean
+meta_data <- raw_data |>
+  str_subset("%") |>
+  str_remove(pattern = "%")
 
 # Create tibble
 data_clean <- read_delim("data/_raw/bone-marrow.arff", 
                       delim = ",", 
-                      skip = data_start,
+                      # Start after line that starts with "@data"
+                      skip = str_which(raw_data, pattern = "^@data")+1,
                       col_names = var_names,
                       na = "?",
                       col_types = "i"
@@ -40,5 +43,6 @@ data_clean <- read_delim("data/_raw/bone-marrow.arff",
 
 # write data to gzip tsv file 
 data_clean |> write_tsv("data/02_dat_clean.tsv.gz")
+meta_data |> write_lines("data/02_metadat_clean.txt.gz")
 
 ```
