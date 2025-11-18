@@ -20,7 +20,7 @@ library("tidyverse")
 
 ```{r}
 # Get variable names and clean them
-raw_data <- read_lines("bone-marrow.arff")
+raw_data <- read_lines("data/_raw/bone-marrow.arff")
 var_names <- raw_data |>
   str_subset("^@attribute") |>
   str_remove_all(pattern = "@attribute|\\{.*\\}|numeric|\\s")
@@ -29,7 +29,7 @@ var_names <- raw_data |>
 data_start <- which(str_detect(raw_data, pattern = "^@data"))+1
 
 # Create tibble
-data_clean <- read_delim("bone-marrow.arff", 
+data_clean <- read_delim("data/_raw/bone-marrow.arff", 
                       delim = ",", 
                       skip = data_start,
                       col_names = var_names,
