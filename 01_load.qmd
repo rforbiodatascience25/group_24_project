@@ -33,10 +33,4 @@ if( !file.exists(str_c(raw_dir, "bone-marrow.arff")) ){
       )
 }
 
-#Loading the .arff file into R using the foreign library
-bm_data <- read.arff("data/_raw/bone-marrow.arff")
-
-#Removing the last line, which does not contain data
-bm_data <- bm_data |> 
-  filter(Stemcellsource != "")
 ```

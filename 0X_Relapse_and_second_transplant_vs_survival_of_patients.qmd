@@ -1,0 +1,94 @@
+---
+title: "0X_Relapse_and_second_transplant_vs_survival_of_patients"
+format: html
+editor: visual
+---
+
+# Relapse & Second Transplant vs. Survival of Patients
+
+We want to look at the relationship between relapse and secondary transplants in patients and how it affects their odds of survival.
+
+To Do this, we look at how many relapsed, needed a second transplant, and how many of them survived and when they where observed. This is done using 4 variables taken from xxx, as described in table 1, and then performing an analysis of the relationship between them.
+
+| Variable | Description | Value |
+|:---------------------:|:----------------------------------------------------------------:|:-----------------------:|
+| `Txpostrelapse` | Second Bone Marrow transplantation after relapse | Yes (1) or No (0) |
+| `Relapse` | Reoccurance of disease | Yes (1) or No (0) |
+| `survival_time` | Time of Observation (Alive) or time of event in days (Dead) | Yes (1) or No (0) |
+| `survival_status` | Survival status | Yes (1) or No (0) |
+
+: Table 1: The data used for this analysis is xxx using these variables:`Txpostrelapse`, `Relapse`, `survival_time`& `survival_status`.
+
+## Initiate Libraries
+
+We start by loading the relevant libraries.
+
+```{r}
+library(tidyverse) 
+```
+
+## Data Wrangling
+
+First we load the xxx data as a tibble.
+
+```{r}
+
+bm_data <- read_tsv("data/03_dat_aug.tsv.gz")
+
+
+
+```
+
+```{r}
+bm_data
+
+```
+
+compare data
+
+```{r}
+ggplot(data = bm_data,
+       mapping = aes(x = HLAmatch,
+                     group = survival_status)) +
+  geom_histogram()
+
+  
+```
+
+Old plots not edited
+
+```{r}
+#box plot with stradified expression levels
+ggplot(data = bm_data,
+       mapping = aes(x = HLAmatch,
+                     y = survival_time,
+                     fill = HLAmatch)) +
+  #boxplot
+  geom_boxplot(alpha = 0.45)
+```
+
+100000 -\> used as placeholder for nothing in some columns
+
+Augment (PCA): time_to_aGvHD_III_IV,
+
+lm - function,
+
+Gendermatch -\> ung men prefered, sensitation
+
+HLAmatch
+
+**subdataset**
+
+group together to see if dead or observation
+
+-   survival_time
+
+Time of observation (if alive) or time to event (if dead) in days
+
+-   survival_status
+
+Survival status (0 - alive, 1 - dead)
+
+psudosample number
+
+first or second transplant
