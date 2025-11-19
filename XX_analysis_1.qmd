@@ -1,0 +1,90 @@
+---
+title: "XX_analysis_1"
+format: html
+---
+
+## PCA analysis
+
+Initial analysis of bone-marrow data
+
+#### Load libraries and data
+
+```{r}
+library(tidyverse)
+library(broom)
+
+bm_data <- read_tsv(file = "data/03_dat_aug.tsv.gz", show_col_types = FALSE )  |>
+  mutate(across(c(1:2, 4:22, 24:26, 35), factor))
+```
+
+```{r}
+pca_fit <- bm_data |>
+  select(where(is.numeric)) |>
+  drop_na() |>
+  prcomp(scale = TRUE)
+```
+
+```{r}
+bm_data_clean <- bm_data |>
+  drop_na(where(is.numeric))
+
+pca_fit |>
+  augment(bm_data_clean) |>
+  ggplot(aes(.fittedPC1, .fittedPC2, colour = survival_status)) +
+  geom_point(size = 1.5) +
+  scale_color_manual(
+    values = c("Alive" = "#D55E00", "Dead" = "#0072B2")
+  ) 
+```
+
+### PCA coordinates
+
+```{r}
+pca_fit |>
+  tidy(matrix = "rotation")
+```
+
+```{r}
+# define arrow style for plotting
+arrow_style <- arrow(
+  angle = 20, ends = "first", type = "closed", length = grid::unit(8, "pt")
+)
+
+# plot rotation matrix
+pca_fit %>%
+  tidy(matrix = "rotation") %>%
+  pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") %>%
+  ggplot(aes(PC1, PC2)) +
+  geom_segment(xend = 0, yend = 0, arrow = arrow_style) +
+  geom_text(
+    aes(label = column),
+    hjust = 1, nudge_x = -0.02, 
+    color = "#904C2F"
+  ) +
+  xlim(-1.25, .5) + ylim(-.5, 1) +
+  coord_fixed() + # fix aspect ratio to 1:1
+  theme_minimal()
+```
+
+### Variance
+
+```{r}
+pca_fit %>%
+  tidy(matrix = "eigenvalues")
+```
+
+```{r}
+pca_fit %>%
+  tidy(matrix = "eigenvalues") %>%
+  ggplot(aes(PC, percent)) +
+  geom_col(fill = "#56B4E9", alpha = 0.8) +
+  scale_x_continuous(breaks = 1:9) +
+  scale_y_continuous(
+    labels = scales::percent_format(),
+    expand = expansion(mult = c(0, 0.01))
+  ) +
+  theme_minimal()
+```
+
+The first principal component explains 29% of the variance and the second principal component explains 16% of the variance.\
+Thus, only 44% of the total variance is explained by the two principal components.
