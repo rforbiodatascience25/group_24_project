@@ -1,5 +1,5 @@
 ---
-title: "0X_Relapse_and_second_transplant_vs_survival_of_patients"
+title: "0X_Analysis_Relapse_and_2nd_transplant_survival"
 format: html
 editor: visual
 ---
@@ -14,10 +14,10 @@ To Do this, we look at how many relapsed, needed a second transplant, and how ma
 
 | Variable | Description | Value |
 |:---------------------:|:----------------------------------------------------------------:|:-----------------------:|
-| `Txpostrelapse` | Second Bone Marrow transplantation after relapse | Yes (1) or No (0) |
-| `Relapse` | Reoccurance of disease | Yes (1) or No (0) |
-| `survival_time` | Time of Observation (Alive) or time of event in days (Dead) | Yes (1) or No (0) |
-| `survival_status` | Survival status | Yes (1) or No (0) |
+| `Txpostrelapse` | Second Bone Marrow transplantation after relapse | Yes or No |
+| `Relapse` | Reoccurance of disease | Yes or No |
+| `survival_time` | Time of Observation (Alive) or time of event in days (Dead) | Yes or No |
+| `survival_status` | Survival status | Yes or No |
 
 : Table 1: The data used for this analysis is `03_dat_aug` using these variables:`Txpostrelapse`, `Relapse`, `survival_time`& `survival_status`.
 
