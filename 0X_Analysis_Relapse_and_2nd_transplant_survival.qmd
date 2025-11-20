@@ -13,7 +13,7 @@ We want to look at the relationship between relapse and secondary transplants in
 To Do this, we look at how many relapsed, needed a second transplant, and how many of them survived and when they where observed. This is done using 4 variables taken from the cleaned augmented dataset, described in table 1, and then performing an analysis of the relationship between them.
 
 | Variable | Description | Value |
-|:---------------------:|:----------------------------------------------------------------:|:-----------------------:|
+|:--:|:--:|:--:|
 | `Txpostrelapse` | Second Bone Marrow transplantation after relapse | Yes or No |
 | `Relapse` | Reoccurance of disease | Yes or No |
 | `survival_time` | Time of Observation (Alive) or time of event in days (Dead) | Yes or No |
@@ -27,8 +27,7 @@ To Do this, we look at how many relapsed, needed a second transplant, and how ma
 
 We start by loading the relevant libraries.
 
-```{r} library(tidyverse)}
-```
+`{r} library(tidyverse)}`
 
 We then load a subset of the cleaned and augmented data frame as a tibble containing only our 4 variables.
 

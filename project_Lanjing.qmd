@@ -1,0 +1,61 @@
+---
+title: "Untitled"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+```{r}
+inmuno_data <- read_tsv('data/bone-marrow-clean.tsv')
+data|> view()
+```
+
+Which gender survived the most?
+
+```{r}
+filter_gender_survival <- inmuno_data |>
+  mutate(
+    Recipientgender = recode(Recipientgender,
+                             `0` = "Female",
+                             `1` = "Male")
+  ) |>
+  filter(survival_status == 0) |>
+  group_by(Recipientgender) |>
+  summarise(count = n(), .groups = "drop")
+
+ggplot(filter_gender_survival,
+       aes(x = Recipientgender, y = count, fill = Recipientgender)) +
+  geom_col(color = "black", alpha = 0.5) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(
+    title = "Number of Survivors by Gender",
+    x = "Gender",
+    y = "Number of Survivors"
+  )
+
+
+```
+
+Between which age survived the most?
