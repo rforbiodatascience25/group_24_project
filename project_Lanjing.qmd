@@ -58,7 +58,7 @@ data_lanjing_project <- data_clean |>
   )) |> count(Recipientgender, survival_status) |>
   
     ggplot(aes(x = Recipientgender, y = n, fill = factor(survival_status))) +
-  geom_col(position = "dodge", color='black', alpha = 0.5) +
+  geom_col(position = "dodge", color='black', alpha = 1) +
   scale_fill_manual(values = c("0" = "lightblue", "1" = "purple")) +
   theme_minimal() +
   theme(legend.position = 'bottom')+
