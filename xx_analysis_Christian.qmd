@@ -1,0 +1,63 @@
+---
+title: "xx_analysis_Christian"
+format: html
+editor: visual
+---
+
+## Analyses
+
+```{r}
+library(tidyverse)
+library(ggpubr)
+```
+
+```{r}
+data_clean_aug <- read_tsv("data/03_dat_aug.tsv.gz")
+```
+
+```{r}
+stemcellsource_surv <- data_clean_aug |>
+  mutate(surv_stat_fact = factor(survival_status, levels = c("Dead", "Alive"))) |>
+  group_by(Stemcellsource, Disease, surv_stat_fact) |>
+  summarise(N = n()) |>
+  ggplot(aes(x = Stemcellsource, y = N, fill = surv_stat_fact)) +
+  geom_col() +
+  facet_wrap(~Disease)
+
+stemcellsource_surv
+```
+
+```{r}
+neutro_plot <- data_clean_aug |>
+  filter(survival_status == "Dead") |>
+  filter(ANCrecovery != 1000000) |>
+  ggplot(aes(x = ANCrecovery, y = survival_time, colour = Disease)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  stat_cor(aes(label = paste(..rr.label.., ..p.label.., sep = "~`,`~")))
+neutro_plot
+
+platelet_plot <- data_clean_aug |>
+  filter(survival_status == "Dead") |>
+  filter(PLTrecovery != 1000000) |>
+  ggplot(aes(x = PLTrecovery, y = survival_time, colour = Disease)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  stat_cor(aes(label = paste(..rr.label.., ..p.label.., sep = "~`,`~")))
+platelet_plot
+```
+
+```{r}
+neutro_surv_stat <- data_clean_aug |>
+  filter(ANCrecovery != 1000000) |>
+  ggplot(aes(x = Disease, y = ANCrecovery, fill = survival_status)) +
+  geom_boxplot() +
+  stat_cor()
+neutro_surv_stat
+
+platelet_surv_stat <- data_clean_aug |>
+  filter(PLTrecovery != 1000000) |>
+  ggplot(aes(x = Disease, y = PLTrecovery, fill = survival_status)) +
+  geom_boxplot()
+platelet_surv_stat
+```

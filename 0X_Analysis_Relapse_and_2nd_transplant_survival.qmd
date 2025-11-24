@@ -14,6 +14,7 @@ To do this, we look at how many relapsed, needed a second transplant, and how ma
 
 | Variable | Description | Value |
 |:--:|:--:|:--:|
+
 | `Txpostrelapse` | Second Bone Marrow transplantation after relapse | Yes, No |
 | `Relapse` | Reoccurance of disease | Yes, No |
 | `survival_time` | Time of Observation (Alive) or time of event in days (Dead) | Yes, No |
