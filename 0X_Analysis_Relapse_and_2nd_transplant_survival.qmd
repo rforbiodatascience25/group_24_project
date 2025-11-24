@@ -13,12 +13,12 @@ We want to look at the relationship between relapse and secondary transplants in
 To do this, we look at how many relapsed, needed a second transplant, and how many of them survived and when they where observed. This is done using X variables taken from the cleaned augmented dataset, described in table 1, and then performing an analysis of the relationship between them.
 
 | Variable | Description | Value |
-|:------------------:|:------------------------------:|:----------------------------:|
-| `Txpostrelapse` | Second Bone Marrow transplantation after relapse | Yes or No |
-| `Relapse` | Reoccurance of disease | Yes or No |
-| `survival_time` | Time of Observation (Alive) or time of event in days (Dead) | Yes or No |
-| `survival_status` | Survival status | Yes or No |
-| `Diseasegroup` | Type of disease | Malignant or Nonmalignant |
+|:--:|:--:|:--:|
+| `Txpostrelapse` | Second Bone Marrow transplantation after relapse | Yes, No |
+| `Relapse` | Reoccurance of disease | Yes, No |
+| `survival_time` | Time of Observation (Alive) or time of event in days (Dead) | Yes, No |
+| `survival_status` | Survival status | Yes, No |
+| `Diseasegroup` | Type of disease | Malignant, Nonmalignant |
 
 : Table 1: The data used for this analysis is from `03_dat_aug` using these variables:`Txpostrelapse`, `Relapse`, `survival_time`, `survival_status` & `Diseasegroup`.
 
@@ -59,7 +59,9 @@ The full tibble can be seen here.
 bm_data
 ```
 
-We then generate the subset for the first part of the analysis `relapse_surv_data`.
+## Data Analysis
+
+We start by generating the subset for the first part of the analysis `relapse_surv_data` containing 4 variables.
 
 ```{r}
 relapse_surv_data <- bm_data |>
@@ -71,9 +73,9 @@ relapse_surv_data <- bm_data |>
 relapse_surv_data
 ```
 
-## Data Analysis
+### Survival
 
-First we want to look at the relationship between survival of patients and the time of observation or event. This is done by visualizing `survival_time` and `survival_status` from subset: `relapse_surv_data`.
+We want to look at the relationship between survival of patients and the time of observation or event. This is done by visualizing `survival_time` and `survival_status` from subset: `relapse_surv_data`.
 
 ```{r}
 #| label: Boxplot of time of survival stradified by survival status
@@ -242,7 +244,7 @@ malign_surv_data |>
 
 See tendencies... Need something else here...
 
-### Look at 'Disease'?
+### Look at 'Disease'? or 'Riskgroup'?
 
 ## Random Notes (REMOVE LATER!)
 

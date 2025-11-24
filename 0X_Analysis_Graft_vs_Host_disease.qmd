@@ -5,3 +5,82 @@ editor: visual
 ---
 
 # Graft vs. host disease in relation to Survival
+
+Dataset: *Bone Marrow Transplantation: Children*
+
+We want to look at the relationship between relapse and secondary transplants in patients and how it affects their odds of survival.
+
+Variables used:
+
+| Variable | Description | Value | Missing values |
+|:--:|:--:|:--:|----|
+| `aGvHDIIIIV` | Development of acute graft versus host disease stage III or IV | Yes, No | No, kind of |
+| `extcGvHD` | Development of extensive chronic graft versus host disease | Yes, No | Yes |
+| `time_to_aGvHD_III_IV` | Time to development of acute graft versus host disease stage III or IV | Integer, time in days | No |
+| X? |  |  |  |
+| X? |  |  |  |
+
+: Table 1: The data used for this analysis is from `03_dat_aug` ? using these variables: `aGvHDIIIIV`, `extcGvHD`, `time_to_aGvHD_III_IV`, X & X.
+
+## Data Wrangling
+
+### Initiate Libraries
+
+We start by loading the relevant libraries.
+
+```{r}
+library(tidyverse)
+#library("table1")
+
+```
+
+We then load a subset of the cleaned and augmented data frame as a tibble.
+
+```{r}
+
+bm_data <- read_tsv(file = "data/03_dat_aug.tsv",
+                            show_col_types = FALSE)
+
+```
+
+It contains 186 values and follows the guidelines for tidy data, with:
+
+-   Each variable having its own column.
+
+-   Each observation having its own row.
+
+-   Each value having its own cell.
+
+Some variables used in this analysis contains missing values or very high values, see table 1 for more details. The high values correspond with other data.
+
+The full tibble can be seen here.
+
+```{r}
+bm_data
+```
+
+## Data Analysis
+
+### Development of Acute Graft
+
+We look at the time it takes to develop acute graft and SOMETHING WITH VERSUS HOST DISEASE STAGE III AND IV.
+
+We do this by creating a subset using X variables to look into the development of acute graft vs. host disease stage III & IV.
+
+```{r}
+acute_graft_data <- bm_data |>
+  select(aGvHDIIIIV,
+         time_to_aGvHD_III_IV)
+
+acute_graft_data
+```
+
+Further look into values.
+
+```{r}
+acute_graft_data |>
+  filter(aGvHDIIIIV == "Yes") |>
+  summarise()
+```
+
+We then see that entries with no development of acute graft has exstremly high values of 10\^6 days, where cases of development falls in
