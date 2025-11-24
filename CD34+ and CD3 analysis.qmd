@@ -13,7 +13,32 @@ library(dplyr)
 ```
 
 ```{r}
-data <- read_tsv('data/bone-marrow-clean.tsv.gz')
+# Get variable names and clean them
+raw_data <- read_lines("data/_raw/bone-marrow.arff")
+var_names <- raw_data |>
+  str_subset("@attribute") |>
+  str_remove_all(pattern = "@attribute|\\{.*\\}|numeric|\\s")
+
+# get meta data and clean
+meta_data <- raw_data |>
+  str_subset("%") |>
+  str_remove(pattern = "%")
+
+# Create tibble
+data_clean <- read_delim("data/_raw/bone-marrow.arff", 
+                      delim = ",", 
+                      # Start after line that starts with "@data"
+                      skip = str_which(raw_data, pattern = "^@data")+1,
+                      col_names = var_names,
+                      na = "?",
+                      col_types = "i"
+                      )  |>
+  mutate(across(c(1:2, 4:22, 24:28, 37), factor))
+
+# write data to gzip tsv file 
+data_clean |> write_tsv("data/02_dat_clean.tsv.gz")
+meta_data |> write_lines("data/02_metadat_clean.txt.gz")
+
 ```
 
 ```{r}
@@ -37,7 +62,7 @@ Linear regression between Survival rate of survival population and the dose of C
 
 # Filter only the survival group 
 group_surv <- function(data) {
-  data |>
+  data_clean |>
     filter(survival_status == '0')
 }
 
@@ -54,11 +79,11 @@ ggplot(group_surv(df),
 
 In this plot, the relationship between CD34+ cell dose and post-transplant survival was analyzed. Patients predominantly received low CD34+ doses (0-25 cells/kg), with survival times ranging from approximately 500 - 3500 days. Linear regression revealed a near-flat, slightly positive slope, indicating minimal influence of CD34+ dose on survival. The widening confidence interval at higher doses reflects increased uncertainty due to fewer data points. Overall, CD34+ dose does not appear to predict survival in this patient group, with both low and high dose recipients showing highly variable outcomes
 
-This plot is taking into account all the patients
+This plot is taking into account all the patients ( no filter for the one who survived)
 
 ```{r}
 
-ggplot(data, 
+ggplot(data_clean, 
        aes(x = CD34kgx10d6, 
            y = survival_time)) + 
   geom_point() + 
@@ -75,7 +100,7 @@ A slight positive correlation was observed between CD34+ cell dose per kg and po
 CD3+ case (without filtering)
 
 ```{r}
-ggplot(data, 
+ggplot(data_clean, 
        aes(x = CD3dkgx10d8, 
            y = survival_time)) +
   geom_point() + 
@@ -90,7 +115,7 @@ CD3 case ( filtering those who survived) :
 ```{r}
 # Filter only the survival group 
 group_surv <- function(data) {
-  data |>
+  data_clean |>
     filter(survival_status == '0')
 }
 
@@ -112,29 +137,28 @@ The development of acute (aGvHD III/IV) and extensive chronic (cGvHD) graft- ver
 
 In this analysis, we explore the relationship between CD3+ T cell dose, patient survival time. and the development of graft-versus-host disease (GvHD) following bone marrow transplantation. Specifically, we examine how the ocurrence of severe acute GvHD (aGvHD III/IV) and extensive chronic GvHD (cGvHD) correlates with CD3+ cell dose and impacts post-transplant survival. Separate scatter plots are generated for each GvHD type to visualize potential trends and differences, providing insights into the immunological outcomes associated with varying CD3+ doses.
 
-For aGvHDIIIIV:
+For aGvHDIIIIV (acute Graft-versus-Host Disease, enfermedad injerto contra huésped aguda):
+
+0 – desarrola la enfermedad
+
+1 - no desarrolla la enfermedad
 
 ```{r}
-# Filter only the survival group 
-group_surv <- function(data) {
-  data |>
+# Filter only the survival group geom_boxplot() 
+group_surv <- function(data_clean) {
+  data_clean |>
     filter(survival_status == '0')
 }
 
-ggplot(group_surv(df), 
+ggplot(group_surv(data_clean), 
        aes(x = CD3dkgx10d8, 
            y = survival_time, 
            color = aGvHDIIIIV)) + 
   geom_point(size = 3, alpha = 0.7) + 
-  scale_color_gradient(low = 'blue', high = 'red') + 
-  labs(
-    x = 'Doses of CD3+', 
-    y = 'Survival Time (days)',
-    color = 'aGvHD III/IV'
-  ) +
-  theme_minimal() + 
-  
-  geom_smooth(aes(group = aGvHDIIIIV), method = 'lm', se = FALSE, linetype = 'dashed')
+  scale_color_brewer(palette = 'Set1') + 
+
+  geom_smooth(aes(group = aGvHDIIIIV), method = 'lm', se = FALSE, linetype = 'dashed') +
+  theme_minimal() 
 ```
 
 The analysis of post-transplant survival relative to administered CD3+ dose shows a slight negative trend, suggesting that higher CD3+ doses may be associated with reduced survival, potentially mediated by the development of severe aGvHD. Patients without severe aGvHD are distributed across the full range of CD3+ doses and exhibit highly variable survival times, indicating that the absence of severe aGvHD does not necessarily ensure longer survival. In contrast, patients who developed severe aGvHD tend to cluster at low intermediate CD3+ doses, with some showing shorter survival, consistent with the expected detrimental impact of severe aGvHD. However , the wide dispersion of data points highlights the influence of additional factors, such as patient age, underlying disease, or complications, on survival. Overall, while a weak inverse relationship between CD3+ dose and survival is observed, the patterns is not strictly linear.
@@ -142,20 +166,21 @@ The analysis of post-transplant survival relative to administered CD3+ dose show
 for extcGvHD ( chronic) :
 
 ```{r}
+
 # Filter only the survival group 
-group_surv <- function(data) {
-  data |>
+group_surv <- function(data_clean) {
+  data_clean |>
     filter(survival_status == '0')
 }
 
 # Plot
 
-ggplot(group_surv(df),
+ggplot(group_surv(data_clean),
        aes(x = CD3dkgx10d8, 
            y = survival_time,
            color = extcGvHD)) + 
   geom_point(size = 3, alpha = 0.7) + 
-  scale_color_gradient(low = 'orange', high = 'green') + 
+  scale_color_brewer(palette = 'Set1') + 
   labs(
     x = 'Doses of CD3+', 
     y = 'Survival time (days)',
@@ -165,56 +190,47 @@ ggplot(group_surv(df),
   geom_smooth(aes(group = extcGvHD), method = 'lm', se = FALSE, linetype = 'dashed')
 ```
 
-# Analizar grafica
+This analysis examines the impact of infused CD3+ T-cell dose on post-transplant survival in patients with and without extensive chronic graft-versus-host disease (cGvHD). Higher CD3+ doses were associated with reduced survival in both groups, suggesting that excessive donor T-cell infusion may increase harmful immune-mediated toxicity. However, patients who developed extensive cGvHD showed slightly longer survival and a less pronounced decline in response to CD3+ dose, which could indicate a beneficial graft-versus-disease effect.
 
-CMV virus
+# CMV virus
 
-# Box plot for recipient CMV
+### Mixed plot between survival and non-survival:
 
 ```{r}
-ggplot(data, aes(
-  x = RecipientCMV, 
-  y = survival_time, 
-  fill = RecipientCMV)) + 
-  geom_boxplot() + 
-  geom_jitter(width = 0.2, alpha = 0.5) + 
-  labs(
-    title = 'Survival time by Recipient CMV status',
-    x = 'Recipient CMV', 
-    y = 'Survival time (days)' + 
+
+data_new <- data_clean |>
+  filter(!is.na(CMVstatus), !is.na(survival_time))
+
+ggplot(data_new, aes(
+  x = as.factor(CMVstatus), 
+  y = survival_time,
+  fill = as.factor(CMVstatus))) + 
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  facet_wrap(~survival_status) +  # separate between survival and deceasedy pa
+  labs(title = "Survival time by CMV compatibility and survival status",
+       x = "CMV Compatibility",
+       y = "Survival time (days)",
+       fill = "CMVstatus") +
   theme_minimal()
-  )
+
 ```
 
-## Bloxplot for DonorCMV
+### For the survival group
+
+In patients who survived the transplant, overall survival times were generally prolonged, with medians ranging approximately from 1000 to 1600 days depending on the CMV compatibility between donor and recipient. No clear linear relationship is observed between CMV status and survival, although patients with greater incompatibility show a slight tendency toward higher medians. The data dispersion indicates significant individual variability and the presence of outliers.
 
 ```{r}
 
-ggplot(data, aes(x = DonorCMV, 
-                 y = survival_time, 
-                 fill = DonorCMV)) + 
-  
-  geom_jitter(with = 0.2, alpha = 0.5) + 
-  labs(title = 'Survival time by Donor CMV status', 
-       x = 'Donor CMV', 
-       y = 'Survival time (days)') + 
-    theme_minimal()
-    
-```
-
-# Boxplot for CMVs status (compatibility)
-
-```{r}
-# Take out the 0, because dont give information about the compatibility 
-
-data_new <- data |>
-  filter(CMVstatus != 0)
+data_new <- data_clean |>
+  filter(!is.na(CMVstatus), !is.na(survival_time)) |>
+  filter(survival_status == 0)
 
 ggplot(data_new, aes(
   x = CMVstatus, 
   y = survival_time,
   fill = CMVstatus)) + 
-
+  geom_boxplot() +
   geom_jitter(width = 0.2, alpha = 0.5) + 
   labs(title = 'Survival time by CMV compatibility', 
        x = 'CMV Compatibility', 
@@ -222,4 +238,49 @@ ggplot(data_new, aes(
   theme_minimal()
 ```
 
-Tengo que ver que significa el 1, 2 y R en cuandot a la compatibililidad)
+### For the deceased group :
+
+In patients who died after the transplant, survival times were significantly shorter, with medians of approximately 100–200 days, regardless of the level of CMV compatibility. The data distribution suggests that CMV compatibility alone is not a determining factor for survival in this group, and most patients died within the first year post-transplant, with few cases of prolonged survival that could be considered atypical.
+
+```{r}
+
+data_new <- data_clean |>
+  filter(!is.na(CMVstatus), !is.na(survival_time)) |>
+  filter(survival_status == 1)
+
+ggplot(data_new, aes(
+  x = CMVstatus, 
+  y = survival_time,
+  fill = CMVstatus)) + 
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) + 
+  labs(title = 'Survival time by CMV compatibility', 
+       x = 'CMV Compatibility', 
+       y = 'Survival time (days)') +
+  theme_minimal()
+```
+
+## Donor and Recipient status (number of deaths)
+
+The data on CMV matching shows unexpected results:
+
+-   **Highest Risk (58 deaths):** Occurs in CMV-positive recipients **(R+)** receiving a negative donor organ **(D-)**. The R+ patient is the most vulnerable.
+
+-   **Lowest Risk (27 deaths):** Found in the "mismatched" **D+/R-** group. This was the safest combination.
+
+```{r}
+
+table_CMVs <- data_new |>
+  group_by(DonorCMV, RecipientCMV) |>
+  summarise(count = n(),
+            deaths = sum(survival_status == 1),
+            survival = sum(survival_status == 0))
+
+ggplot(table_CMVs, aes(x = DonorCMV, y = RecipientCMV, fill = deaths)) +
+  geom_tile() +
+  geom_text(aes(label = count), color = "white") +
+  labs(title = "Donor vs Recipient CMV status (number of patients)",
+       x = "Donor CMV", y = "Recipient CMV", fill = "Deaths") +
+  theme_minimal()
+
+```
