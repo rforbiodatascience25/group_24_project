@@ -296,7 +296,7 @@ The data on CMV matching shows unexpected results:
 
 ```{r}
 
-table_CMVs <- data_new |>
+table_CMVs <- data_clean |>
   group_by(DonorCMV, RecipientCMV) |>
   summarise(count = n(),
             deaths = sum(survival_status == 1),
