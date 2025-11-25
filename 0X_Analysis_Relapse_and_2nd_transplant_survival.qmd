@@ -10,16 +10,18 @@ Dataset: *Bone Marrow Transplantation: Children*
 
 We want to look at the relationship between relapse and secondary transplants in patients and how it affects their odds of survival.
 
-To Do this, we look at how many relapsed, needed a second transplant, and how many of them survived and when they where observed. This is done using 4 variables taken from the cleaned augmented dataset, described in table 1, and then performing an analysis of the relationship between them.
+To do this, we look at how many relapsed, needed a second transplant, and how many of them survived and when they where observed. This is done using X variables taken from the cleaned augmented dataset, described in table 1, and then performing an analysis of the relationship between them.
 
 | Variable | Description | Value |
 |:--:|:--:|:--:|
-| `Txpostrelapse` | Second Bone Marrow transplantation after relapse | Yes or No |
-| `Relapse` | Reoccurance of disease | Yes or No |
-| `survival_time` | Time of Observation (Alive) or time of event in days (Dead) | Yes or No |
-| `survival_status` | Survival status | Yes or No |
 
-: Table 1: The data used for this analysis is `03_dat_aug` using these variables:`Txpostrelapse`, `Relapse`, `survival_time`& `survival_status`.
+| `Txpostrelapse` | Second Bone Marrow transplantation after relapse | Yes, No |
+| `Relapse` | Reoccurance of disease | Yes, No |
+| `survival_time` | Time of Observation (Alive) or time of event in days (Dead) | Yes, No |
+| `survival_status` | Survival status | Yes, No |
+| `Diseasegroup` | Type of disease | Malignant, Nonmalignant |
+
+: Table 1: The data used for this analysis is from `03_dat_aug` using these variables:`Txpostrelapse`, `Relapse`, `survival_time`, `survival_status` & `Diseasegroup`.
 
 ## Data Wrangling
 
@@ -27,24 +29,32 @@ To Do this, we look at how many relapsed, needed a second transplant, and how ma
 
 We start by loading the relevant libraries.
 
-`{r} library(tidyverse)}`
+```{r}
+library(tidyverse)
+#library("table1")
 
-We then load a subset of the cleaned and augmented data frame as a tibble containing only our 4 variables.
+```
+
+We then load a subset of the cleaned and augmented data frame as a tibble.
 
 ```{r}
 
 bm_data <- read_tsv(file = "data/03_dat_aug.tsv",
-                    col_select = c("Txpostrelapse",
-                                   "Relapse",
-                                   "survival_time",
-                                   "survival_status"),
-                    show_col_types = FALSE)
-
-
+                            show_col_types = FALSE)
 
 ```
 
-It contains the 4 columns we are interested in, 186 datapoints for each, and does not contain any NA / missing values.
+It contains 186 values and follows the guidelines for tidy data, with:
+
+-   Each variable having its own column.
+
+-   Each observation having its own row.
+
+-   Each value having its own cell.
+
+And all values used in this analysis does not contain missing values, see table 1 for variables.
+
+The full tibble can be seen here.
 
 ```{r}
 bm_data
@@ -52,12 +62,26 @@ bm_data
 
 ## Data Analysis
 
-First we want to look at the relationship between survival of patients and the time of observation or event. This is done by visualizing `survival_time` based on `survival_status` in `bm_data`.
+We start by generating the subset for the first part of the analysis `relapse_surv_data` containing 4 variables.
+
+```{r}
+relapse_surv_data <- bm_data |>
+  select(Txpostrelapse,
+         Relapse,
+         survival_status,
+         survival_time)
+
+relapse_surv_data
+```
+
+### Survival
+
+We want to look at the relationship between survival of patients and the time of observation or event. This is done by visualizing `survival_time` and `survival_status` from subset: `relapse_surv_data`.
 
 ```{r}
 #| label: Boxplot of time of survival stradified by survival status
 
-bm_data |>
+relapse_surv_data |>
   ggplot(data = _,
          mapping = aes(x = survival_status,
                        y = survival_time,
@@ -82,7 +106,7 @@ Next we will look at the rate of relapses and how it relates to survival status 
 
 ```{r}
 
-bm_data |>
+relapse_surv_data |>
   count(survival_status,Relapse) |>
   ggplot(mapping = aes(x = Relapse,
                        y = n,
@@ -96,9 +120,132 @@ bm_data |>
   theme(legend.position = "bottom",
         panel.grid.major.x = element_blank())
   
+```
 
+We see a large number of the patents that survived did not relapse. This is shown in numbers below.
+
+```{r}
+relapse_surv_data |>
+  count(Relapse,survival_status)
+```
+
+We see that the majority of relapsed patients did not survive. This is something we will look more into by looking who got a second transplant. INSERT STASTISTICS IN THIS SECTION!
+
+### Secondary transplant after relapse in relation to survival
+
+First we look at who got a second transplant. NEED BETTER TABLE!
+
+```{r}
+relapse_surv_data |>
+  group_by(Txpostrelapse) |>
+  count(Relapse,survival_status)
+```
+
+We then create a new subset with a new variable: `tx_history`, based on: `Txpostrelapse` & `Relapse`.
+
+```{r}
+transplant_surv_data <- relapse_surv_data |>
+  mutate(
+    tx_history = case_when(
+      Txpostrelapse == "Yes" & Relapse == "Yes" ~  "2nd Transplant & Relapse",
+      Txpostrelapse == "Yes" & Relapse == "No" ~  "2nd Transplant & no Relapse*",
+      Txpostrelapse == "No" & Relapse == "Yes" ~  "No Transplant & Relapse",
+      Txpostrelapse == "No" & Relapse == "No" ~  "No Transplant & no Relapse"))
   
 ```
+
+Visualization of 2nd Transplant and relapse data.
+
+```{r}
+
+transplant_surv_data |>
+  count(tx_history,survival_status) |>
+  ggplot(mapping = aes(x = tx_history,
+                       y = n,
+                       fill = factor(survival_status))) +
+  geom_col(position = position_dodge(
+    preserve = "single"),
+    colour = "black",
+    alpha = 0.5) +
+  geom_hline(yintercept = 0) +
+  theme_minimal(base_size = 12) +
+  labs(caption = "*No Relapse means no remission before 2nd transplant",
+       fill = "Survival Status",
+       x = "Transplant and relapse History") +
+  theme(legend.position = "bottom",
+        panel.grid.major.x = element_blank(),
+        axis.text.x = element_text(angle = 10,
+                                   hjust = 0.5,
+                                   vjust = 1))
+```
+
+We see a difference in the number of surviving patients when we look at the number of patients receiving a second transplantation, with few surviving after having a relapse.
+
+Patients, who need a second transplantation INSERT STASTISTICS and still have not gone into remission (no relapse) have WRITE OUTCOME (A 50/50-ISH FOR MOW) chance of survival.
+
+Patients with relapse have INSERT STATISTICS OF BOTH of surviving.
+
+Patients, who does not need a second transplant have a better outcome with INSERT STASTITICS surviving.
+
+**Outcome:** 2nd transplant seem to help some after relapse, but odds are grim in case of relapse.
+
+*Somehow some are getting a transplant without haveing a relapse, either by getting a second transplantation before disease is fully gone... None survived having a second transplant after reoccurance of disease, only survived getting it before having relapse...*
+
+### Look at 'Diseasegroup' in relation to relapse and survival
+
+`Diseasegroup` describes if the type of disease is Malignant (1) or Nonmalignant (0)
+
+We create a new subset with `Diseasegroup`. *2nd transplant is kept in for now, might remove later.*
+
+```{r}
+malign_surv_data <- bm_data |>
+  select(Txpostrelapse,
+         Relapse,
+         Diseasegroup,
+         survival_status,
+         survival_time)
+```
+
+Then we add a variable `type_history`, which describes the type of disease the patient had.
+
+```{r}
+malign_surv_data <- malign_surv_data |>
+  mutate(
+    type_history = case_when(
+      Diseasegroup == "Malignant" & Relapse == "Yes" ~  "Malignant & Relapse",
+      Diseasegroup == "Malignant" & Relapse == "No" ~  "Malignant & no Relapse*",
+      Diseasegroup == "Nonmalignant" & Relapse == "Yes" ~  "Nonmalignant & Relapse",
+      Diseasegroup == "Nonmalignant" & Relapse == "No" ~  "Nonmalignant & no Relapse"))
+
+```
+
+Next we see if it affects relapse and survival.
+
+```{r}
+malign_surv_data |>
+  count(type_history,survival_status) |>
+  ggplot(mapping = aes(x = type_history,
+                       y = n,
+                       fill = factor(survival_status))) +
+  geom_col(position = position_dodge(
+    preserve = "single"),
+    colour = "black",
+    alpha = 0.5) +
+  geom_hline(yintercept = 0) +
+  theme_minimal(base_size = 12) +
+  labs(caption = "*No Relapse means no remission",
+       fill = "Survival Status",
+       x = "Disease type and relapse status for Patients") +
+  theme(legend.position = "bottom",
+        panel.grid.major.x = element_blank(),
+        axis.text.x = element_text(angle = 10,
+                                   hjust = 0.5,
+                                   vjust = 1))
+```
+
+See tendencies... Need something else here...
+
+### Look at 'Disease'? or 'Riskgroup'?
 
 ## Random Notes (REMOVE LATER!)
 
