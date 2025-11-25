@@ -30,14 +30,14 @@ In this plot, the relationship between CD34+ cell dose and post-transplant survi
 
 ```{r}
 
-# Filter only the survival group 
-group_surv <- function(data) {
+# Filter only the deceased group 
+group_dece <- function(data) {
   data_clean |>
-    filter(survival_status == '0')
+    filter(survival_status == '1')
 }
 
 # Plot using the fuction 
-ggplot(group_surv(), 
+ggplot(group_dece(), 
        aes(x = CD34kgx10d6, 
            y = survival_time)) + 
   geom_point() + 
@@ -65,6 +65,27 @@ ggplot(data_clean,
   labs(title = 'CD34+ dose vs Survival Days',
        x = 'CD34+ cells/kg', 
        y = 'Days survived post-transplant')
+
+data_clean |>
+  group_by(survival_status) |>
+  ggplot(aes(x = survival_status, y = CD34kgx10d6, fill = survival_status)) + 
+  geom_boxplot()
+```
+
+```{r}
+ggplot(data_clean,
+       aes(x = factor(survival_status), 
+           y = CD34kgx10d6,
+           fill = factor(survival_status))) +
+  geom_boxplot() +
+  labs(title = "CD34+ dose for each Survival Status",
+       x = "Survival Status (0 = died, 1 = survived)",
+       y = "CD34+ cells/kg") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set2", 
+                    name = "Survival Status",
+                    labels = c("0" = "Died", "1" = "Survived"))
+
 ```
 
 ## 3.2. CD3 ANALYSIS
@@ -166,6 +187,35 @@ ggplot(group_surv(data_clean),
   geom_smooth(aes(group = extcGvHD), method = 'lm', se = FALSE, linetype = 'dashed')
 ```
 
+```{r}
+
+ggplot(data_clean, 
+       aes(x = CD3dkgx10d8, 
+           y = survival_time, 
+           color = factor(aGvHDIIIIV))) + 
+  geom_point(size = 3, alpha = 0.7) + 
+  scale_color_brewer(palette = 'Set1') + 
+
+  geom_smooth(aes(group = aGvHDIIIIV), method = 'lm', se = FALSE, linetype = 'dashed') +
+  theme_minimal() 
+```
+
+```{r}
+ggplot(data_clean,
+       aes(x = factor(survival_status), 
+           y = CD3dkgx10d8,
+           fill = factor(survival_status))) +
+  geom_boxplot() +
+  labs(title = "CD3+ dose for each Survival Status",
+       x = "Survival Status (0 = died, 1 = survived)",
+       y = "CD3+ cells/kg") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set2", 
+                    name = "Survival Status",
+                    labels = c("0" = "Died", "1" = "Survived"))
+
+```
+
 ## 4. CMV VIRUS
 
 ### 4.1 .Mixed plot between survival and non-survival groupsd:
@@ -259,4 +309,72 @@ ggplot(table_CMVs, aes(x = DonorCMV, y = RecipientCMV, fill = deaths)) +
        x = "Donor CMV", y = "Recipient CMV", fill = "Deaths") +
   theme_minimal()
 
+```
+
+# NEW 
+
+```{r}
+# Filter only the deceased group 
+group_dece <- function(data) {
+  data_clean |>
+    filter(survival_status == '1')
+}
+
+# Plot using the fuction 
+ggplot(group_dece(), 
+       aes(x = CD34kgx10d6, 
+           y = survival_time)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm', se = TRUE) + 
+  labs(title = 'CD34+ dose vs Survival Days',
+       x = 'CD34+ cells/kg', 
+       y = 'Days survived post-transplant')
+```
+
+```{r}
+ggplot(data_clean,
+       aes(x = factor(survival_status), 
+           y = CD34kgx10d6,
+           fill = factor(survival_status))) +
+  geom_boxplot() +
+  labs(title = "CD34+ dose for each Survival Status",
+       x = "Survival Status (0 = died, 1 = survived)",
+       y = "CD34+ cells/kg") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set2", 
+                    name = "Survival Status",
+                    labels = c("0" = "Died", "1" = "Survived"))
+```
+
+```{r}
+
+# Filter only the deceased group 
+group_dece <- function(data) {
+  data_clean |>
+    filter(survival_status == '1')
+}
+
+ggplot(data_clean, 
+       aes(x = CD3dkgx10d8, 
+           y = survival_time)) +
+  geom_point() + 
+  geom_smooth(method = 'lm', se = TRUE) + 
+  labs(title = 'CD3 dose vs survival Days',
+       x = 'CD3+ cells/kg', 
+       y = 'Days survived post-transplant')
+```
+
+```{r}
+ggplot(data_clean,
+       aes(x = factor(survival_status), 
+           y = CD3dkgx10d8,
+           fill = factor(survival_status))) +
+  geom_boxplot() +
+  labs(title = "CD3+ dose for each Survival Status",
+       x = "Survival Status (0 = died, 1 = survived)",
+       y = "CD3+ cells/kg") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set2", 
+                    name = "Survival Status",
+                    labels = c("0" = "Died", "1" = "Survived"))
 ```
