@@ -13,47 +13,7 @@ library(dplyr)
 ```
 
 ```{r}
-# Get variable names and clean them
-raw_data <- read_lines("data/_raw/bone-marrow.arff")
-var_names <- raw_data |>
-  str_subset("@attribute") |>
-  str_remove_all(pattern = "@attribute|\\{.*\\}|numeric|\\s")
-
-# get meta data and clean
-meta_data <- raw_data |>
-  str_subset("%") |>
-  str_remove(pattern = "%")
-
-# Create tibble
-data_clean <- read_delim("data/_raw/bone-marrow.arff", 
-                      delim = ",", 
-                      # Start after line that starts with "@data"
-                      skip = str_which(raw_data, pattern = "^@data")+1,
-                      col_names = var_names,
-                      na = "?",
-                      col_types = "i"
-                      )  |>
-  mutate(across(c(1:2, 4:22, 24:28, 37), factor))
-
-# write data to gzip tsv file 
-data_clean |> write_tsv("data/02_dat_clean.tsv.gz")
-meta_data |> write_lines("data/02_metadat_clean.txt.gz")
-
-```
-
-```{r}
-# Function for grouping data based on survival status
-subset_deceased <- function(data) {
-  data |>
-    filter(survival_status == "Dead")
-}
-
-
-# Function for grouping data based on survival status
-group_surv <- function(data_clean) {
-  data_clean |>
-    group_by(survival_status)
-}
+data_clean <-  read_tsv('data/02_dat_clean.tsv.gz')
 ```
 
 Linear regression between Survival rate of survival population and the dose of CD34+ per Kg of recipient body weight.
@@ -67,7 +27,7 @@ group_surv <- function(data) {
 }
 
 # Plot using the fuction 
-ggplot(group_surv(df), 
+ggplot(group_surv(), 
        aes(x = CD34kgx10d6, 
            y = survival_time)) + 
   geom_point() + 
@@ -153,7 +113,7 @@ group_surv <- function(data_clean) {
 ggplot(group_surv(data_clean), 
        aes(x = CD3dkgx10d8, 
            y = survival_time, 
-           color = aGvHDIIIIV)) + 
+           color = factor(aGvHDIIIIV))) + 
   geom_point(size = 3, alpha = 0.7) + 
   scale_color_brewer(palette = 'Set1') + 
 
@@ -178,7 +138,7 @@ group_surv <- function(data_clean) {
 ggplot(group_surv(data_clean),
        aes(x = CD3dkgx10d8, 
            y = survival_time,
-           color = extcGvHD)) + 
+           color = factor(extcGvHD))) + 
   geom_point(size = 3, alpha = 0.7) + 
   scale_color_brewer(palette = 'Set1') + 
   labs(
@@ -229,7 +189,7 @@ data_new <- data_clean |>
 ggplot(data_new, aes(
   x = CMVstatus, 
   y = survival_time,
-  fill = CMVstatus)) + 
+  fill = factor(CMVstatus))) + 
   geom_boxplot() +
   geom_jitter(width = 0.2, alpha = 0.5) + 
   labs(title = 'Survival time by CMV compatibility', 
@@ -251,7 +211,7 @@ data_new <- data_clean |>
 ggplot(data_new, aes(
   x = CMVstatus, 
   y = survival_time,
-  fill = CMVstatus)) + 
+  fill = factor(CMVstatus))) + 
   geom_boxplot() +
   geom_jitter(width = 0.2, alpha = 0.5) + 
   labs(title = 'Survival time by CMV compatibility', 
