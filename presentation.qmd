@@ -1,7 +1,9 @@
 ---
 title: "presentation.qmd"
 author: "Group 24"
-format: html
+format: 
+  html:
+    embed-resources: true
 editor: visual
 ---
 
