@@ -1,0 +1,78 @@
+---
+title: "presentation.qmd"
+author: "Group 24"
+format: html
+editor: visual
+---
+
+# Presentation
+
+**Final Output**
+
+-   10 slides
+
+## Slide 1
+
+The order of the content is not final and will probably change.
+
+**Include:**
+
+-   Aim
+
+## Slide 2
+
+**Include:**
+
+-   background / research in topic
+
+## Slide 3
+
+**Include:**
+
+-   What is the data -\> What does it describe?
+
+-   Where / how was it collected?
+
+## Slide 4
+
+**Include:**
+
+-   Data wrangling
+
+## Slide 5
+
+**Include:**
+
+-   Exploratory Analysis
+
+## Slide 6
+
+**Include:**
+
+-   Exploratory analysis or other type of analysis
+
+## Slide 7
+
+**Include:**
+
+-   analysis
+
+## Slide 8
+
+**Include:**
+
+-   analysis
+
+## Slide 9
+
+**Include:**
+
+-   Discussion
+
+## Slide 10
+
+**Include:**
+
+-   Conclusion
+
+-   perspectivation?
