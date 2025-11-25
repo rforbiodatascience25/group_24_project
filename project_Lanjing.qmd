@@ -90,7 +90,7 @@ data_clean|>
   theme_minimal() + 
   labs(
     x = 'Survival Status (0 = survivor, 1 = death)', 
-    y = 'Age of the recipient',
+    y = 'Number of patients',
     fill = 'Survival Status'
   )
 
@@ -177,7 +177,7 @@ data_clean |>
   theme_minimal() + 
   labs(
     x = 'Survival Status (0 = survivor, 1 = death)', 
-    y = 'Age of the recipient',
+    y = 'Number of recipients',
     fill = 'Survival Status'
   )
 
