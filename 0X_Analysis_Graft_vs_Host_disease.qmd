@@ -13,7 +13,7 @@ We want to look at the relationship between relapse and secondary transplants in
 Variables used:
 
 | Variable | Description | Value | Missing values |
-|:--:|:--:|:--:|----|
+|:----------------:|:----------------:|:----------------:|------------------|
 | `aGvHDIIIIV` | Development of acute graft versus host disease stage III or IV | Yes, No | No, kind of |
 | `extcGvHD` | Development of extensive chronic graft versus host disease | Yes, No | Yes |
 | `time_to_aGvHD_III_IV` | Time to development of acute graft versus host disease stage III or IV | Integer, time in days | No |
@@ -38,7 +38,7 @@ We then load a subset of the cleaned and augmented data frame as a tibble.
 
 ```{r}
 
-bm_data <- read_tsv(file = "data/03_dat_aug.tsv",
+bm_data <- read_tsv(file = "data/03_dat_aug.tsv.gz",
                             show_col_types = FALSE)
 
 ```
