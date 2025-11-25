@@ -15,15 +15,35 @@ The order of the content is not final and will probably change.
 
 ## Slide 1
 
-**Include:**
+**Include:** Introduction or Aim
+
+-   Title
 
 -   Aim
 
+-   Group names
+
+**Text included in slide:**
+
+*Titel:*
+
+Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation
+
+*Aim:*
+
+Which biological factors affect patent outcome and how can we ensure a good response?
+
+*group names:*
+
+Group 24: names
+
 ## Slide 2
 
-**Include:**
+**Include:** background / research in topic
 
--   background / research in topic
+-   content
+
+**Text included in slide:**
 
 ## Slide 3
 
