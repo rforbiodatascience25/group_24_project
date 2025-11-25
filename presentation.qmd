@@ -7,13 +7,13 @@ editor: visual
 
 # Presentation
 
+The order of the content is not final and will probably change.
+
 **Final Output**
 
 -   10 slides
 
 ## Slide 1
-
-The order of the content is not final and will probably change.
 
 **Include:**
 
