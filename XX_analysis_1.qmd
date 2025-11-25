@@ -16,8 +16,10 @@ library(ggrepel)
 library(ggridges)
 library(patchwork)
 
-bm_data <- read_tsv(file = "data/03_dat_aug.tsv.gz", show_col_types = FALSE )  |>
+bm_data <- read_tsv(file = "data/03_dat_aug.tsv.gz", 
+                    show_col_types = FALSE, na = "100000")  |>
   mutate(across(c(1:2, 4:22, 24:26, 35), factor)) |>
+  mutate(across(c(3,23,27:34), as.integer)) |>
   select(- time_to_aGvHD_III_IV) |>
   drop_na(where(is.numeric))
 ```
@@ -42,16 +44,29 @@ pca_plot <- pca_fit |>
   geom_point(size = 1.5) +
   labs(x = "PC1 (31,2%)",
        y = "PC2 (15,5%)", 
-       colour = "Survival Status") +
+       colour = "Survival Status",
+       title = "Scores Plot") +
   scale_colour_viridis_d() +
   theme_minimal() +
   theme(legend.position = "bottom") 
-  
 
+pca_plot
+
+
+
+
+
+```
+
+The PC-scores plot shows that there is no clear separation between the samples based on the survival status and thus, the groups are not distinguishable based on the first two principal components.
+
+```{r}
 # define arrow style for plotting
-arrow_style <- arrow(
-  angle = 20, ends = "first", type = "closed", length = grid::unit(8, "pt")
-)
+arrow_style <- arrow(angle = 20, 
+                     ends = "first", 
+                     type = "closed", 
+                     length = grid::unit(8, "pt"))
+
 
 # plot rotation matrix
 rotation_plot <- pca_fit |>
@@ -66,19 +81,20 @@ rotation_plot <- pca_fit |>
                   colour = "blue",
                   hjust = 1,
                   nudge_x = 0.2) +
+  labs(title = "Loading Plot") +
   scale_x_continuous(limits = c(-0.8,1.0)) +
   scale_y_continuous(limits = c(-0.8,1.0)) +
   theme_minimal() 
 
-(pca_plot|rotation_plot) +
-  plot_annotation(title = 'PCA analysis') +
-  plot_annotation(tag_levels = 'I')
 
-
+rotation_plot
 ```
 
+The loading plot shows a strong correlation between the CD34+ and CD3 dosage and the first principal component (PC1). Whereas recipient age and body mass are mainly correlated to PC1, but are also somewhat correlated with PC2.\
+Platelet and neutrophils
+
 ```{r}
-pca_fit %>%
+pca_fit |>
   tidy(matrix = "eigenvalues")
 
 var_plot <- pca_fit |>
@@ -92,6 +108,7 @@ var_plot <- pca_fit |>
        x = "Principal Component")
 
 var_plot
+
 ```
 
 The first principal component explains 31% of the variance and the second principal component explains 15% of the variance.\
@@ -103,6 +120,10 @@ Thus, only 46% of the total variance is explained by the two principal component
 HLA_data <- bm_data |>
   select(HLAmatch, HLAmatch, HLAmismatch, Antigen, Alel, HLAgrI, survival_time, survival_status) |> 
   mutate(HLAmatch = fct_relevel(HLAmatch, c("7/10", "8/10", "9/10", "10/10")))
+
+HLA_data |>
+  count(HLAmatch, survival_status) |>
+  group_by(HLAmatch)
 
 HLA_data |>
   count(HLAmatch, survival_status) |>
