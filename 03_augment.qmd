@@ -9,7 +9,7 @@ format: html
 library(tidyverse)
 ```
 
-### Load data and augment data 
+### Load data and augment data
 
 ```{r}
 data_clean_aug <- read_tsv(file = "data/02_dat_clean.tsv.gz", show_col_types = FALSE )  |>
@@ -67,23 +67,23 @@ data_clean_aug <- read_tsv(file = "data/02_dat_clean.tsv.gz", show_col_types = F
       HLAmismatch == 0 ~ "Matched",
       HLAmismatch == 1 ~ "Mismatched"),
     Antigen = case_when(
-      Antigen == -1 ~ "Matched",
-      Antigen == 0 ~ "1 mismatch",
-      Antigen == 1 ~ "2 mismatches",
-      Antigen == 2 ~ "3 mismatches"),
+      Antigen == -1 ~ "0 MM",
+      Antigen == 0 ~ "1 MM",
+      Antigen == 1 ~ "2 MM",
+      Antigen == 2 ~ "3 MM"),
     Alel = case_when(
-      Alel == -1 ~ "Matched",
-      Alel == 0 ~ "1 mismatch",
-      Alel == 1 ~ "2 mismatches",
-      Alel == 2 ~ "3 mismatches",
-      Alel == 3 ~ " 4 mismatches"),
+      Alel == -1 ~ "0 MM",
+      Alel == 0 ~ "1 MM",
+      Alel == 1 ~ "2 MM",
+      Alel == 2 ~ "3 MM",
+      Alel == 3 ~ "4 MM"),
     HLAgrI = case_when(
-      HLAgrI == 0 ~ "Matched",
+      HLAgrI == 0 ~ "0 MM",
       HLAgrI == 1 ~ "1 MM (antigen)",
       HLAgrI == 2 ~ "1 MM (allele)",
-      HLAgrI == 3 ~ "1 MM(DRB1-allele)",
-      HLAgrI == 4 ~ "2 MM (allele)",
-      HLAgrI == 5 ~ "2MM (allele/antigen)",
+      HLAgrI == 3 ~ "1 MM (DRB1-allele)",
+      HLAgrI == 4 ~ "2 MM (2 allele / allele+antigen)",
+      HLAgrI == 5 ~ "2 MM (2 allele + antigen)",
       HLAgrI == 7 ~ "Mismatched"),
     Relapse = case_when( 
       Relapse == 0 ~ "No",
