@@ -9,6 +9,8 @@ editor: visual
 
 The order of the content is not final and will probably change.
 
+*Cursive text* should not be shown in finished presentation!
+
 **Final Output**
 
 -   10 slides
@@ -41,29 +43,47 @@ Group 24: names
 
 **Include:** background / research in topic
 
--   content
+-   Hematopoietic Stem Cell Transplantation / topic
+
+-   Challenges
 
 **Text included in slide:**
 
+*Topic:*
+
+*Challenges:*
+
 ## Slide 3
 
-**Include:**
+**Include:** Data description
 
--   What is the data -\> What does it describe?
+-   collected from
 
--   Where / how was it collected?
+-   Describes
+
+**Text included in slide:**
+
+*collection of data:*
+
+*Description of data:*
 
 ## Slide 4
 
-**Include:**
+**Include:** Data type / data wrangling
 
--   Data wrangling
+-   file type upon import
+
+-   data wrangling
+
+**Text included in slide:**
+
+*data type:*
+
+*data wrangling:*
 
 ## Slide 5
 
-**Include:**
-
--   Exploratory Analysis
+**Include:** (Exploratory Analysis)
 
 ## Slide 6
 
