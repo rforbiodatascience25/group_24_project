@@ -22,7 +22,7 @@ data_clean <-  read_tsv('data/02_dat_clean.tsv.gz')
 
 # 3. ANALYSIS
 
-## 3.1. CD34+ ANALYSIS 
+## 3.1. CD34+ ANALYSIS
 
 **Description**:
 
@@ -284,7 +284,7 @@ ggplot(data_new, aes(
   theme_minimal()
 ```
 
-### 4.4 Donor and Recepient status ( 
+### 4.4 Donor and Recepient status (
 
 ## Donor and Recipient status (number of deaths)
 
@@ -311,7 +311,7 @@ ggplot(table_CMVs, aes(x = DonorCMV, y = RecipientCMV, fill = deaths)) +
 
 ```
 
-# NEW 
+# NEW
 
 ```{r}
 # Filter only the deceased group 
