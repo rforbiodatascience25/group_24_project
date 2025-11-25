@@ -17,32 +17,7 @@ library("tidyverse")
 ### Clean data
 
 ```{r}
-# Get variable names and clean them
-raw_data <- read_lines("data/_raw/bone-marrow.arff")
-var_names <- raw_data |>
-  str_subset("@attribute") |>
-  str_remove_all(pattern = "@attribute|\\{.*\\}|numeric|\\s")
-
-# get meta data and clean
-meta_data <- raw_data |>
-  str_subset("%") |>
-  str_remove(pattern = "%")
-
-# Create tibble
-data_clean <- read_delim("data/_raw/bone-marrow.arff", 
-                      delim = ",", 
-                      # Start after line that starts with "@data"
-                      skip = str_which(raw_data, pattern = "^@data")+1,
-                      col_names = var_names,
-                      na = "?",
-                      col_types = "i"
-                      )  |>
-  mutate(across(c(1:2, 4:22, 24:28, 37), factor))
-
-# write data to gzip tsv file 
-data_clean |> write_tsv("data/02_dat_clean.tsv.gz")
-meta_data |> write_lines("data/02_metadat_clean.txt.gz")
-
+data_clean <- read_tsv('data/02_dat_clean.tsv.gz')
 ```
 
 ### Create graph(s) and visual to explain relation with recipient age, disease type, and BMI
@@ -80,7 +55,7 @@ data_clean|>
       Recipientgender == 1 ~ 'male',
       Recipientgender == 0 ~ 'female')
   ) |>
-  ggplot(aes(x = factor(Recipientgender), y = Recipientage, fill = factor(survival_status))) +
+  ggplot(aes(x = factor(Disease), y = Recipientage, fill = factor(survival_status))) +
   geom_boxplot(alpha = 1) + 
   scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
   theme_minimal() + 
@@ -115,7 +90,7 @@ data_clean|>
   theme_minimal() + 
   labs(
     x = 'Survival Status (0 = survivor, 1 = death)', 
-    y = 'Age of the recipient',
+    y = 'Number of patients',
     fill = 'Survival Status'
   )
 
@@ -170,7 +145,7 @@ data_clean |>
   theme_minimal() +
   labs(
     x = "Type of disease",
-    y = "Number of survivors",
+    y = "Number of deaths",
     fill = "Gender"
   )
 
@@ -202,10 +177,61 @@ data_clean |>
   theme_minimal() + 
   labs(
     x = 'Survival Status (0 = survivor, 1 = death)', 
-    y = 'Age of the recipient',
+    y = 'Number of recipients',
     fill = 'Survival Status'
   )
 
 ```
 
 Graph shows that obese patients had the highest mortality, but also the highest survival rate among the different Rbodymass index values. this time we don't differentiate between women and men, since the indicators used are from WHO and it foes not differ among genders.
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+data_clean |>
+  mutate(
+    Recipientgender = case_when(
+      Recipientgender == 1 ~ "male",
+      Recipientgender == 0 ~ "female"
+    ),
+    Rbodymass = case_when(
+      Rbodymass < 18.5 ~ "Underweight",
+      Rbodymass >= 18.5 & Rbodymass < 25 ~ "Normal weight",
+      Rbodymass >= 25 & Rbodymass < 30 ~ "Overweight",
+      Rbodymass >= 30 ~ "Obese"
+    ),
+    Rbodymass = fct_relevel(Rbodymass,
+                                  'Underweight',
+                                  'Normal weight',
+                                  'Overweight',
+                                  'Obeses')
+  ) |>
+  filter(!is.na(Rbodymass)) |>                      
+  count(survival_status, Rbodymass) |>
+  group_by(Rbodymass) |>
+  
+  mutate(Rbodymass_percentage = str_c(round(n / sum(n) * 100, 1), "%")) |>
+  
+  ggplot(aes(x = factor(Rbodymass),
+             y = n,
+             fill = factor(survival_status))) +
+  
+  geom_col(position = 'dodge',
+           alpha = 1,
+           color = 'black') + 
+  
+  geom_text(aes(label = Rbodymass_percentage),
+            position = position_dodge( width = 1),
+            vjust = -2,
+            size = 3.5)+
+  
+  scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
+  theme_minimal() + 
+  labs(
+    x = 'Survival Status (0 = survivor, 1 = death)', 
+    y = 'Number of recipients',
+    fill = 'Survival Status'
+  )
+
+```

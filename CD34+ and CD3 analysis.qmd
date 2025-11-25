@@ -20,6 +20,10 @@ library(dplyr)
 data_clean <-  read_tsv('data/02_dat_clean.tsv.gz')
 ```
 
+```{r}
+data_clean <- read_tsv('data/03_dat_aug.tsv.gz')
+```
+
 # 3. ANALYSIS
 
 ## 3.1. CD34+ ANALYSIS
@@ -296,7 +300,7 @@ The data on CMV matching shows unexpected results:
 
 ```{r}
 
-table_CMVs <- data_new |>
+table_CMVs <- data_clean |>
   group_by(DonorCMV, RecipientCMV) |>
   summarise(count = n(),
             deaths = sum(survival_status == 1),
@@ -338,12 +342,11 @@ ggplot(data_clean,
            fill = factor(survival_status))) +
   geom_boxplot() +
   labs(title = "CD34+ dose for each Survival Status",
-       x = "Survival Status (0 = died, 1 = survived)",
+       x = "Survival Status",
        y = "CD34+ cells/kg") +
   theme_minimal() +
   scale_fill_brewer(palette = "Set2", 
-                    name = "Survival Status",
-                    labels = c("0" = "Died", "1" = "Survived"))
+                    name = "Survival Status")
 ```
 
 ```{r}
@@ -371,10 +374,9 @@ ggplot(data_clean,
            fill = factor(survival_status))) +
   geom_boxplot() +
   labs(title = "CD3+ dose for each Survival Status",
-       x = "Survival Status (0 = died, 1 = survived)",
+       x = "Survival Status",
        y = "CD3+ cells/kg") +
   theme_minimal() +
   scale_fill_brewer(palette = "Set2", 
-                    name = "Survival Status",
-                    labels = c("0" = "Died", "1" = "Survived"))
+                    name = "Survival Status")
 ```

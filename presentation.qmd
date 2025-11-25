@@ -1,0 +1,126 @@
+---
+title: "presentation.qmd"
+author: "Group 24"
+format: html
+editor: visual
+---
+
+# Presentation
+
+The order of the content is not final and will probably change.
+
+*Cursive text* should not be shown in finished presentation!
+
+**Final Output**
+
+-   10 slides
+
+## Slide 1
+
+**Include:** Introduction or Aim
+
+-   Title
+
+-   Aim
+
+-   Group names
+
+**Text included in slide:**
+
+*Title:*
+
+Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation
+
+*Aim:*
+
+Which biological factors affect patent outcome and how can we ensure a good response?
+
+*group names:*
+
+Group 24: names
+
+## Slide 2
+
+**Include:** background / research in topic
+
+-   Hematopoietic Stem Cell Transplantation / topic
+
+-   Challenges
+
+**Text included in slide:**
+
+*Topic:*
+
+*Challenges:*
+
+Graft versus Host Disease (GVHD): Acute & Chronic
+
+Non-Relapse mortality: Infection & Organ Failure
+
+## Slide 3
+
+**Include:** Data description
+
+-   collected from
+
+-   Describes
+
+**Text included in slide:**
+
+*collection of data:*
+
+*Description of data:*
+
+## Slide 4
+
+**Include:** Data type / data wrangling
+
+-   file type upon import
+
+-   data wrangling
+
+**Text included in slide:**
+
+*data type:*
+
+**Dataset:** Bone marrow transplant: Children (Donated 20/04/2020)
+
+**File:** bone-marrow.ariff
+
+*data wrangling:*
+
+## Slide 5
+
+**Include:** (Exploratory Analysis)
+
+## Slide 6
+
+**Include:**
+
+-   Exploratory analysis or other type of analysis
+
+## Slide 7
+
+**Include:**
+
+-   analysis
+
+## Slide 8
+
+**Include:**
+
+-   analysis
+
+## Slide 9
+
+**Include:**
+
+-   Discussion
+
+## Slide 10
+
+**Include:**
+
+-   Conclusion
+
+-   perspectivation?
