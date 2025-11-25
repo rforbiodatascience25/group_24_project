@@ -36,7 +36,7 @@ data_clean <- read_delim("data/_raw/bone-marrow.arff",
                       # Start after line that starts with "@data"
                       skip = str_which(raw_data, pattern = "^@data")+1,
                       col_names = var_names,
-                      na = "?",
+                      na = c("?", "1000000"),
                       col_types = "i"
                       )  |>
   mutate(across(c(1:2, 4:22, 24:28, 37), factor))
