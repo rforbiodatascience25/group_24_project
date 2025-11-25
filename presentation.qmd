@@ -53,6 +53,10 @@ Group 24: names
 
 *Challenges:*
 
+Graft versus Host Disease (GVHD): Acute & Chronic
+
+Non-Relapse mortality: Infection & Organ Failure
+
 ## Slide 3
 
 **Include:** Data description
