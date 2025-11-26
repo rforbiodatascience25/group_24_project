@@ -363,14 +363,14 @@ ggplot(data_clean,
 ggplot(data_clean,
        aes(x = factor(survival_status), 
            y = CD3dkgx10d8,
-           fill = factor(survival_status))) +
-  geom_boxplot() +
+           fill = survival_status)) +
+  geom_boxplot(alpha = 0.5) +
   labs(title = "CD3+ dose for each Survival Status",
        x = "Survival Status",
-       y = "CD3+ cells/kg") +
+       y = "CD3+ cells/kg",
+       fill = 'Survival Status') +
   theme_minimal() +
-  scale_fill_brewer(palette = "Set2", 
-                    name = "Survival Status")
+  scale_fill_viridis_d()
 ```
 
 ```{r}
