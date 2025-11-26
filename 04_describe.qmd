@@ -1,6 +1,8 @@
 ---
 title: "04_describe"
-format: html
+format: 
+  html:
+    embed-resources: true
 editor: visual
 ---
 
@@ -11,6 +13,7 @@ editor: visual
 
 library(tidyverse)
 library(knitr)
+library(gridExtra)
 source("99_proj_func.R")
 ```
 
@@ -46,10 +49,10 @@ Tab_desc <- full_join(Tab_desc, age, join_by(Disease))
 
 #add information on antigen matches
 Tab_desc <- N_into_table(data_clean_aug, "Antigen", Tab_desc)
-Tab_desc <- Perc(Tab_desc, Matched, "0 antigen mismatches")
-Tab_desc <- Perc(Tab_desc, `1 mismatch`, "1 antigen mismatch")
-Tab_desc <- Perc(Tab_desc, `2 mismatches`, "2 antigen mismatches")
-Tab_desc <- Perc(Tab_desc, `3 mismatches`, "3 antigen mismatches")
+Tab_desc <- Perc(Tab_desc, `0 MM`, "0 antigen mismatches")
+Tab_desc <- Perc(Tab_desc, `1 MM`, "1 antigen mismatch")
+Tab_desc <- Perc(Tab_desc, `2 MM`, "2 antigen mismatches")
+Tab_desc <- Perc(Tab_desc, `3 MM`, "3 antigen mismatches")
 Tab_desc <- Perc(Tab_desc, `NA`, "No information on antigen mismatch")
 
 #add information on relapses
@@ -61,6 +64,8 @@ Tab_desc <- Perc(Tab_desc, No, "No relapse")
 Tab_desc <- N_into_table(data_clean_aug, "IIIV", Tab_desc)
 Tab_desc <- Perc(Tab_desc, Yes, "Acute graft vs host")
 Tab_desc <- Perc(Tab_desc, No, "No acute graft vs host")
+
+#add information on time until developing acute graft vs host (column timetoaGvHD_III_IV)
 
 #add information on survival status
 Tab_desc <- N_into_table(data_clean_aug, "survival_status", Tab_desc)
@@ -89,19 +94,21 @@ Tab_desc <- Tab_desc |>
                   "Alive patients" = "0 (0.0 %)"))
 
 #Transpose table
-Tab_desc_transp <- transpose(Tab_desc)
-Tab_desc_tib <- tibble(Tab_desc_transp[[1]], Tab_desc_transp[[2]], Tab_desc_transp[[3]],
-                       Tab_desc_transp[[4]], Tab_desc_transp[[5]]) 
+Tab_desc_transp <- t(Tab_desc)
+#Tab_desc_tib <- tibble(Tab_desc_transp[[1]], Tab_desc_transp[[2]], Tab_desc_transp[[3]],
+ #                      Tab_desc_transp[[4]], Tab_desc_transp[[5]]) 
 
 #Set names of transposed table
-Tab_desc_tib <- as.data.frame(Tab_desc_tib)
-rownames(Tab_desc_tib) <- colnames(Tab_desc)
-colnames(Tab_desc_tib) <- Tab_desc$Disease
+#Tab_desc_tib <- as.data.frame(Tab_desc_tib)
+rownames(Tab_desc_transp) <- colnames(Tab_desc)
+colnames(Tab_desc_transp) <- Tab_desc$Disease
 
 #Remove disease row, which is now used as column names in the table
-Tab_desc_tib <- Tab_desc_tib |>
-  filter(ALL != "ALL")
+Tab_desc_transp <- Tab_desc_transp[rownames(Tab_desc_transp) != "Disease",]
 
 #Show table
-kable(Tab_desc_tib, row.names = TRUE, format = "html", align = "r")
+kable(Tab_desc_transp, row.names = TRUE, format = "html", align = "r")
+
+#Export table
+write.csv(Tab_desc_transp, file = "Descriptive_table.txt")
 ```
