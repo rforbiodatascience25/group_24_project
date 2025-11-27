@@ -114,9 +114,6 @@ In this analysis, we explore the relationship between CD3+ T cell dose, patient 
 The analysis of post-transplant survival relative to administered CD3+ dose shows a slight negative trend, suggesting that higher CD3+ doses may be associated with reduced survival, potentially mediated by the development of severe aGvHD. Patients without severe aGvHD are distributed across the full range of CD3+ doses and exhibit highly variable survival times, indicating that the absence of severe aGvHD does not necessarily ensure longer survival. In contrast, patients who developed severe aGvHD tend to cluster at low intermediate CD3+ doses, with some showing shorter survival, consistent with the expected detrimental impact of severe aGvHD. However , the wide dispersion of data points highlights the influence of additional factors, such as patient age, underlying disease, or complications, on survival. Overall, while a weak inverse relationship between CD3+ dose and survival is observed, the patterns is not strictly linear.
 
 ```{r}
-# Filter only the survival group geom_boxplot() 
-data <- data_clean |> 
-  filter(survival_status == 'Dead')
 
 ggplot(data_clean, 
        aes(x = CD3dkgx10d8, 
