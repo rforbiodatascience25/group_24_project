@@ -45,25 +45,23 @@ Which biological factors affect patent outcome and how can we ensure a good resp
 
 *group names:*
 
+Christian, Helena, Lanjing, Inma and Pernille
+
 Group 24: names
 
-## Slide 2
+## Slide 2 - Why did we use R?
 
-**Include:** background / research in topic
-
--   Hematopoietic Stem Cell Transplantation / topic
-
--   Challenges
+**Include:** briefly explanation of what is a bone-marrow transplant
 
 **Text included in slide:**
 
 *Topic:*
 
-*Challenges:*
+A bone marrow transplant is the replacement of damaged blood cells for healthy stems cells.
 
-Graft versus Host Disease (GVHD): Acute & Chronic
+*Methodology:*
 
-Non-Relapse mortality: Infection & Organ Failure
+R programming language is a powerful tool that allowed us to clean, visualize, organize, and manipulate the data. Therefore, we were able to understand the correlation of the different varibales affecting to the survival rate after the transplant.
 
 ## Slide 3
 
@@ -101,11 +99,27 @@ Table 1. Information on the subjects included in the data.
 
 ```{r}
 #| echo: false
-Descriptive_table <- read.table("Descriptive_table.txt", sep = ",", header = TRUE, row.names = 1)
+Descriptive_table <- read.table("Descriptive_table_present.txt", sep = ",", header = TRUE, row.names = 1)
 kable(Descriptive_table, row.names = TRUE, format = "html", align = "r")
 ```
 
-A large number of ALL, AML, chronic and non-malignant patients were included in the data. Only 9 lymphoma patients were included, and findings on lymphoma patients should be interpreted carefully. A majority of the included patients were male across all the investigated diseases. Both median donor and recipient age did not vary to great extend among the diseases, but it could be noted that the median recipient age did both include pre-adolescent ages (ALL and non-malignant patients) as well as ages during adolescence (AML and lymphoma patients). Zero antigen mismatches with the donor was clearly the most common for AML, lymphoma, and non-malignant patients, while for ALL and chronic patients 0 and 2 antigen mismatches were found in close to equal amounts. Only a minority of patients (\<18 %) experienced relapse, except in the lymphoma group, in which almost half of the patients experienced relapse. Between half and two-thirds (46.9 - 64.4 %) of the patients experienced acute graft vs host disease. For all diseases, a majority of the patients survived their disease (54.5 - 62.5 %), except for lymphoma patients, among which all patients deceased. Median follow-up time for surviving patients were between 1301 and 1867 for the diseases, excluding lymphoma which did not have any surviving patients. Survival time for deceased patients was shortest for lymphoma patients (67 days) and longest for AML patients (274 days).
+<br>
+
+-   ALL, AML, chronic and non-malignant: large patient cohort
+
+-   Lymphoma patients: small patient cohort (careful interpretation needed)
+
+-   A majority was male among all diseases
+
+-   Median recipient age did not vary greatly among diseases, but included both pre-adolescent and adolescent ages
+
+-   A minority (\<18 %) experienced relapse, except in the lymphoma group (almost half)
+
+-   A majority survived, except for lymphoma patients
+
+-   Median follow-up time for surviving patients were around 3.5 to 6 years depending on the disease
+
+-   Median survival time for deceased patients varied from around 2 (lymphoma) to around 9 (AML) months
 
 ## Slide 5
 
@@ -115,7 +129,27 @@ A large number of ALL, AML, chronic and non-malignant patients were included in 
 
 **Include:**
 
--   Exploratory analysis or other type of analysis
+### Recipientage, Disease type, Rbodymass index VS Survival rate
+
+The boxplot plot compares the age distribution of the recipients among the different diseases types, while dividing them by their survival status: alive and dead.
+
+**Relevant outcomes:**
+
+-   Patients with lymphoma had a survial rate of 0%.
+
+-   Age might be associated with mortality, since older patients have higher mortality than young ones.
+
+-   Every disease type exhibited higher mortality than survival.
+
+The bar plot reveals the relationship between the BMI with survival rate. It showed that survival decreases while BMI increases. Underweight patients had the highest amount of survivors, meanwhile, the obese group was the only category which mortality exceeded survival.
+
+```{r}
+library(knitr)
+
+images <- c("Recipient age, Disease type VS survival status boxplot.png", "Rbodymass inxed VS survival status.png")
+include_graphics(images)
+
+```
 
 ## Slide 7
 
@@ -131,9 +165,10 @@ A large number of ALL, AML, chronic and non-malignant patients were included in 
 ![](platelets.png)
 :::
 
-**Isnclude:**
+<br>
 
--   analysis
+-   No clear connection between time for neutrophil or platelet recovery and survival time
+-   Interpretation should be aware of few data points and influence of outliers
 
 ## Slide 9
 

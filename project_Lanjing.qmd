@@ -56,10 +56,11 @@ data_clean_aug|>
   scale_fill_viridis_d() +
   theme_minimal() + 
   labs(
-    x = 'Survival Status (0 = survivor, 1 = death)', 
+    x = 'Survival Status', 
     y = 'Age of the recipient',
     fill = 'Survival Status'
-  )
+  )+
+    theme(legend.position = "bottom") 
 
 
 ```

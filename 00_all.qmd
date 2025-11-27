@@ -8,6 +8,8 @@ editor: visual
 
 ## Execute all scripts
 
+Running load, clean, augment, describe, and analysis scripts:
+
 ::: content-hidden
 {{< embed 01_load.qmd echo=false >}}
 
