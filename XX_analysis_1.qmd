@@ -3,7 +3,7 @@ title: "XX_analysis_1"
 format: html
 ---
 
-## PCA analysis
+## PCA and HLA Matching analysis
 
 Initial analysis of bone-marrow data
 
@@ -47,11 +47,18 @@ pca_plot <- pca_fit |>
   theme_minimal() +
   theme(legend.position = "bottom") 
   
+pca_plot
+```
+
+```{r}
+
 
 # define arrow style for plotting
 arrow_style <- arrow(
-  angle = 20, ends = "first", type = "closed", length = grid::unit(8, "pt")
-)
+  angle = 20, 
+  ends = "first", 
+  type = "closed", 
+  length = grid::unit(8, "pt"))
 
 # plot rotation matrix
 rotation_plot <- pca_fit |>
@@ -60,32 +67,28 @@ rotation_plot <- pca_fit |>
               names_prefix = "PC", 
               values_from = "value")|>
   ggplot(mapping = aes(PC1, PC2)) +
-  geom_segment(xend = 0, yend = 0, arrow = arrow_style) +
+  geom_segment(xend = 0, 
+               yend = 0, 
+               arrow = arrow_style) +
   geom_text_repel(aes(label = column),
                   size = 3,
-                  colour = "blue",
+                  colour = "#440154FF",
                   hjust = 1,
                   nudge_x = 0.2) +
   scale_x_continuous(limits = c(-0.8,1.0)) +
   scale_y_continuous(limits = c(-0.8,1.0)) +
   theme_minimal() 
 
-(pca_plot|rotation_plot) +
-  plot_annotation(title = 'PCA analysis') +
-  plot_annotation(tag_levels = 'I')
-
+rotation_plot
 
 ```
 
 ```{r}
-pca_fit %>%
-  tidy(matrix = "eigenvalues")
-
 var_plot <- pca_fit |>
   tidy(matrix = "eigenvalues") |>
   mutate(Percentage = percent * 100) |>
   ggplot(mapping = aes(PC, Percentage)) +
-  geom_col(fill = "blue", alpha = 0.5) +
+  geom_col(alpha = 0.5, fill = "#440154FF") +
   scale_x_continuous(breaks = 1:9) +
   theme_minimal() +
   labs(y = "Percentage (%)",
@@ -101,7 +104,6 @@ Thus, only 46% of the total variance is explained by the two principal component
 
 ```{r}
 HLA_data <- bm_data |>
-  select(HLAmatch, HLAmatch, HLAmismatch, Antigen, Alel, HLAgrI, survival_time, survival_status) |> 
   mutate(HLAmatch = fct_relevel(HLAmatch, c("7/10", "8/10", "9/10", "10/10")))
 
 HLA_data |>
@@ -109,37 +111,38 @@ HLA_data |>
   group_by(HLAmatch) |>
   mutate(survival_pct = str_c(round(n / sum(n) *100, 1), "%")) |> 
   ggplot(aes(x = HLAmatch, 
-             y = survival_pct, 
-             fill = survival_status, 
-             label = survival_pct)) +
+             y = n,
+             fill = survival_status)) +
   geom_col(position = "dodge", 
            alpha = 0.5) +
-  geom_text(position = position_dodge(0.9)) +
+  geom_text(aes(label = survival_pct),
+            vjust = -0.5,
+            position = position_dodge(width = 0.9)) +
   theme_minimal() +
   scale_fill_viridis_d() +
   labs(x = "HLA Match", 
-       y = "Percentage (%)",
+       y = "Number of Patients",
        fill = "Survival Status", 
        title = "Survival Status of Patients"
        ) +
+  scale_y_continuous(limits = c(0,55))
   theme(legend.position = "bottom") 
-
 ```
-
-Allele or antigen mismatch
 
 ```{r}
 
 ggplot(data = HLA_data, 
        mapping = aes(x = survival_time,
                      y = HLAmatch,
-                     fill = HLAmatch, )) +
-  geom_density_ridges(alpha = 0.3) +
+                     fill = HLAmatch)) +
+  stat_density_ridges(quantile_lines = TRUE,
+                      alpha = 0.3) +
   scale_fill_viridis_d() +
   theme_minimal() +
   labs(x = "Survival time (days)", 
-       y= "HLA match grade", 
-       fill = "HLA match", 
-       title = "Survival of Patients Post Stem Cell Transplantation") +
+       y= "HLA Match Grade", 
+       fill = "HLA Match", 
+       title = "Survival of Patients Post Stem Cell Transplantation",
+       subtitle = "Distribution of Survival Time Stratified on HLA Match Grade") +
   theme(legend.position = "bottom") 
 ```
