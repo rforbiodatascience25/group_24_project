@@ -110,6 +110,11 @@ A large number of ALL, AML, chronic and non-malignant patients were included in 
 ## Slide 5
 
 **Include:** (Exploratory Analysis)
+::: {layout-ncol="2"}
+![](PCA_plots.png)
+
+![](rotation_plot.png)
+:::
 
 ## Slide 6
 
@@ -137,9 +142,11 @@ A large number of ALL, AML, chronic and non-malignant patients were included in 
 
 ## Slide 9
 
-**Include:**
+::: {layout-ncol="2"}
+![](match_plot.png)
 
--   Discussion
+![](survival_plot.png)
+:::
 
 ## Slide 10
 
