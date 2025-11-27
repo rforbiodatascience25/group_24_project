@@ -101,11 +101,27 @@ Table 1. Information on the subjects included in the data.
 
 ```{r}
 #| echo: false
-Descriptive_table <- read.table("Descriptive_table.txt", sep = ",", header = TRUE, row.names = 1)
+Descriptive_table <- read.table("Descriptive_table_present.txt", sep = ",", header = TRUE, row.names = 1)
 kable(Descriptive_table, row.names = TRUE, format = "html", align = "r")
 ```
 
-A large number of ALL, AML, chronic and non-malignant patients were included in the data. Only 9 lymphoma patients were included, and findings on lymphoma patients should be interpreted carefully. A majority of the included patients were male across all the investigated diseases. Both median donor and recipient age did not vary to great extend among the diseases, but it could be noted that the median recipient age did both include pre-adolescent ages (ALL and non-malignant patients) as well as ages during adolescence (AML and lymphoma patients). Zero antigen mismatches with the donor was clearly the most common for AML, lymphoma, and non-malignant patients, while for ALL and chronic patients 0 and 2 antigen mismatches were found in close to equal amounts. Only a minority of patients (\<18 %) experienced relapse, except in the lymphoma group, in which almost half of the patients experienced relapse. Between half and two-thirds (46.9 - 64.4 %) of the patients experienced acute graft vs host disease. For all diseases, a majority of the patients survived their disease (54.5 - 62.5 %), except for lymphoma patients, among which all patients deceased. Median follow-up time for surviving patients were between 1301 and 1867 for the diseases, excluding lymphoma which did not have any surviving patients. Survival time for deceased patients was shortest for lymphoma patients (67 days) and longest for AML patients (274 days).
+<br>
+
+-   ALL, AML, chronic and non-malignant: large patient cohort
+
+-   Lymphoma patients: small patient cohort (careful interpretation needed)
+
+-   A majority was male among all diseases
+
+-   Median recipient age did not vary greatly among diseases, but included both pre-adolescent and adolescent ages
+
+-   A minority (\<18 %) experienced relapse, except in the lymphoma group (almost half)
+
+-   A majority survived, except for lymphoma patients
+
+-   Median follow-up time for surviving patients were around 3.5 to 6 years depending on the disease
+
+-   Median survival time for deceased patients varied from around 2 (lymphoma) to around 9 (AML) months
 
 ## Slide 5
 
@@ -131,9 +147,10 @@ A large number of ALL, AML, chronic and non-malignant patients were included in 
 ![](platelets.png)
 :::
 
-**Isnclude:**
+<br>
 
--   analysis
+-   No clear connection between time for neutrophil or platelet recovery and survival time
+-   Interpretation should be aware of few data points and influence of outliers
 
 ## Slide 9
 
