@@ -1,0 +1,107 @@
+---
+title: "07_Analysis_SCsource_recovery"
+format: html
+editor: visual
+---
+
+## Analyses
+
+Load libraries:
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(ggpubr)
+```
+
+Load data:
+
+```{r}
+#| message: false
+
+data_clean_aug <- read_tsv("data/03_dat_aug.tsv.gz")
+```
+
+Generate plot for stem cell source in relation to survival status:
+
+```{r}
+#| message: false
+
+stemcellsource_surv <- data_clean_aug |>
+  mutate(surv_stat_fact = factor(survival_status, levels = c("Dead", "Alive"))) |>
+  group_by(Stemcellsource, Disease, surv_stat_fact) |>
+  summarise(N = n()) |>
+  ggplot(aes(x = Stemcellsource, y = N, fill = surv_stat_fact)) +
+  geom_col() +
+  facet_wrap(~Disease)
+
+stemcellsource_surv
+```
+
+There were no tendency across the diseases for more dead or alive patients regarding whether the patients received stem cells from bone marrow or peripheral blood.
+
+<br>
+
+Create plot for relation between neutrophil/platelet recovery time and survival time:
+
+```{r}
+#| message: false
+
+#plot with neutrophil revocery time
+neutro_plot <- data_clean_aug |>
+  filter(survival_status == "Dead") |>
+  filter(ANCrecovery != 1000000) |>
+  ggplot(aes(x = ANCrecovery, y = survival_time, colour = Disease)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~Disease) +
+  labs(title = "Time for neutrophil recovery and survival time", 
+  x = "Time until neutophil recovery (>0.5 x 10^9/L) (days)", 
+  y = "Survival time (days)")
+
+neutro_plot
+
+#Save plot to include in presentation
+ggsave("neutrophils.png", width = 6)
+
+#plot with platelet revocery time
+platelet_plot <- data_clean_aug |>
+  filter(survival_status == "Dead") |>
+  filter(PLTrecovery != 1000000) |>
+  ggplot(aes(x = PLTrecovery, y = survival_time, colour = Disease)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~Disease) +
+  labs(title = "Time for platelet recovery and survival time", 
+  x = "Time until platelet recovery (>50000/mm3) (days)", 
+  y = "Survival time (days)")
+
+platelet_plot
+
+#Save plot to include in presentation
+ggsave("platelets.png", width = 6)
+```
+
+There were no certain tendencies for increased or decreased survival time in relation to neutrophil or platelet recovery time across the diseases. The plots should be interpreted carefully, since some of the plots are based on few data points, and some of the regressions are highly affected by one or a few outliers.
+
+<br>
+
+Create plot for relation between neutrophil/platelet recovery time and survival status:
+
+```{r}
+neutro_surv_stat <- data_clean_aug |>
+  filter(ANCrecovery != 1000000) |>
+  ggplot(aes(x = Disease, y = ANCrecovery, fill = survival_status)) +
+  geom_boxplot() +
+  stat_cor()
+neutro_surv_stat
+
+platelet_surv_stat <- data_clean_aug |>
+  filter(PLTrecovery != 1000000) |>
+  ggplot(aes(x = Disease, y = PLTrecovery, fill = survival_status)) +
+  geom_boxplot()
+platelet_surv_stat
+```
+
+Both neutrophil and platelet recovery time did not seem to vary between survived and deceased patients for all the investigated diseases.
