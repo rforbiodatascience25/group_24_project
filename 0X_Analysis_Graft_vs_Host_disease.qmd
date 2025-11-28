@@ -38,7 +38,7 @@ We then load a subset of the cleaned and augmented data frame as a tibble.
 
 ```{r}
 
-bm_data <- read_tsv(file = "data/03_dat_aug.tsv",
+bm_data <- read_tsv(file = "data/03_dat_aug.tsv.gz",
                             show_col_types = FALSE)
 
 ```
