@@ -1,5 +1,5 @@
 ---
-title: "0X_Analysis_Relapse_and_2nd_transplant_survival"
+title: "06_Analysis_Relapse_and_2nd_transplant_survival"
 format: html
 editor: visual
 ---
@@ -7,6 +7,8 @@ editor: visual
 # Relapse & Second Transplant vs. Survival of Patients
 
 Dataset: *Bone Marrow Transplantation: Children*
+
+*Exporatory Anlysis. Not included in the slides.*
 
 We want to look at the relationship between relapse and secondary transplants in patients and how it affects their odds of survival.
 

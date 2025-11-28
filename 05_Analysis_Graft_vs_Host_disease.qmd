@@ -1,5 +1,5 @@
 ---
-title: "0X_Analysis_Graft_vs_Host_disease"
+title: "05_Analysis_Graft_vs_Host_disease"
 format: html
 editor: visual
 ---
@@ -7,6 +7,8 @@ editor: visual
 # Graft vs. host disease in relation to Survival
 
 Dataset: *Bone Marrow Transplantation: Children*
+
+*Exporatory Anlysis. Not included in the slides.*
 
 We want to look at the relationship between relapse and secondary transplants in patients and how it affects their odds of survival.
 
