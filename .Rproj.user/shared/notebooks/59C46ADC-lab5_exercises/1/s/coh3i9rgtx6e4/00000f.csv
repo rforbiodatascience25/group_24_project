@@ -1,9 +1,0 @@
-"0","    meta_data <- meta_data|> mutate("
-"0","     Allele_F_1_2 = str_sub(Allele,1,7),"
-"0","    )"
-"1","[1m[33mError[39m in `mutate()`:[22m
-[38;5;232m[36mℹ[38;5;232m In argument: `Allele_F_1_2 = str_sub(Allele, 1, 7)`.[39m
-[1mCaused by error:[22m
-[33m![39m object 'Allele' not found
-[90mRun `]8;;x-r-run:rlang::last_trace()rlang::last_trace()]8;;` to see where the error occurred.[39m
-"

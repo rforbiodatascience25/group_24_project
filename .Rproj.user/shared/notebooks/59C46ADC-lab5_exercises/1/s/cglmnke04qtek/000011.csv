@@ -1,6 +1,0 @@
-"0","library(""table1"") # <= Yes, this should normally go at the beginning!"
-"0","Meta_data_new|>"
-"0","  mutate(Gender = factor(Gender),"
-"0","         Cohort = factor(Cohort)) |>"
-"0","  table1(x = formula(~ Gender + Age + Race | Cohort),"
-"0","         data = _)"

@@ -1,5 +1,0 @@
-"0",""
-"0","data_clean |>"
-"0","  group_by(survival_status) |>"
-"0","  ggplot(aes(x = survival_status, y = CD34kgx10d6, fill = survival_status)) + "
-"0","  geom_boxplot()"

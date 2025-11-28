@@ -1,7 +1,0 @@
-"0","    meta_data |>"
-"0","      count(Cohort, Gender)|>filter(!is.na(Gender))|>"
-"0","      ggplot(aes(x=Cohort, y=n, fill = Gender)) +"
-"0","    geom_col(stat = 'identity', position = 'dodge', color ='black', alpha = 0.5) +  theme_minimal() +"
-"0","        theme(legend.position = 'bottom') + "
-"0","      theme(axis.text.x = element_text(angle = 20, vjust = 1, hjust=1)) "
-"2","Warning: [38;5;232mIgnoring unknown parameters: `stat`[39m"
