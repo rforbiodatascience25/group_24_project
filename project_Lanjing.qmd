@@ -55,12 +55,15 @@ data_clean_aug|>
   geom_boxplot(alpha = 0.5) + 
   scale_fill_viridis_d() +
   theme_minimal() + 
-  labs(
+  labs( 
+    title = 'Recipient',
     x = 'Survival Status', 
     y = 'Age of the recipient',
     fill = 'Survival Status'
   )+
     theme(legend.position = "bottom") 
+
+  ggsave('Recipient.png', width = 6)
 
 
 ```
@@ -146,7 +149,7 @@ data_clean_aug |>
                                   'Underweight',
                                   'Normal weight',
                                   'Overweight',
-                                  'Obeses')
+                                  'Obese')
   ) |>
   filter(!is.na(Rbodymass)) |>                      
   count(survival_status, Rbodymass) |>
@@ -169,11 +172,14 @@ data_clean_aug |>
   theme_minimal()+
   scale_fill_viridis_d() +
   labs(
+    title = 'Rbodymass VS Survival rate',
     x = 'Survival Status', 
     y = 'Number of recipients',
     fill = 'Survival Status'
   )+
   theme(legend.position = "bottom") 
+
+ ggsave('Rbodymass.png', width = 6)
 
 
 ```
