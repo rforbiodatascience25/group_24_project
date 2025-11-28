@@ -203,14 +203,3 @@ ggplot(data_new, aes(
   theme_minimal()
 
 ```
-
-```{r}
-
-ggplot(data_clean, 
-       aes(x = survival_status, 
-           y = CD3dkgx10d8, 
-           color = aGvHDIIIIV)) + 
-  geom_boxplot() + 
-  scale_fill_viridis_d() +
-  theme_minimal() 
-```
