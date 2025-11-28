@@ -1,0 +1,11 @@
+"0","meta_data <- read_csv(file = 'data/subject-metadata.csv', na = c('', 'N/A', 'NA'))"
+"2","New names:"
+"2","[1mRows: [22m[34m144[39m [1mColumns: [22m[34m30[39m"
+"2","[36m──[39m [1mColumn specification[22m [36m───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m (28): Experiment, Cell Type, Target Type, Cohort, Gender, Race, HLA-A...9, HLA-A...10, HLA-B...11, HLA-B...12, HLA-C...13, HLA-C...14, DPA1...15, DPA1...16, DPB1.....
+[32mdbl[39m  (2): Subject, Age"
+"2","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message."
+"0","meta_data"

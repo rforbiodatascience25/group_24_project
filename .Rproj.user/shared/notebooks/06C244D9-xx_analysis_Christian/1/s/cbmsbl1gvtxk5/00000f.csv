@@ -1,0 +1,6 @@
+"0","neutro_surv_stat <- data_clean_aug |>"
+"0","  filter(ANCrecovery != 1000000) |>"
+"0","  ggplot(aes(x = Disease, y = ANCrecovery, fill = survival_status)) +"
+"0","  geom_boxplot() +"
+"0","  stat_cor()"
+"0","neutro_surv_stat"

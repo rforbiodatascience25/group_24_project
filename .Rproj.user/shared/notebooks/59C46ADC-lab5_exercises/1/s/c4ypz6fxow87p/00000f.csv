@@ -1,0 +1,4 @@
+"0","    long_peptide_data <- long_peptide_data |>"
+"0","    filter(str_detect(peptide,'^[ARNDCQEGHILKMFPSTWYV]', negate = FALSE) &"
+"0","    str_detect(CDR3b, '^[ARNDCQEGHILKMFPSTWYV]', negate = FALSE))"
+"0","    long_peptide_data"

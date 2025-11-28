@@ -1,0 +1,9 @@
+"0","data_clean <- read_tsv('data/03_dat_aug.tsv.gz')"
+"2","[1mRows: [22m[34m186[39m [1mColumns: [22m[34m35[39m"
+"2","[36m──[39m [1mColumn specification[22m [36m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m ""\t""
+[31mchr[39m (23): Recipientgender, Stemcellsource, IIIV, Gendermatch, DonorABO, RecipientABO, RecipientRh, ABOmatch, DonorCMV, RecipientCMV, Disease, Riskgroup, Txpostrelapse, Diseasegroup...
+[32mdbl[39m (12): Donorage, Donorage35, CMVstatus, Recipientage, CD34kgx10d6, CD3dCD34, CD3dkgx10d8, Rbodymass, ANCrecovery, PLTrecovery, time_to_aGvHD_III_IV, survival_time"
+"2","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message."

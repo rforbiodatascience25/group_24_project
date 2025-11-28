@@ -1,0 +1,44 @@
+---
+title: "02_Clean"
+author: "Helena Utzon"
+format: html
+editor: visual
+---
+
+## Clean data
+
+Takes the bone-marrow.arff and creates a tidy tibble
+
+### Load libraries
+
+```{r}
+library("tidyverse")
+
+```
+
+### Clean data
+
+```{r}
+# Get variable names and clean them
+raw_data <- read_lines("bone-marrow.arff")
+var_names <- raw_data |>
+  str_subset("^@attribute") |>
+  str_remove_all(pattern = "@attribute|\\{.*\\}|numeric|\\s")
+
+# Find line where data begins
+data_start <- which(str_detect(raw_data, pattern = "^@data"))+1
+
+# Create tibble
+data_clean <- read_delim("bone-marrow.arff", 
+                      delim = ",", 
+                      skip = data_start,
+                      col_names = var_names,
+                      na = "?",
+                      col_types = "i"
+                      )  |>
+  mutate(across(c(1:2, 4:22, 24:28, 37), factor))
+
+# write data to gzip tsv file 
+data_clean |> write_tsv("data/02_dat_clean.tsv.gz")
+
+```

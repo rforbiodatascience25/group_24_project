@@ -1,0 +1,5 @@
+"0","    long_peptide <- long_peptide_data|> mutate("
+"0","      k_CDR3b = str_length(CDR3b),"
+"0","      k_peptide = str_length(peptide)"
+"0","    )"
+"0","    long_peptide"

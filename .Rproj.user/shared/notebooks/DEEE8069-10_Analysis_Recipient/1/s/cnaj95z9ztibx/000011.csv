@@ -1,0 +1,24 @@
+"0","data_lanjing_project <- data_clean |>"
+"0","  select(Recipientgender, Disease, Recipientage, Rbodymass, survival_time, survival_status) |>"
+"0","  mutate( Recipientgender = case_when("
+"0","    Recipientgender == 1 ~ 'male',"
+"0","    Recipientgender == 0 ~ 'female'"
+"0","  )) |> count(Recipientgender, survival_status) |>"
+"0","  "
+"0","    ggplot(aes(x = Recipientgender, y = n, fill = factor(survival_status))) +"
+"0","  geom_col(position = ""dodge"", color='black', alpha = 1) +"
+"0","  scale_fill_manual(values = c(""0"" = ""lightblue"", ""1"" = ""purple"")) +"
+"0","    ggplot(aes(x = Recipientgender, y = n, fill = survival_status)) +"
+"0","  geom_col(position = ""dodge"", alpha = 0.5) +"
+"0","  "
+"0"," scale_fill_viridis_d() +"
+"0","  theme_minimal() +"
+"0","  theme(legend.position = 'bottom')+"
+"0","  labs(x = ""Gender"","
+"0","       y = ""Number of survivors/deaths"","
+"0","       fill = ""Survival Status"")"
+"1","[1m[33mError[39m in `fortify()`:[22m
+[38;5;232m[33m![38;5;232m `data` must be a [34m<data.frame>[38;5;232m, or an object coercible by `fortify()`, or a valid [34m<data.frame>[38;5;232m-like object coercible by `as.data.frame()`, not a <uneval> object.
+[36mℹ[38;5;232m Did you accidentally pass `aes()` to the `data` argument?[39m
+[90mRun `]8;;x-r-run:rlang::last_trace()rlang::last_trace()]8;;` to see where the error occurred.[39m
+"

@@ -1,0 +1,4 @@
+"0","    peptide_data|> "
+"0","      separate(col = `TCR BioIdentity`, "
+"0","               into = c(""CDR3b"", ""V_gene"", ""J_gene""), "
+"0","               sep = ""\\+"")"

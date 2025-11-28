@@ -1,0 +1,208 @@
+---
+title: "Lab3 exercises"
+format: pdf
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+```{r}
+library("tidyverse")
+load(file = "data/gravier.RData") # Nope!
+```
+
+```{r}
+library("here")
+load(file = here("data/gravier.RData")) # Yup!
+```
+
+You can add options to executable code like this
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+```{r}
+#| echo: true
+#| eval: true
+base_url <- "http://userweb.eng.gla.ac.uk/umer.ijaz/bioinformatics/ecological/"
+raw_data_path <- "data/_raw/"
+
+SPE <- read_csv(file = str_c(base_url, "SPE_pitlatrine.csv"))
+write_csv(x = SPE,
+          file = str_c(raw_data_path, "SPE_pitlatrine.csv"))
+
+ENV <- read_csv(file = str_c(base_url, "ENV_pitlatrine.csv"))
+write_csv(x = ENV,
+          file = str_c(raw_data_path, "ENV_pitlatrine.csv"))
+
+```
+
+```{r}
+SPE |> 
+  pivot_longer(cols = -Taxa,
+               names_to = "Samples",
+               values_to = "OTU_Count")  |> 
+  full_join(ENV, by = "Samples") |> 
+  mutate(site = case_when(str_detect(Samples, "^T") ~ "Tanzania",
+                          str_detect(Samples, "^V") ~ "Vietnam")) |>  
+  write_tsv(file = "data/SPE_ENV.tsv")
+```
+
+```{r}
+SPE_ENV <- read_tsv(file = "data/SPE_ENV.tsv")
+SPE_ENV
+```
+
+### TASKS
+
+#### Task 1 - Recreate the following plot
+
+*Discuss in your group, which ggplot elements can you identify?*
+
+```{r}
+ggplot(data = SPE_ENV,
+       mapping = aes(x = OTU_Count,
+                     y = Taxa, 
+                     fill = site)) +
+  geom_boxplot(color = 'black')
+  
+```
+
+#### Task 2 - Recreate the following plot
+
+*Discuss in your group, which ggplot elements can you identify?*
+
+```{r}
+ggplot(data = SPE_ENV,
+       mapping = aes(x = site,
+                     y = Temp)) +
+  geom_boxplot(color = 'black')
+
+```
+
+#### Task 3 - Recreate the following plot
+
+*Discuss in your group, which ggplot elements can you identify?*
+
+```{r}
+ggplot(data = SPE_ENV,
+       mapping = aes(x = Temp,
+                     y = pH,
+                     color = site)) +
+  geom_point()
+```
+
+#### Task 4 - Recreate the following plot
+
+*Discuss in your group, which ggplot elements can you identify?*
+
+```{r}
+ggplot(data = SPE_ENV,
+       mapping = aes(x = Temp,
+                     y = pH,
+                     color = site,
+                     label = Samples)) +
+  geom_label(size = 3)
+```
+
+#### Task 5 - Recreate the following plots
+
+*Discuss in your group, which ggplot elements can you identify?*
+
+```{r}
+ggplot(data = SPE_ENV,
+       mapping = aes(x = NH4,
+                     fill = site)) +
+  geom_density()
+
+```
+
+```{r}
+ggplot(data = SPE_ENV,
+       mapping = aes(x = NH4,
+                     fill = site)) +
+  geom_density(alpha = 0.5) + 
+  scale_x_log10()
+```
+
+#### Task 6 - Recreate the following plot
+
+*Discuss in your group, which ggplot elements can you identify?*
+
+```{r}
+ggplot(data = SPE_ENV,
+       mapping = aes(x = CODt,
+                     y = CODs,
+                     color = site)) +
+  geom_point() + geom_smooth(method = lm, se = FALSE)
+```
+
+#### Task 7 - Recreate the following plot
+
+*Discuss in your group, which ggplot elements can you identify?*
+
+```{r}
+#| fig-height: 10
+#| fig-width: 10
+ggplot(data = SPE_ENV,
+       mapping = aes(x = Taxa,
+                     y = Samples,
+                     fill = OTU_Count)) +
+  geom_raster() + scale_fill_gradient2(midpoint = 10000, low = 'blue', high = 'red') + theme(legend.position = 'bottom') + 
+  theme(axis.text.x = element_text(angle = 75, vjust = 1, hjust=1)) 
+```
+
+#### Task 8 - Recreate the following plot
+
+Start by running this code in a new chunk (ignore details for now)
+
+```{r}
+targets <- c("Methanobacteria", "Clostridia", "Actinobacteria",
+            "Sphingobacteria", "Anaerolineae")
+SPE_ENV_targets <- SPE_ENV |>
+  filter(Taxa %in% targets)
+```
+
+```{r}
+
+ggplot(data = SPE_ENV_targets,
+       mapping = aes(x = OTU_Count,
+                     y = Taxa,
+                     fill = Taxa)) +
+  geom_density_ridges() + 
+  scale_fill_viridis_d() + 
+  facet_grid(. ~ site)+
+  labs(
+    title = 'OTU Count Distribution for 5 Taxa Stratified by Site',
+    x = "OTU",
+    y = "Taxa Identified",
+    fill = "site"
+  ) +
+  theme_minimal()
+  theme(legend.position = "bottom")
+  
+ 
+
+```
+
+#### Task 9 - GROUP ASSIGNMENT (Important, see: [how to](https://r4bds.github.io/assignments.html))
+
+*For this assignment you and your group are to apply what you have learned in the two data visualisation labs. The task is to be creative and make a really nice plot using the `SPE`- and `ENV`-data sets or a relevant subset hereof, remember to include how you arrive at subsets of the data in your assignment*
+
+```{r}
+ggplot(data = SPE_ENV,
+       mapping = aes(x = TS,
+                     y = VS,
+                     fill = VFA)) +
+  geom_boxplot()
+
+```
