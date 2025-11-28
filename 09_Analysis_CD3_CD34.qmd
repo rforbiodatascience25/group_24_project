@@ -57,6 +57,8 @@ data_clean |>
        x = "Survival Status",
        y = "CD34+ cells/kg") +
   scale_fill_viridis_d()
+
+ggsave('CD34+_dose.png', width = 6)
 ```
 
 ## 3.2. CD3 ANALYSIS
@@ -100,6 +102,7 @@ ggplot(aes(x = survival_status,
        fill = 'Survival Status') +
   theme_minimal() +
   scale_fill_viridis_d()
+ggsave('CD3+_dose.png', width = 6)
 
 ```
 
