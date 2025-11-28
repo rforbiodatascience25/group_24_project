@@ -8,6 +8,8 @@ editor: visual
 
 ## Execute all scripts
 
+Running load, clean, augment, describe, and analysis scripts:
+
 ::: content-hidden
 {{< embed 01_load.qmd echo=false >}}
 
@@ -16,4 +18,9 @@ editor: visual
 {{< embed 03_augment.qmd echo=false >}}
 
 {{< embed 04_describe.qmd echo=false >}}
+
+{{< embed 05_Analysis_Graft_vs_Host_disease.qmd echo=false >}}
+
+{{< embed 06_Analysis_Relapse_and_2nd_transplant_survival.qmd echo=false >}}
+
 :::
