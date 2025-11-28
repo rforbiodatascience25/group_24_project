@@ -143,13 +143,11 @@ The boxplot plot compares the age distribution of the recipients among the diffe
 
 The bar plot reveals the relationship between the BMI with survival rate. It showed that survival decreases while BMI increases. Underweight patients had the highest amount of survivors, meanwhile, the obese group was the only category which mortality exceeded survival.
 
-```{r}
-library(knitr)
+::: {layout-ncol="2"}
+![](Recipient.png)
 
-images <- c("Recipient age, Disease type VS survival status boxplot.png", "Rbodymass inxed VS survival status.png")
-include_graphics(images)
-
-```
+![](Rbodymass.png)
+:::
 
 ## Slide 7
 
