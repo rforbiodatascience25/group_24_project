@@ -25,23 +25,19 @@ data_clean <- read_tsv('data/02_dat_clean.tsv.gz')
 ### Recipient age
 
 ```{r}
-data_lanjing_project <- data_clean |>
+ data_clean |>
   select(Recipientgender, Disease, Recipientage, Rbodymass, survival_time, survival_status) |>
-  mutate( Recipientgender = case_when(
-    Recipientgender == 1 ~ 'male',
-    Recipientgender == 0 ~ 'female'
-  )) |> count(Recipientgender, survival_status) |>
-  
-    ggplot(aes(x = Recipientgender, y = n, fill = factor(survival_status))) +
-  geom_col(position = "dodge", color='black', alpha = 1) +
-  scale_fill_manual(values = c("0" = "lightblue", "1" = "purple")) +
-    ggplot(aes(x = Recipientgender, y = n, fill = survival_status)) +
+  count(Recipientgender, survival_status) |>
+   
+  ggplot(aes(x = Recipientgender, y = n, fill = factor(survival_status))) +
+   
   geom_col(position = "dodge", alpha = 0.5) +
-  
- scale_fill_viridis_d() +
+   
+  scale_fill_viridis_d() +
   theme_minimal() +
   theme(legend.position = 'bottom')+
-  labs(x = "Gender",
+  labs( title = 'Survival status among genders',
+    x = "Gender",
        y = "Number of survivors/deaths",
        fill = "Survival Status")
 
@@ -60,12 +56,10 @@ data_clean|>
       Recipientgender == 0 ~ 'female')
   ) |>
   ggplot(aes(x = factor(Disease), y = Recipientage, fill = factor(survival_status))) +
-  geom_boxplot(alpha = 1) + 
-  scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
+  geom_boxplot(alpha = 0.5) + 
+   scale_fill_viridis_d() +
   theme_minimal() + 
   labs(
-    x = 'Survival Status (0 = survivor, 1 = death)', 
-  labs( 
     title = 'Recipient',
     x = 'Survival Status', 
     y = 'Age of the recipient',
@@ -95,7 +89,7 @@ data_clean|>
              y = n,
              fill = factor(survival_status))) +
   geom_col(position = 'dodge', alpha = 1) + 
-  scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
+    scale_fill_viridis_d() +
   theme_minimal() + 
   labs(
     x = 'Survival Status (0 = survivor, 1 = death)', 
@@ -123,8 +117,9 @@ data_clean |>
   filter(survival_status == 0) |>
   count(Disease, Recipientgender) |>
   ggplot(aes(x = Disease, y = n, fill = Recipientgender)) +
-  geom_col(position = "dodge", alpha = 0.5, color = "black") +
+  geom_col(position = "dodge", alpha = 0.5) +
   scale_x_discrete(drop = FALSE) + 
+    scale_fill_viridis_d()+
   theme_minimal() +
   labs(
     x = "Type of disease",
@@ -149,8 +144,9 @@ data_clean |>
   filter(survival_status == 1) |>
   count(Disease, Recipientgender) |>
   ggplot(aes(x = Disease, y = n, fill = Recipientgender)) +
-  geom_col(position = "dodge", alpha = 0.5, color = "black") +
-  scale_x_discrete(drop = FALSE) + 
+  geom_col(position = "dodge", alpha = 0.5) +
+  scale_x_discrete(drop = FALSE) +
+    scale_fill_viridis_d()+
   theme_minimal() +
   labs(
     x = "Type of disease",
@@ -161,36 +157,6 @@ data_clean |>
 ```
 
 ### Relationship between BMI and survival rate
-
-```{r}
-data_clean |>
-  mutate(
-    Recipientgender = case_when(
-      Recipientgender == 1 ~ "male",
-      Recipientgender == 0 ~ "female"
-    ),
-      Rbodymass = case_when(
-        Rbodymass < 18.5 ~ "Underweight",
-        Rbodymass >= 18.5 & Rbodymass < 25 ~ "Normal weight",
-        Rbodymass >= 25 & Rbodymass < 30 ~ "Overweight",
-        Rbodymass >= 30 ~ "Obese"))|>
-  
-  count(survival_status, Rbodymass) |>
-  ggplot(aes(x = factor(Rbodymass),
-             y = n,
-             fill = factor(survival_status))) +
-  geom_col(position = 'dodge',
-           alpha = 0.5,
-           color = 'black') + 
-  scale_fill_viridis_d() +
-  theme_minimal() + 
-  labs(
-    x = 'Survival Status (0 = survivor, 1 = death)', 
-    y = 'Number of recipients',
-    fill = 'Survival Status'
-  )
-
-```
 
 Graph shows that obese patients had the highest mortality, but also the highest survival rate among the different Rbodymass index values. this time we don't differentiate between women and men, since the indicators used are from WHO and it foes not differ among genders.
 
@@ -227,29 +193,24 @@ data_clean |>
              fill = factor(survival_status))) +
   
   geom_col(position = 'dodge',
-           alpha = 1,
-           color = 'black') + 
+           alpha = 0.5) + 
   
   geom_text(aes(label = Rbodymass_percentage),
             position = position_dodge( width = 1),
-            vjust = -2,
+            vjust = 0,
             size = 3.5)+
   
-  scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
-  theme_minimal() + 
+  theme_minimal() +
+  scale_fill_viridis_d() +
   labs(
-    x = 'Survival Status (0 = survivor, 1 = death)', 
-    y = 'Number of recipients',
-    fill = 'Survival Status'
-  )
-    title = 'Rbodymass VS Survival rate',
-    x = 'Survival Status', 
-    y = 'Number of recipients',
-    fill = 'Survival Status'
-  )+
-  theme(legend.position = "bottom") 
+    title = "Rbodymass vs Survival rate",
+    x = "Rbodymass category",   # this is actually BMI group
+    y = "Number of recipients",
+    fill = "Survival Status"
+  ) +
+  theme(legend.position = "bottom")
 
- ggsave('Rbodymass.png', width = 6)
+ggsave("Rbodymass.png", width = 6)
 
 
 ```
