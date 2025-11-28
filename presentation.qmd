@@ -25,16 +25,6 @@ The order of the content is not final and will probably change.
 
 ## Slide 1
 
-**Include:** Introduction or Aim
-
--   Title
-
--   Aim
-
--   Group names
-
-**Text included in slide:**
-
 *Title:*
 
 Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation
@@ -45,15 +35,9 @@ Which biological factors affect patent outcome and how can we ensure a good resp
 
 *group names:*
 
-Christian, Helena, Lanjing, Inma and Pernille
-
-Group 24:
+Group 24: Christian, Helena, Lanjing, Inma and Pernille
 
 ## Slide 2 - Why did we use R?
-
-**Include:** briefly explanation of what is a bone-marrow transplant
-
-**Text included in slide:**
 
 *Topic:*
 
@@ -69,13 +53,23 @@ R programming language is a powerful tool that allowed us to clean, visualize, o
 
 **File:** bone-marrow.ariff
 
--   Download Data
+An Attribute-Relation File format, .ariff, has two destinct sections: Header & Data, and comments use "%".
 
--   Created two gzipped files
++---------------------------------------------------------+-------------------------------+
+| Header                                                  | Data                          |
++:========================================================+:==============================+
+| -   Contains Metadata                                   | -   Contains Data information |
+|                                                         |                               |
+| -   Name of Relation                                    | -   comma seperated entries   |
+|                                                         |                               |
+| -   List of Attributes                                  |                               |
++---------------------------------------------------------+-------------------------------+
 
-Metadata file
+**Steps:**
 
-tsv file
+1.  Download file into newly created data folders
+2.  Extract metadata & data into two files: a .txt and a .tsv containing tidy data: *metadata.txt.gz & data.tsv.gz*
+3.  Augment columns & binary values
 
 ## Description of the data
 

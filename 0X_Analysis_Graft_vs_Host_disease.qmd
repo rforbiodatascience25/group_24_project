@@ -13,14 +13,12 @@ We want to look at the relationship between relapse and secondary transplants in
 Variables used:
 
 | Variable | Description | Value | Missing values |
-|:--:|:--:|:--:|----|
+|:----------------:|:----------------:|:----------------:|------------------|
 | `aGvHDIIIIV` | Development of acute graft versus host disease stage III or IV | Yes, No | No, kind of |
 | `extcGvHD` | Development of extensive chronic graft versus host disease | Yes, No | Yes |
 | `time_to_aGvHD_III_IV` | Time to development of acute graft versus host disease stage III or IV | Integer, time in days | No |
-| X? |  |  |  |
-| X? |  |  |  |
 
-: Table 1: The data used for this analysis is from `03_dat_aug` ? using these variables: `aGvHDIIIIV`, `extcGvHD`, `time_to_aGvHD_III_IV`, X & X.
+: Table 1: The data used for this analysis is from `03_dat_aug` ? using these variables: `aGvHDIIIIV`, `extcGvHD`, `time_to_aGvHD_III_IV`.
 
 ## Data Wrangling
 
