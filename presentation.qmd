@@ -55,15 +55,15 @@ R programming language is a powerful tool that allowed us to clean, visualize, o
 
 An Attribute-Relation File format, .ariff, has two destinct sections: Header & Data, and comments use "%".
 
-+-----------------------------------------+-------------------------------+
-| Header                                  | Data                          |
-+:========================================+:==============================+
-| -   Contains Metadata                   | -   Contains Data information |
-|                                         |                               |
-| -   Name of Relation                    | -   comma seperated entries   |
-|                                         |                               |
-| -   List of Attributes                  |                               |
-+-----------------------------------------+-------------------------------+
++------------------------+-------------------------------+
+| Header                 | Data                          |
++:=======================+:==============================+
+| -   Contains Metadata  | -   Contains Data information |
+|                        |                               |
+| -   Name of Relation   | -   comma seperated entries   |
+|                        |                               |
+| -   List of Attributes |                               |
++------------------------+-------------------------------+
 
 **Steps:**
 
@@ -126,7 +126,6 @@ The bar plot reveals the relationship between the BMI with survival rate. It sho
 
 ![](Rbodymass.png)
 :::
-
 
 ## Slide 7
 
