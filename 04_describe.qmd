@@ -1,5 +1,6 @@
 ---
 title: "04_describe"
+auther: "group"
 format: 
   html:
     embed-resources: true

@@ -101,7 +101,9 @@ kable(Descriptive_table, row.names = TRUE, format = "html", align = "r")
 
 ## Slide 5
 
-**Include:** (Exploratory Analysis)
+**Include:** (Exploratory Analysis) ::: {layout-ncol="2"} ![](PCA_plots.png)
+
+![](rotation_plot.png) :::
 
 ## Slide 6
 
