@@ -1,0 +1,458 @@
+---
+title: "Lab4_exercises"
+format: docx
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+## A few initial questions
+
+```{r}
+tibble(x = c(4, 3, 5, 1, 2))
+```
+
+-   **Q1: `tibble(x = c(4, 3, 5, 1, 2)) |> filter(x > 2)`?**
+
+    ```{r}
+    tibble(x = c(4, 3, 5, 1, 2))|>filter (x > 2)
+
+    ```
+
+<!-- -->
+
+-   **Q2: `tibble(x = c(4, 3, 5, 1, 2)) |> arrange(x)`?**
+
+    ```{r}
+    tibble(x = c(4, 3, 5, 1, 2)) |> arrange(x)
+    ```
+
+**Q3: `tibble(x = c(4, 3, 5, 1, 2)) |> arrange(desc(x))?`**
+
+```{r}
+tibble(x = c(4, 3, 5, 1, 2)) |> arrange(desc(x))
+```
+
+-   **Q4: `tibble(x = c(4, 3, 5, 1, 2)) |> arrange(desc(desc(x)))`?**
+
+    ```{r}
+    tibble(x = c(4, 3, 5, 1, 2)) |> arrange(desc(desc(x)))
+    ```
+
+<!-- -->
+
+-   **Q5: `tibble(x = c(4, 3, 5, 1, 2), y = c(2, 4, 3, 5, 1)) |> select(x)`?**
+
+    ```{r}
+    tibble(x = c(4, 3, 5, 1, 2), y = c(2, 4, 3, 5, 1)) |> select(x)
+    ```
+
+<!-- -->
+
+-   **Q6: `tibble(x = c(4, 3, 5, 1, 2), y = c(2, 4, 3, 5, 1)) |> select(y)`?**
+
+```{r}
+tibble(x = c(4, 3, 5, 1, 2), y = c(2, 4, 3, 5, 1)) |> select(y)
+```
+
+-   **Q7: `tibble(x = c(4, 3, 5, 1, 2), y = c(2, 4, 3, 5, 1)) |> select(-x)`?**
+
+    ```{r}
+    tibble(x = c(4, 3, 5, 1, 2), y = c(2, 4, 3, 5, 1)) |> select(-x)
+    # (-x) select all columns but x
+    ```
+
+<!-- -->
+
+-   **Q8: `tibble(x = c(4, 3, 5, 1, 2), y = c(2, 4, 3, 5, 1)) |> select(-x, -y)`?**
+
+    ```{r}
+    tibble(x = c(4, 3, 5, 1, 2), y = c(2, 4, 3, 5, 1)) |> select(-x, -y)
+    ```
+
+-   **Q9: `tibble(x = c(4, 3, 5, 1, 2)) |> mutate(x_dbl = 2*x)`?**
+
+    ```{r}
+    tibble(x = c(4, 3, 5, 1, 2)) |> mutate(x_dbl = 2*x)
+    ```
+
+-   **Q10: `tibble(x = c(4, 3, 5, 1, 2)) |> mutate(x_dbl = 2 * x, x_qdr = 2*x_dbl)`?**
+
+    ```{r}
+    tibble(x = c(4, 3, 5, 1, 2)) |> mutate(x_dbl = 2 * x, x_qdr = 2*x_dbl)
+    ```
+
+-   **Q11: `tibble(x = c(4, 3, 5, 1, 2)) |> summarise(x_mu = mean(x))`?**
+
+    ```{r}
+    tibble(x = c(4, 3, 5, 1, 2)) |> summarize(x_mu = mean(x))
+    ```
+
+-   **Q12: `tibble(x = c(4, 3, 5, 1, 2)) |> summarise(x_max = max(x))`?**
+
+    ```{r}
+    tibble(x = c(4, 3, 5, 1, 2)) |> summarise(x_max = max(x))
+    ```
+
+<!-- -->
+
+-   **Q13: `tibble(lbl = c("A", "A", "B", "B", "C"), x = c(4, NA, 5, 1, 2)) |> group_by(lbl) |> summarise(x_mu = mean(x), x_max = max(x))`?**
+
+    ```{r}
+    tibble(lbl = c("A", "A", "B", "B", "C"), x = c(4, NA, 5, 1, 2)) |> group_by(lbl) |> summarise(x_mu = mean(x), x_max = max(x))
+    ```
+
+-   **Q14: `tibble(lbl = c("A", "A", "B", "B", "C"), x = c(4, 3, 5, 1, 2)) |> group_by(lbl) |> summarise(n = n())?`**
+
+    ```{r}
+    tibble(lbl = c("A", "A", "B", "B", "C"), x = c(4, 3, 5, 1, 2)) |> group_by(lbl) |> summarise(n = n())
+    ```
+
+-   **Q15: `tibble(lbl = c("A", "A", "B", "B", "C"), x = c(4, 3, 5, 1, 2)) |> count(lbl)`?**
+
+    ```{r}
+    tibble(lbl = c("A", "A", "B", "B", "C"), x = c(4, 3, 5, 1, 2)) |> count(lbl)
+    ```
+
+## Load data
+
+```{r}
+diabetes_data <- read_csv(file = 'data/diabetes.csv')
+diabetes_data
+```
+
+```{r}
+# This is a way to download data directly from the wedsite
+# Create the data directory programmatically
+dir.create(path = "data")
+
+# Retrieve the data directly
+diabetes_data <- read_csv(file = "https://hbiostat.org/data/repo/diabetes.csv")
+
+# Write the data to disk
+write_csv(x = diabetes_data,
+          file = "data/diabetes.csv")
+```
+
+-   
+
+    ```{r}
+    diabetes_data <- read_csv(file = 'data/diabetes.csv')
+    diabetes_data
+    ```
+
+-   **Q1: How many observations and how many variables?**
+
+    Your dataset has **403 observations (rows)** and **19 variables (columns)**
+
+-   **Q2: Is this a tidy data set? Which three rules must be satisfied?**
+
+    According to **Hadley Wickham’s Tidy Data principles**, a dataset is tidy if it follows **3 rules**:
+
+    **Each variable forms a column** → Every column should represent exactly one type of measurement (e.g., age, BMI, glucose level).
+
+    **Each observation forms a row** → Each row should represent exactly one unit of observation (e.g., one patient).
+
+    **Each value forms a single cell** → Each cell should contain only one value (not multiple values, not summaries).
+
+This is a tidy data set and it does satisfied the rules.
+
+-   **Q3: When you run the chunk, then underneath each column name is stated `<chr>` and `<dbl>` what is that?**
+
+    chr –\> character (word)
+
+    dbl –\> number/value (real number)
+
+-   **T1: Change the `height`, `weight`, `waist` and `hip` from the imperial system (inches/pounds) to the metric system (cm/kg), rounding to 1 decimal**
+
+    **`NOTE --> round(x, digits = 0)`**: Rounds to the nearest value with a specified number of decimal places.
+
+    Note –\> 1 inche = 2.54 cm
+
+    Note –\> 1 pound = 0,453592kg
+
+    ```{r}
+    diabetes_data_new <-
+      diabetes_data |>
+       mutate(
+        height_cm = round(height * 2.54, 1), 
+        weight_kg = round(weight * 0.453592, 1),
+        waist_cm = round(waist * 2.54, 1),
+        hip_cm = round(hip * 2.54, 1),
+      ) 
+    diabetes_data_new 
+    ```
+
+-   **Q4: How many weigh less than 100kg?**
+
+```{r}
+diabetes_data |>
+   mutate(
+    height_cm = round(height * 2.54, 1), 
+    weight_kg = round(weight * 0.453592, 1),
+    waist_cm = round(waist * 2.54, 1),
+    hip_cm = round(hip * 2.54, 1),
+  ) |> arrange(desc(desc(weight))) |>View()
+```
+
+349 people weigh less than 100 kg.
+
+```{r}
+diabetes_data_new |>
+  filter(weight_kg < 100) |>
+  count()
+```
+
+-   **Q5: How many weigh more than 100kg?**
+
+    ```{r}
+    diabetes_data_new |>
+      filter(weight_kg > 100) |>
+      count()
+
+    ```
+
+-   **Q6: How many weigh more than 100kg and are less than 1.6m tall?**
+
+```{r}
+diabetes_data_new |>
+  filter(weight_kg > 100 &
+           height_cm < 160) |>
+  count()
+```
+
+76 people are less than 1.6 tall and 54 people weigh more than 100kg.
+
+-   **Q7: How many women are taller than 1.8m?**
+
+```{r}
+diabetes_data_new|>
+  filter(gender =='female' &
+           height_cm >180) |>
+  count()
+```
+
+-   **Q8: How many men are taller than 1.8m?**
+
+    ```{r}
+    diabetes_data_new |>
+      filter(gender == 'male' &
+               height_cm > 180) |>
+      count()
+    ```
+
+<!-- -->
+
+-   **Q9: How many women in Louisa are older than 30?**
+
+    ```{r}
+    diabetes_data_new |>
+      filter(location == 'Louisa' &
+               age >30)|>
+      count()
+    ```
+
+<!-- -->
+
+-   **Q10: How many men in Buckingham are younger than 30 and taller than 1.9m?**
+
+    ```{r}
+    diabetes_data_new |>
+      filter(location == 'Buckingham' &
+               age < 30 &
+               height_cm > 190)|>
+      count()
+    ```
+
+<!-- -->
+
+-   **T2: Make a scatter plot of `weight` versus `height` and colour by sex for inhabitants of Louisa above the age of 40**
+
+    ```{r}
+    diabetes_Louisa <-
+      diabetes_data_new |>
+      filter(location == 'Louisa' &
+               age > 40)
+    diabetes_Louisa
+    ```
+
+```{r}
+#| label: Height vs Weight
+
+diabetes_data_new |>
+filter(location == 'Louisa' &
+         age > 40) |>
+ggplot(aes(x = height_cm, y = weight_kg, color = gender)) +
+geom_point()
+
+```
+
+-   **T3: Make a box plot of height versus location stratified on sex for people above the age of 50**
+
+```{r}
+diabetes_data_new |>
+filter(age > 50)|>
+  
+ggplot(aes(x = location, y = age, fill = gender)) +
+  
+geom_boxplot()
+```
+
+-   **Q11: How old is the youngest person?**
+
+    ```{r}
+    diabetes_data_new |>
+      arrange(desc(desc(age))) 
+    ```
+
+The youngest is 19
+
+-   **Q12: How old is the oldest person?**
+
+    ```{r}
+    diabetes_data_new |>
+      arrange(desc(age))
+    ```
+
+The oldest person is 92
+
+-   **Q13: Of all the 20-year-olds, what is the height of the tallest?**
+
+    ```{r}
+    diabetes_data_new |>
+      filter(age == 20) |>
+      arrange(desc(height_cm))
+    ```
+
+The tallest is 182.9 cm
+
+-   **Q14: Of all the 20-year-olds, what is the height of the shortest?**
+
+    ```{r}
+    diabetes_data_new |>
+      filter(age == 20) |>
+      arrange(desc(desc(height_cm)))
+    ```
+
+The shortest is 147.3 cm
+
+-   **Q15: How many columns (variables) `starts_with` a “b”?**
+
+    ```{r}
+    diabetes_data_new|>
+        select(starts_with('b'))|>
+      ncol() #number of columns
+    ```
+
+<!-- -->
+
+-   **Q16: How many columns (variables) `contains` the word “eight”?**
+
+    ```{r}
+    diabetes_data_new|>
+        select(contains('eight'))|>
+     ncol()
+    ```
+
+<!-- -->
+
+-   **T4: Create a new variable, where you calculate the BMI**
+
+    ```{r}
+    BMI <- diabetes_data_new |> 
+      mutate( BMI = weight_kg / (height_cm / 100)^2,
+        BMI_class = case_when(
+          BMI < 18.5 ~ "Underweight",
+          BMI >= 18.5 & BMI < 25 ~ "Normal weight",
+          BMI >= 25 & BMI < 30 ~ "Overweight",
+          BMI >= 30 ~ "Obese"))
+    BMI
+    ```
+
+<!-- -->
+
+-   **T5: Create a `BMI_class` variable**
+
+    ```{r}
+    diabetes_data_BMI_NEW <- BMI |>
+      mutate(BMI_class = factor(BMI_class,
+                                levels =  c("my 1st category", "my 2nd category",
+                                            "my 3rd category", "my nth category")))
+    diabetes_data_BMI_NEW
+    ```
+
+<!-- -->
+
+-   **T6: Create a box plot of `hdl` versus BMI_class**
+
+    ```{r}
+    diabetes_data_BMI_NEW |>
+    ggplot(aes(x = BMI_class, y = hdl, fill = gender)) +
+      
+    geom_boxplot()
+    ```
+
+<!-- -->
+
+-   **Q17: What do you see?**
+
+-   **T7: Create a `BFP` (Body fat percentage) variable**
+
+    ```{r}
+    BFP <- BMI |> 
+      mutate(gender = case_when(
+               gender == 'male' ~ 1,
+               gender == 'female' ~ 0),
+               BFP = 1.39 * BMI + 0.16 * age - 10.34 * gender - 9
+             )
+    BFP
+
+    ```
+
+<!-- -->
+
+-   **T8: Create a `WHR` (waist-to-hip ratio) variable**
+
+```{r}
+WHR <- BFP |> 
+  mutate( WHR = waist_cm/hip_cm
+         )
+WHR
+```
+
+-   **Q18: What correlates better with `BMI`: `WHR` or `BFP`?** GROUP ASSIGNMENT (Important, see: [how to](https://r4bds.github.io/assignments.html))
+
+    ```{r}
+    Linear_regression <- WHR |>
+      ggplot(aes(x = BMI, y = WHR)) +
+      geom_point() + 
+      geom_smooth(method = 'lm', color = 'blue')
+    Linear_regression
+    ```
+
+```{r}
+Linear_regression <- WHR |>
+  ggplot(aes(x = BMI, y = BFP)) +
+  geom_point() + 
+  geom_smooth(method = 'lm', color = 'blue')
+Linear_regression
+```
