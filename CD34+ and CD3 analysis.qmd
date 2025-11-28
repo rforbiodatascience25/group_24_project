@@ -17,10 +17,6 @@ library(dplyr)
 # 2. LOAD DATA
 
 ```{r}
-data_clean <-  read_tsv('data/02_dat_clean.tsv.gz')
-```
-
-```{r}
 data_clean <- read_tsv('data/03_dat_aug.tsv.gz')
 ```
 
@@ -318,14 +314,10 @@ ggplot(table_CMVs, aes(x = DonorCMV, y = RecipientCMV, fill = deaths)) +
 # NEW
 
 ```{r}
-# Filter only the deceased group 
-group_dece <- function(data) {
-  data_clean |>
-    filter(survival_status == '1')
-}
+
 
 # Plot using the fuction 
-ggplot(group_dece(), 
+ggplot(data_clean, 
        aes(x = CD34kgx10d6, 
            y = survival_time)) + 
   geom_point() + 
@@ -379,4 +371,18 @@ ggplot(data_clean,
   theme_minimal() +
   scale_fill_brewer(palette = "Set2", 
                     name = "Survival Status")
+```
+
+```{r}
+ggplot(data_clean,
+       aes(x = factor(survival_status), 
+           y = CD34kgx10d6,
+           fill = survival_status)) +
+  geom_boxplot(alpha = 0.5) +
+  labs(title = "CD34+ dose for each Survival Status",
+       x = "Survival Status",
+       y = "CD34+ cells/kg",
+       fill = "Survival Status") +
+  theme_minimal() + 
+  scale_fill_viridis_d()
 ```
