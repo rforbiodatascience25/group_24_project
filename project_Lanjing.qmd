@@ -20,6 +20,11 @@ library("tidyverse")
 data_clean <- read_tsv('data/02_dat_clean.tsv.gz')
 ```
 
+```{r}
+data_clean_aug |> write_tsv("data/03_dat_aug.tsv.gz")
+
+```
+
 ### Create graph(s) and visual to explain relation with recipient age, disease type, and BMI
 
 ### Recipient age
