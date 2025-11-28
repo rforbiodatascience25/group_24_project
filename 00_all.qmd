@@ -31,5 +31,3 @@ Running load, clean, augment, describe, and analysis scripts.
 
 {{< embed 10_Analysis_recipient.qmd echo=false >}}
 :::
-
-
