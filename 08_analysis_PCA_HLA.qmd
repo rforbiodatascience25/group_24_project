@@ -54,7 +54,6 @@ pca_plot
 ggsave("result/pca_plot.png", width = 6 )
 
 
-
 ```
 
 The PC-scores plot shows that there is no clear separation between the samples based on the survival status and thus, the groups are not distinguishable based on the first two principal components.
@@ -89,6 +88,7 @@ rotation_plot <- pca_fit |>
 
 rotation_plot
 ggsave("result/rotation_plot.png", width = 6 )
+
 ```
 
 The loading plot shows a strong correlation between the CD34+ and CD3 dosage and the first principal component (PC1). Whereas recipient age and body mass are mainly correlated to PC1, but are also somewhat correlated with PC2.\
@@ -116,52 +116,54 @@ Thus, only 46% of the total variance is explained by the two principal component
 ### HLA-matching impact on survival
 
 ```{r}
-HLA_data <- bm_data |>
+HLA_data <- bm_data |> 
   mutate(HLAmatch = fct_relevel(HLAmatch, c("7/10", "8/10", "9/10", "10/10")))
 
-match_plot <- HLA_data |>
-  count(HLAmatch, survival_status) |>
-  group_by(HLAmatch) |>
+match_plot <- HLA_data |> 
+  count(HLAmatch, survival_status) |> 
+  group_by(HLAmatch) |> 
   mutate(survival_pct = str_c(round(n / sum(n) *100, 1), "%")) |> 
   ggplot(aes(x = HLAmatch, 
-             y = n,
-             fill = survival_status)) +
+             y = n, 
+             fill = survival_status)) + 
   geom_col(position = "dodge", 
-           alpha = 0.5) +
-  geom_text(aes(label = survival_pct),
-            vjust = -0.5,
-            position = position_dodge(width = 0.9)) +
-  theme_minimal() +
-  scale_fill_viridis_d() +
+           alpha = 0.5) + 
+  geom_text(aes(label = survival_pct), 
+            vjust = -0.5, 
+            position = position_dodge(width = 0.9)) + 
+  theme_minimal() + 
+  scale_fill_viridis_d() + 
   labs(x = "HLA Match", 
-       y = "Number of Patients",
+       y = "Number of Patients", 
        fill = "Survival Status", 
-       title = "Survival Status of Patients"
-       ) +
-  scale_y_continuous(limits = c(0,55))
-  theme(legend.position = "bottom") 
-  
-match_plot
+       title = "Survival Status of Patients" ) + 
+  scale_y_continuous(limits = c(0,55)) +
+  theme(legend.position = "bottom")
+
+match_plot 
 ggsave("result/match_plot.png", width = 6 )
+
+
 ```
 
 ```{r}
-
 survival_plot <- ggplot(data = HLA_data, 
-       mapping = aes(x = survival_time,
-                     y = HLAmatch,
-                     fill = HLAmatch)) +
-  stat_density_ridges(quantile_lines = TRUE,
-                      alpha = 0.3) +
-  scale_fill_viridis_d() +
-  theme_minimal() +
+                        mapping = aes(x = survival_time, 
+                                      y = HLAmatch, 
+                                      fill = HLAmatch)) + 
+  stat_density_ridges(quantile_lines = TRUE, 
+                      alpha = 0.3) + 
+  scale_fill_viridis_d() + 
+  theme_minimal() + 
   labs(x = "Survival time (days)", 
        y= "HLA Match Grade", 
        fill = "HLA Match", 
-       title = "Survival of Patients Post Stem Cell Transplantation",
-       subtitle = "Distribution of Survival Time Stratified on HLA Match Grade") +
-  theme(legend.position = "bottom") 
+       title = "Survival of Patients Post Stem Cell Transplantation", 
+       subtitle = "Distribution of Survival Time Stratified on HLA Match Grade") + 
+  theme(legend.position = "bottom")
 
-survival_plot
+survival_plot 
 ggsave("result/survival_plot.png", width = 6 )
+
+
 ```
