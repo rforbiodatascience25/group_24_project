@@ -77,8 +77,12 @@ Table 1. Information on the subjects included in the data.
 
 ```{r}
 #| echo: false
-Descriptive_table <- read.table("Descriptive_table_present.txt", sep = ",", header = TRUE, row.names = 1)
-kable(Descriptive_table, row.names = TRUE, format = "html", align = "r")
+
+#read table
+Descriptive_table <- read_tsv(file = "Descriptive_table_present.tsv", col_names = TRUE)
+
+#show table
+kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 ```
 
 <br>

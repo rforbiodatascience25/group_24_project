@@ -101,15 +101,21 @@ Tab_desc <- Tab_desc |>
 #Transpose table
 Tab_desc_transp <- t(Tab_desc)
 
-#Set names of transposed table
-rownames(Tab_desc_transp) <- colnames(Tab_desc)
+#Adding the disease row as column names to the table
 colnames(Tab_desc_transp) <- Tab_desc$Disease
 
-#Remove disease row, which is now used as column names in the table
-Tab_desc_transp <- Tab_desc_transp[rownames(Tab_desc_transp) != "Disease",]
+#Adding a column with rownames to the table
+Tab_desc_transp <- as.data.frame(Tab_desc_transp)
+Tab_desc_transp <- Tab_desc_transp |> 
+  rownames_to_column(var = "Parameter")
+Tab_desc_tib <- tibble(Tab_desc_transp)
+
+#Removing disease row, since it is the column names
+Tab_desc_tib <- Tab_desc_tib |>
+  filter(ALL != "ALL")
 
 #Export table
-write.csv(Tab_desc_transp, file = "Descriptive_table.txt")
+write_tsv(Tab_desc_tib, file = "Descriptive_table.tsv")
 ```
 
 <br>
@@ -120,7 +126,7 @@ Table 1. Description of the patients included in the data
 #| echo: false
 
 #Show table
-kable(Tab_desc_transp, row.names = TRUE, format = "html", align = "r")
+kable(Tab_desc_tib, row.names = FALSE, format = "html", align = "r")
 ```
 
 <br>
@@ -134,14 +140,14 @@ Generating table for presentation
 ```{r}
 #filter rows for table for presentation
 
-Tab_pres <- Tab_desc_transp[rownames(Tab_desc_transp) %in% 
-                              c("N", "Male patients", "Median recipient age", "Relapse", 
+Tab_pres <- Tab_desc_tib |>
+  filter(Parameter %in% c("N", "Male patients", "Median recipient age", "Relapse", 
                                 "Deceased patients",
                                 "Median survival time for deceased patients (days)",
-                                "Median follow-up time for survived patients (days)"),]
+                                "Median follow-up time for survived patients (days)"))
 
 #Export table
-write.csv(Tab_pres, file = "Descriptive_table_present.txt")
+write_tsv(Tab_pres, file = "Descriptive_table_present.tsv")
 ```
 
 <br>
@@ -152,5 +158,5 @@ Table 2. Part of Table 1 selected for the project presentation.
 #| echo: false
 
 #Show table
-kable(Tab_pres, row.names = TRUE, format = "html", align = "r")
+kable(Tab_pres, row.names = FALSE, format = "html", align = "r")
 ```
