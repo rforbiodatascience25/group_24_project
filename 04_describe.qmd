@@ -100,11 +100,8 @@ Tab_desc <- Tab_desc |>
 
 #Transpose table
 Tab_desc_transp <- t(Tab_desc)
-#Tab_desc_tib <- tibble(Tab_desc_transp[[1]], Tab_desc_transp[[2]], Tab_desc_transp[[3]],
- #                      Tab_desc_transp[[4]], Tab_desc_transp[[5]]) 
 
 #Set names of transposed table
-#Tab_desc_tib <- as.data.frame(Tab_desc_tib)
 rownames(Tab_desc_transp) <- colnames(Tab_desc)
 colnames(Tab_desc_transp) <- Tab_desc$Disease
 
