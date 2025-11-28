@@ -1,6 +1,5 @@
 ---
-title: "05_Analysis_Graft_vs_Host_disease"
-auther: "group"
+title: "0X_Analysis_Graft_vs_Host_disease"
 format: html
 editor: visual
 ---
@@ -9,19 +8,19 @@ editor: visual
 
 Dataset: *Bone Marrow Transplantation: Children*
 
-*Exporatory Anlysis. Not included in the slides.*
-
 We want to look at the relationship between relapse and secondary transplants in patients and how it affects their odds of survival.
 
 Variables used:
 
 | Variable | Description | Value | Missing values |
-|:----------------:|:----------------:|:----------------:|------------------|
+|:--:|:--:|:--:|----|
 | `aGvHDIIIIV` | Development of acute graft versus host disease stage III or IV | Yes, No | No, kind of |
 | `extcGvHD` | Development of extensive chronic graft versus host disease | Yes, No | Yes |
 | `time_to_aGvHD_III_IV` | Time to development of acute graft versus host disease stage III or IV | Integer, time in days | No |
+| X? |  |  |  |
+| X? |  |  |  |
 
-: Table 1: The data used for this analysis is from `03_dat_aug` ? using these variables: `aGvHDIIIIV`, `extcGvHD`, `time_to_aGvHD_III_IV`.
+: Table 1: The data used for this analysis is from `03_dat_aug` ? using these variables: `aGvHDIIIIV`, `extcGvHD`, `time_to_aGvHD_III_IV`, X & X.
 
 ## Data Wrangling
 
@@ -39,7 +38,7 @@ We then load a subset of the cleaned and augmented data frame as a tibble.
 
 ```{r}
 
-bm_data <- read_tsv(file = "data/03_dat_aug.tsv.gz",
+bm_data <- read_tsv(file = "data/03_dat_aug.tsv",
                             show_col_types = FALSE)
 
 ```

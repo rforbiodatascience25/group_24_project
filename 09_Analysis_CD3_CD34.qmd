@@ -46,9 +46,9 @@ ggplot(data,
 **Description** :
 
 ```{r}
-
 data_clean |>
   group_by(survival_status) |>
+  
   ggplot(aes(x = survival_status, 
              y = CD34kgx10d6, 
              fill = survival_status)) + 
@@ -87,8 +87,10 @@ ggplot(data,
 
 ```{r}
 
-ggplot(data_clean,
-       aes(x = survival_status, 
+data_clean |>
+  group_by(survival_status) |>
+  
+ggplot(aes(x = survival_status, 
            y = CD3dkgx10d8,
            fill = survival_status)) +
   geom_boxplot(alpha = 0.5) +
@@ -201,5 +203,3 @@ ggplot(data_new, aes(
   theme_minimal()
 
 ```
-
-### 4.2. For the survival group

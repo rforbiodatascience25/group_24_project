@@ -25,6 +25,16 @@ The order of the content is not final and will probably change.
 
 ## Slide 1
 
+**Include:** Introduction or Aim
+
+-   Title
+
+-   Aim
+
+-   Group names
+
+**Text included in slide:**
+
 *Title:*
 
 Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation
@@ -35,9 +45,15 @@ Which biological factors affect patent outcome and how can we ensure a good resp
 
 *group names:*
 
-Group 24: Christian, Helena, Lanjing, Inma and Pernille
+Christian, Helena, Lanjing, Inma and Pernille
+
+Group 24: names
 
 ## Slide 2 - Why did we use R?
+
+**Include:** briefly explanation of what is a bone-marrow transplant
+
+**Text included in slide:**
 
 *Topic:*
 
@@ -47,29 +63,35 @@ A bone marrow transplant is the replacement of damaged blood cells for healthy s
 
 R programming language is a powerful tool that allowed us to clean, visualize, organize, and manipulate the data. Therefore, we were able to understand the correlation of the different varibales affecting to the survival rate after the transplant.
 
-## Data Wrangling
+## Slide 3
+
+**Include:** Data description
+
+-   collected from
+
+-   Describes
+
+**Text included in slide:**
+
+*collection of data:*
+
+*Description of data:*
+
+**Include:** Data type / data wrangling
+
+-   file type upon import
+
+-   data wrangling
+
+**Text included in slide:**
+
+*data type:*
 
 **Dataset:** Bone marrow transplant: Children (Donated 20/04/2020)
 
 **File:** bone-marrow.ariff
 
-An Attribute-Relation File format, .ariff, has two destinct sections: Header & Data, and comments use "%".
-
-+------------------------+-------------------------------+
-| Header                 | Data                          |
-+:=======================+:==============================+
-| -   Contains Metadata  | -   Contains Data information |
-|                        |                               |
-| -   Name of Relation   | -   comma seperated entries   |
-|                        |                               |
-| -   List of Attributes |                               |
-+------------------------+-------------------------------+
-
-**Steps:**
-
-1.  Download file into newly created data folders
-2.  Extract metadata & data into two files: a .txt and a .tsv containing tidy data: *metadata.txt.gz & data.tsv.gz*
-3.  Augment columns & binary values
+*data wrangling:*
 
 ## Description of the data
 
@@ -101,9 +123,7 @@ kable(Descriptive_table, row.names = TRUE, format = "html", align = "r")
 
 ## Slide 5
 
-**Include:** (Exploratory Analysis) ::: {layout-ncol="2"} ![](PCA_plots.png)
-
-![](rotation_plot.png) :::
+**Include:** (Exploratory Analysis)
 
 ## Slide 6
 

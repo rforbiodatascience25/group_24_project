@@ -1,6 +1,5 @@
 ---
 title: "03_augment"
-auther: "group"
 format: html
 ---
 
@@ -104,4 +103,3 @@ data_clean_aug <- read_tsv(file = "data/02_dat_clean.tsv.gz", show_col_types = F
 ### Write augmented data to tsv
 data_clean_aug |> write_tsv("data/03_dat_aug.tsv.gz")
 ```
-
