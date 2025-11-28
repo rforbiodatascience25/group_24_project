@@ -17,32 +17,12 @@ library("tidyverse")
 ### Clean data
 
 ```{r}
-# Get variable names and clean them
-raw_data <- read_lines("data/_raw/bone-marrow.arff")
-var_names <- raw_data |>
-  str_subset("@attribute") |>
-  str_remove_all(pattern = "@attribute|\\{.*\\}|numeric|\\s")
+data_clean_aug |> write_tsv("data/03_dat_aug.tsv.gz")
+data_clean_aug|> view()
+```
 
-# get meta data and clean
-meta_data <- raw_data |>
-  str_subset("%") |>
-  str_remove(pattern = "%")
-
-# Create tibble
-data_clean <- read_delim("data/_raw/bone-marrow.arff", 
-                      delim = ",", 
-                      # Start after line that starts with "@data"
-                      skip = str_which(raw_data, pattern = "^@data")+1,
-                      col_names = var_names,
-                      na = "?",
-                      col_types = "i"
-                      )  |>
-  mutate(across(c(1:2, 4:22, 24:28, 37), factor))
-
-# write data to gzip tsv file 
-data_clean |> write_tsv("data/02_dat_clean.tsv.gz")
-meta_data |> write_lines("data/02_metadat_clean.txt.gz")
-
+```{r}
+data_clean <- read_tsv('data/02_dat_clean.tsv.gz')
 ```
 
 ### Create graph(s) and visual to explain relation with recipient age, disease type, and BMI
@@ -50,16 +30,14 @@ meta_data |> write_lines("data/02_metadat_clean.txt.gz")
 ### Recipient age
 
 ```{r}
-data_lanjing_project <- data_clean |>
-  select(Recipientgender, Disease, Recipientage, Rbodymass, survival_time, survival_status) |>
-  mutate( Recipientgender = case_when(
-    Recipientgender == 1 ~ 'male',
-    Recipientgender == 0 ~ 'female'
-  )) |> count(Recipientgender, survival_status) |>
+data_lanjing_project <- data_clean_aug |>
+   mutate(survival_status = factor(survival_status))|>
+  count(Recipientgender, survival_status) |>
   
-    ggplot(aes(x = Recipientgender, y = n, fill = factor(survival_status))) +
+    ggplot(aes(x = Recipientgender, y = n, fill = survival_status)) +
   geom_col(position = "dodge", color='black', alpha = 1) +
-  scale_fill_manual(values = c("0" = "lightblue", "1" = "purple")) +
+  
+  scale_fill_manual(values = c("Alive" = "lightblue", "Dead" = "purple")) +
   theme_minimal() +
   theme(legend.position = 'bottom')+
   labs(x = "Gender",
@@ -67,28 +45,22 @@ data_lanjing_project <- data_clean |>
        fill = "Survival Status")
 
 data_lanjing_project
-  
-
 ```
 
 Note for me: A **factor** in R is a variable made of **categories**, not numbers. We use `factor(survival_status)` so ggplot treats **0 (alive)** and **1 (dead)** as **separate groups** and gives each one a different color.
 
 ```{r}
-data_clean|>
-  mutate(
-    Recipientgender = case_when(
-      Recipientgender == 1 ~ 'male',
-      Recipientgender == 0 ~ 'female')
-  ) |>
-  ggplot(aes(x = factor(Recipientgender), y = Recipientage, fill = factor(survival_status))) +
-  geom_boxplot(alpha = 1) + 
-  scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
+data_clean_aug|>
+  ggplot(aes(x = factor(Disease), y = Recipientage, fill = factor(survival_status))) +
+  geom_boxplot(alpha = 0.5) + 
+  scale_fill_viridis_d() +
   theme_minimal() + 
   labs(
-    x = 'Survival Status (0 = survivor, 1 = death)', 
+    x = 'Survival Status', 
     y = 'Age of the recipient',
     fill = 'Survival Status'
-  )
+  )+
+    theme(legend.position = "bottom") 
 
 
 ```
@@ -101,21 +73,17 @@ First I'm doing a plot to see the survival rate against the disease type, withou
 
 ```{r}
 
-data_clean|>
-  mutate(
-    Recipientgender = case_when(
-      Recipientgender == 1 ~ 'male',
-      Recipientgender == 0 ~ 'female')
-  ) |> count(Disease, survival_status, Recipientgender) |>
+data_clean_aug|>
+  count(Disease, survival_status, Recipientgender) |>
   ggplot(aes(x = factor(Disease),
              y = n,
              fill = factor(survival_status))) +
   geom_col(position = 'dodge', alpha = 1) + 
-  scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
+  scale_fill_manual(values = c( "Alive" = "lightblue", "Dead" = "purple")) +
   theme_minimal() + 
   labs(
-    x = 'Survival Status (0 = survivor, 1 = death)', 
-    y = 'Age of the recipient',
+    x = 'Survival Status', 
+    y = 'Number of patients',
     fill = 'Survival Status'
   )
 
@@ -124,57 +92,7 @@ data_clean|>
 
 Important point –\> none one suffering from lymphoma survived.
 
-### Now I will show the survivors among diseases between genders
-
-```{r}
-data_clean |>
-  mutate(
-    Recipientgender = case_when(
-      Recipientgender == 1 ~ "male",
-      Recipientgender == 0 ~ "female"
-    ),
-    Disease = factor(Disease, 
-                     levels = sort(unique(Disease)))
-  ) |>
-  filter(survival_status == 0) |>
-  count(Disease, Recipientgender) |>
-  ggplot(aes(x = Disease, y = n, fill = Recipientgender)) +
-  geom_col(position = "dodge", alpha = 0.5, color = "black") +
-  scale_x_discrete(drop = FALSE) + 
-  theme_minimal() +
-  labs(
-    x = "Type of disease",
-    y = "Number of survivors",
-    fill = "Gender"
-  )
-
-```
-
 ### The number of deaths per disease among genders
-
-```{r}
-data_clean |>
-  mutate(
-    Recipientgender = case_when(
-      Recipientgender == 1 ~ "male",
-      Recipientgender == 0 ~ "female"
-    ),
-    Disease = factor(Disease, 
-                     levels = sort(unique(Disease)))
-  ) |>
-  filter(survival_status == 1) |>
-  count(Disease, Recipientgender) |>
-  ggplot(aes(x = Disease, y = n, fill = Recipientgender)) +
-  geom_col(position = "dodge", alpha = 0.5, color = "black") +
-  scale_x_discrete(drop = FALSE) + 
-  theme_minimal() +
-  labs(
-    x = "Type of disease",
-    y = "Number of survivors",
-    fill = "Gender"
-  )
-
-```
 
 ### Relationship between BMI and survival rate
 
@@ -202,10 +120,60 @@ data_clean |>
   theme_minimal() + 
   labs(
     x = 'Survival Status (0 = survivor, 1 = death)', 
-    y = 'Age of the recipient',
+    y = 'Number of recipients',
     fill = 'Survival Status'
   )
 
 ```
 
 Graph shows that obese patients had the highest mortality, but also the highest survival rate among the different Rbodymass index values. this time we don't differentiate between women and men, since the indicators used are from WHO and it foes not differ among genders.
+
+### Rbodymass index vs survival rate
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+data_clean_aug |>
+  mutate(
+    Rbodymass = case_when(
+      Rbodymass < 18.5 ~ "Underweight",
+      Rbodymass >= 18.5 & Rbodymass < 25 ~ "Normal weight",
+      Rbodymass >= 25 & Rbodymass < 30 ~ "Overweight",
+      Rbodymass >= 30 ~ "Obese"
+    ),
+    Rbodymass = fct_relevel(Rbodymass,
+                                  'Underweight',
+                                  'Normal weight',
+                                  'Overweight',
+                                  'Obeses')
+  ) |>
+  filter(!is.na(Rbodymass)) |>                      
+  count(survival_status, Rbodymass) |>
+  group_by(Rbodymass) |>
+  
+  mutate(Rbodymass_percentage = str_c(round(n / sum(n) * 100, 1), "%")) |>
+  
+  ggplot(aes(x = factor(Rbodymass),
+             y = n,
+             fill = factor(survival_status))) +
+  
+  geom_col(position = 'dodge',
+           alpha = 0.5) + 
+  
+  geom_text(aes(label = Rbodymass_percentage),
+             position = position_dodge(1),
+            vjust = -0.5,
+            size = 3)+
+  
+  theme_minimal()+
+  scale_fill_viridis_d() +
+  labs(
+    x = 'Survival Status', 
+    y = 'Number of recipients',
+    fill = 'Survival Status'
+  )+
+  theme(legend.position = "bottom") 
+
+
+```
