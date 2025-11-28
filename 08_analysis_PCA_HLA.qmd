@@ -3,7 +3,7 @@ title: "08_analysis_PCA_HLA"
 format: html
 ---
 
-## PCA and HLA Matching analysis
+## PCA analysis
 
 Initial analysis of bone-marrow data
 
@@ -51,7 +51,7 @@ pca_plot <- pca_fit |>
   theme(legend.position = "bottom") 
 
 pca_plot
-ggsave("result/pca_plot.png", width = 6 )
+ggsave("results/pca_plot.png", width = 6 )
 
 
 ```
@@ -60,11 +60,11 @@ The PC-scores plot shows that there is no clear separation between the samples b
 
 ```{r}
 # define arrow style for plotting
-arrow_style <- arrow(
-  angle = 20, 
-  ends = "first", 
-  type = "closed", 
-  length = grid::unit(8, "pt"))
+arrow_style <- arrow(angle = 20, 
+                     ends = "first", 
+                     type = "closed", 
+                     length = grid::unit(8, "pt"))
+
 
 # plot rotation matrix
 rotation_plot <- pca_fit |>
@@ -73,12 +73,10 @@ rotation_plot <- pca_fit |>
               names_prefix = "PC", 
               values_from = "value")|>
   ggplot(mapping = aes(PC1, PC2)) +
-  geom_segment(xend = 0, 
-               yend = 0, 
-               arrow = arrow_style) +
+  geom_segment(xend = 0, yend = 0, arrow = arrow_style) +
   geom_text_repel(aes(label = column),
                   size = 3,
-                  colour = "#440154FF",
+                  colour = "blue",
                   hjust = 1,
                   nudge_x = 0.2) +
   labs(title = "Loading Plot") +
@@ -87,7 +85,8 @@ rotation_plot <- pca_fit |>
   theme_minimal() 
 
 rotation_plot
-ggsave("result/rotation_plot.png", width = 6 )
+ggsave("results/rotation_plot.png", width = 6 )
+
 
 ```
 
@@ -95,18 +94,21 @@ The loading plot shows a strong correlation between the CD34+ and CD3 dosage and
 Platelet and neutrophils
 
 ```{r}
+pca_fit |>
+  tidy(matrix = "eigenvalues")
+
 var_plot <- pca_fit |>
   tidy(matrix = "eigenvalues") |>
   mutate(Percentage = percent * 100) |>
   ggplot(mapping = aes(PC, Percentage)) +
-  geom_col(alpha = 0.5, fill = "#440154FF") +
+  geom_col(fill = "blue", alpha = 0.5) +
   scale_x_continuous(breaks = 1:9) +
   theme_minimal() +
   labs(y = "Percentage (%)",
        x = "Principal Component")
 
 var_plot
-ggsave("result/var_plot.png", width = 6 )
+ggsave("results/var_plot.png", width = 6 )
 
 ```
 
@@ -141,10 +143,12 @@ match_plot <- HLA_data |>
   theme(legend.position = "bottom")
 
 match_plot 
-ggsave("result/match_plot.png", width = 6 )
+ggsave("results/match_plot.png", width = 6 )
 
 
 ```
+
+Allele or antigen mismatch
 
 ```{r}
 survival_plot <- ggplot(data = HLA_data, 
@@ -163,7 +167,6 @@ survival_plot <- ggplot(data = HLA_data,
   theme(legend.position = "bottom")
 
 survival_plot 
-ggsave("result/survival_plot.png", width = 6 )
-
+ggsave("results/survival_plot.png", width = 6 )
 
 ```
