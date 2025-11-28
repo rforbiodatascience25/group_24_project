@@ -10,12 +10,13 @@ Loading libraries:
 
 ```{r}
 library(tidyverse)
-library(foreign)
 ```
 
 Loading the data from URL into R:
 
 ```{r}
+#| label: "Load_data"
+
 data_url <- "https://archive.ics.uci.edu/static/public/565/bone+marrow+transplant+children.zip"
 
 #Creating folder for data if not already done
@@ -32,5 +33,4 @@ if( !file.exists(str_c(raw_dir, "bone-marrow.arff")) ){
       destfile = str_c(raw_dir,"bone-marrow.arff")
       )
 }
-
 ```
