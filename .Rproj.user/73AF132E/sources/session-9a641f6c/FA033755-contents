@@ -1,0 +1,110 @@
+---
+title: "04_describe"
+format: html
+editor: visual
+---
+
+## Description of data
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+data_clean_aug <- read_tsv("data/03_dat_aug.tsv.gz")
+```
+
+```{r}
+#function for generating counts and percentages (calls percentage-generating function) 
+N_and_perc_into_table <- function(input_data, variab, output_tab, new_colnames) {
+  variab_tab <- input_data |>
+    group_by(Disease, input_data[,variab]) |>
+    summarise(N_variab = n()) |>
+    pivot_wider(names_from = variab,
+                values_from = N_variab)
+  output_tab <- full_join(output_tab, variab_tab, join_by(Disease))
+  cols_to_perc <- colnames(output_tab[(ncol(output_tab)-length(new_colnames)+1):ncol(output_tab)])
+  output_tab <- Perc_multi(output_tab, cols_to_perc, new_colnames)
+}
+
+#function for generating percentages
+Perc_multi <- function(input_data, column, new_colname) {
+  names_tmp <- paste0(column, "_tmp")
+  input_data |>
+    mutate(across(all_of(column),
+                  ~ str_c(.x, " (", round(.x / N * 100, digits = 1), " %)"),
+                  .names = "{.col}_tmp")
+           )|>
+    rename_with(~ new_colname, all_of(names_tmp)) |>
+    select(!all_of(column))
+}
+```
+
+```{r}
+#create descriptive table containing overall counts for each disease
+Tab_desc <- data_clean_aug |>
+  group_by(Disease) |>
+  summarise(N = n())
+
+#add information on recipient gender
+new_colnames <- c("Female patient", "Male patients")
+Tab_desc <- N_and_perc_into_table(data_clean_aug, "Recipientgender", Tab_desc, new_colnames)
+
+#add information on median donor age and recipient age
+age <- data_clean_aug |>
+  group_by(Disease) |>
+  summarise("Median donor age" = round(median(Donorage), digits = 0),
+            "Median recipient age" = round(median(Recipientage), digits = 0))
+Tab_desc <- full_join(Tab_desc, age, join_by(Disease))
+
+#add information on antigen matches
+new_colnames <- c("1 antigen mismatch", "2 antigen mismatches", 
+                  "3 antigen mismatches", "0 antigen mismatches", 
+                  "No information on antigen mismatch")
+Tab_desc <- N_and_perc_into_table(data_clean_aug, "Antigen", Tab_desc, new_colnames)
+Tab_desc <- Tab_desc |> 
+  relocate("0 antigen mismatches", .after = "Median recipient age")
+
+#add information on relapses
+new_colnames <- c("No relapse", "Relapse")
+Tab_desc <- N_and_perc_into_table(data_clean_aug, "Relapse", Tab_desc, new_colnames)
+
+#add information on graft vs host
+new_colnames <- c("No acute graft vs host", "Acute graft vs host")
+Tab_desc <- N_and_perc_into_table(data_clean_aug, "IIIV", Tab_desc, new_colnames)
+
+#add information on survival status
+new_colnames <- c("Alive patients", "Dead patients")
+Tab_desc <- N_and_perc_into_table(data_clean_aug, "survival_status", Tab_desc, new_colnames)
+
+#add information on follow-up time for alive patients
+FU_time <- data_clean_aug |> 
+  group_by(Disease) |>
+  filter(survival_status == "Alive") |>
+  summarise("Median follow-up time for alive patients" = median(survival_time))
+Tab_desc <- full_join(Tab_desc, FU_time, join_by(Disease))
+
+#add information on survival time for deceased patients
+surv_time <- data_clean_aug |> 
+  group_by(Disease) |>
+  filter(survival_status == "Dead") |>
+  summarise("Median survival time for deceased patients" = median(survival_time))
+Tab_desc <- full_join(Tab_desc, surv_time, join_by(Disease))
+
+#Replace NAs for counted variables with 0 (0.0 %)
+Tab_desc <- Tab_desc |>
+  replace_na(list("1 antigen mismatch" = "0 (0.0 %)", 
+                  "3 antigen mismatches" = "0 (0.0 %)",
+                  "No information on antigen mismatch" = "0 (0.0 %)",
+                  "Alive patients" = "0 (0.0 %)"))
+
+Tab_desc_transp <- transpose(Tab_desc)
+
+Tab_desc_tib <- tibble(Tab_desc_transp[[1]], Tab_desc_transp[[2]], Tab_desc_transp[[3]],
+                       Tab_desc_transp[[4]], Tab_desc_transp[[5]],) 
+rownames(Tab_desc_tib) <- colnames(Tab_desc)
+colnames(Tab_desc_tib) <- Tab_desc$Disease
+Tab_desc_tib <- Tab_desc_tib |>
+  filter(ALL != "ALL")
+print(format(Tab_desc_tib, justify = "right"))
+```

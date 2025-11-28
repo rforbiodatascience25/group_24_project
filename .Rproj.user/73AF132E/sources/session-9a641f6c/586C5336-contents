@@ -1,0 +1,19 @@
+---
+title: "00_all"
+format: 
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## Execute all scripts
+
+::: content-hidden
+{{< embed 01_load.qmd echo=false >}}
+
+{{< embed 02_clean.qmd echo=false >}}
+
+{{< embed 03_augment.qmd echo=false >}}
+
+{{< embed 04_describe.qmd echo=false >}}
+:::

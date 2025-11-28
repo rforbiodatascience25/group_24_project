@@ -1,0 +1,113 @@
+---
+title: "04_describe"
+format: 
+  html:
+    embed-resources: true
+project: 
+  output-dir: "results"
+editor: visual
+---
+
+## Description of data
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(knitr)
+source("99_proj_func.R")
+```
+
+```{r}
+#| message: false
+
+data_clean_aug <- read_tsv("/data/03_dat_aug.tsv.gz")
+```
+
+```{r}
+#| message: false
+#| warning: false
+
+#counted variables and their percentages are generated using the
+#functions N_into_table and Perc, respectivelty
+
+#create descriptive table containing overall counts for each disease
+Tab_desc <- data_clean_aug |>
+  group_by(Disease) |>
+  summarise(N = n())
+
+#add information on recipient gender
+Tab_desc <- N_into_table(data_clean_aug, "Recipientgender", Tab_desc)
+Tab_desc <- Perc(Tab_desc, Female, "Female patients")
+Tab_desc <- Perc(Tab_desc, Male, "Male patients")
+
+#add information on median donor age and recipient age
+age <- data_clean_aug |>
+  group_by(Disease) |>
+  summarise("Median donor age" = round(median(Donorage), digits = 0),
+            "Median recipient age" = round(median(Recipientage), digits = 0))
+Tab_desc <- full_join(Tab_desc, age, join_by(Disease))
+
+#add information on antigen matches
+Tab_desc <- N_into_table(data_clean_aug, "Antigen", Tab_desc)
+Tab_desc <- Perc(Tab_desc, `0 MM`, "0 antigen mismatches")
+Tab_desc <- Perc(Tab_desc, `1 MM`, "1 antigen mismatch")
+Tab_desc <- Perc(Tab_desc, `2 MM`, "2 antigen mismatches")
+Tab_desc <- Perc(Tab_desc, `3 MM`, "3 antigen mismatches")
+Tab_desc <- Perc(Tab_desc, `NA`, "No information on antigen mismatch")
+
+#add information on relapses
+Tab_desc <- N_into_table(data_clean_aug, "Relapse", Tab_desc)
+Tab_desc <- Perc(Tab_desc, Yes, "Relapse")
+Tab_desc <- Perc(Tab_desc, No, "No relapse")
+
+#add information on graft vs host
+Tab_desc <- N_into_table(data_clean_aug, "IIIV", Tab_desc)
+Tab_desc <- Perc(Tab_desc, Yes, "Acute graft vs host")
+Tab_desc <- Perc(Tab_desc, No, "No acute graft vs host")
+
+#add information on time until developing acute graft vs host (column timetoaGvHD_III_IV)
+
+#add information on survival status
+Tab_desc <- N_into_table(data_clean_aug, "survival_status", Tab_desc)
+Tab_desc <- Perc(Tab_desc, Alive, "Alive patients")
+Tab_desc <- Perc(Tab_desc, Dead, "Deceased patients")
+
+#add information on follow-up time for alive patients
+FU_time <- data_clean_aug |> 
+  group_by(Disease) |>
+  filter(survival_status == "Alive") |>
+  summarise("Median follow-up time for alive patients" = median(survival_time))
+Tab_desc <- full_join(Tab_desc, FU_time, join_by(Disease))
+
+#add information on survival time for deceased patients
+surv_time <- data_clean_aug |> 
+  group_by(Disease) |>
+  filter(survival_status == "Dead") |>
+  summarise("Median survival time for deceased patients" = median(survival_time))
+Tab_desc <- full_join(Tab_desc, surv_time, join_by(Disease))
+
+#Replace NAs for counted variables with 0 (0.0 %)
+Tab_desc <- Tab_desc |>
+  replace_na(list("1 antigen mismatch" = "0 (0.0 %)", 
+                  "3 antigen mismatches" = "0 (0.0 %)",
+                  "No information on antigen mismatch" = "0 (0.0 %)",
+                  "Alive patients" = "0 (0.0 %)"))
+
+#Transpose table
+Tab_desc_transp <- transpose(Tab_desc)
+Tab_desc_tib <- tibble(Tab_desc_transp[[1]], Tab_desc_transp[[2]], Tab_desc_transp[[3]],
+                       Tab_desc_transp[[4]], Tab_desc_transp[[5]]) 
+
+#Set names of transposed table
+Tab_desc_tib <- as.data.frame(Tab_desc_tib)
+rownames(Tab_desc_tib) <- colnames(Tab_desc)
+colnames(Tab_desc_tib) <- Tab_desc$Disease
+
+#Remove disease row, which is now used as column names in the table
+Tab_desc_tib <- Tab_desc_tib |>
+  filter(ALL != "ALL")
+
+#Show table
+kable(Tab_desc_tib, row.names = TRUE, format = "html", align = "r")
+```

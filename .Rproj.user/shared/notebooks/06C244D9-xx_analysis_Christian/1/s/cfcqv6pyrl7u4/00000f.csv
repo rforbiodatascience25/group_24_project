@@ -1,0 +1,3 @@
+"0","data_clean_aug <- read_tsv(""../data/03_dat_aug.tsv.gz"")"
+"2","Error: '../data/03_dat_aug.tsv.gz' does not exist in current working directory ('/net/pupil1/home/people/s150251/projects/group_24_project').
+"

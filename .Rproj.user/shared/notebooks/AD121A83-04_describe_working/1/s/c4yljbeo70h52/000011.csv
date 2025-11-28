@@ -1,0 +1,16 @@
+"0",""
+"0","Trib <- tribble("
+"0","  ~Parameter, ~ALL, ~ALL, ~chronic, ~lymphoma, ~nonmalignant,"
+"0","  #sum$ |> pull(N[1]), sum |> pull(N[2]), sum |> pull(N[3]), sum |> pull(N[4]), sum |> pull(N[5])"
+"0","  ""N"", sum[1], sum[2], sum[3], sum[4], sum[5],"
+"0","  #""Male"", Ma"
+"0","  #sum[1:5]"
+"0","  #sum_gender$Female[1:5],"
+"0","  #sum_gender$Male[1:5]"
+"0",")"
+"1","[1m[33mError[39m in `sum[3]`:[22m
+[33m![39m Can't subset columns past the end.
+[38;5;232m[36mℹ[38;5;232m Location 3 doesn't exist.
+[36mℹ[38;5;232m There are only 2 columns.[39m
+[90mRun `]8;;x-r-run:rlang::last_trace()rlang::last_trace()]8;;` to see where the error occurred.[39m
+"

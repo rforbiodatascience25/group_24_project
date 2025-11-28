@@ -1,0 +1,186 @@
+---
+title: "Untitled"
+format: html
+editor: visual
+---
+
+## Clean data
+
+Takes the bone-marrow.arff and creates a tidy tibble
+
+### Load libraries
+
+```{r}
+library("tidyverse")
+```
+
+### Clean data
+
+```{r}
+data_clean <- read_tsv('data/02_dat_clean.tsv.gz')
+```
+
+### Create graph(s) and visual to explain relation with recipient age, disease type, and BMI
+
+### Recipient age
+
+```{r}
+data_lanjing_project <- data_clean |>
+  select(Recipientgender, Disease, Recipientage, Rbodymass, survival_time, survival_status) |>
+  mutate( Recipientgender = case_when(
+    Recipientgender == 1 ~ 'male',
+    Recipientgender == 0 ~ 'female'
+  )) |> count(Recipientgender, survival_status) |>
+  
+    ggplot(aes(x = Recipientgender, y = n, fill = factor(survival_status))) +
+  geom_col(position = "dodge", color='black', alpha = 1) +
+  scale_fill_manual(values = c("0" = "lightblue", "1" = "purple")) +
+  theme_minimal() +
+  theme(legend.position = 'bottom')+
+  labs(x = "Gender",
+       y = "Number of survivors/deaths",
+       fill = "Survival Status")
+
+data_lanjing_project
+  
+
+```
+
+Note for me: A **factor** in R is a variable made of **categories**, not numbers. We use `factor(survival_status)` so ggplot treats **0 (alive)** and **1 (dead)** as **separate groups** and gives each one a different color.
+
+```{r}
+data_clean|>
+  mutate(
+    Recipientgender = case_when(
+      Recipientgender == 1 ~ 'male',
+      Recipientgender == 0 ~ 'female')
+  ) |>
+  ggplot(aes(x = factor(Disease), y = Recipientage, fill = factor(survival_status))) +
+  geom_boxplot(alpha = 1) + 
+  scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
+  theme_minimal() + 
+  labs(
+    x = 'Survival Status (0 = survivor, 1 = death)', 
+    y = 'Age of the recipient',
+    fill = 'Survival Status'
+  )
+
+
+```
+
+This graphs visualizes the survival rate between genders among their ages. X-axis represents the difference between females and males, and the survival status following color-code, lightblue = survivor; purple = death. Y-axis is showing the ages of the patients. From the graph we could conclude that male survive more than women, but still not a big difference between them. Then, seems that in both cases, older patients have higher mortality than young ones.
+
+### Disease type
+
+First I'm doing a plot to see the survival rate against the disease type, without gender difference.
+
+```{r}
+
+data_clean|>
+  mutate(
+    Recipientgender = case_when(
+      Recipientgender == 1 ~ 'male',
+      Recipientgender == 0 ~ 'female')
+  ) |> count(Disease, survival_status, Recipientgender) |>
+  ggplot(aes(x = factor(Disease),
+             y = n,
+             fill = factor(survival_status))) +
+  geom_col(position = 'dodge', alpha = 1) + 
+  scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
+  theme_minimal() + 
+  labs(
+    x = 'Survival Status (0 = survivor, 1 = death)', 
+    y = 'Number of patients',
+    fill = 'Survival Status'
+  )
+
+
+```
+
+Important point –\> none one suffering from lymphoma survived.
+
+### Now I will show the survivors among diseases between genders
+
+```{r}
+data_clean |>
+  mutate(
+    Recipientgender = case_when(
+      Recipientgender == 1 ~ "male",
+      Recipientgender == 0 ~ "female"
+    ),
+    Disease = factor(Disease, 
+                     levels = sort(unique(Disease)))
+  ) |>
+  filter(survival_status == 0) |>
+  count(Disease, Recipientgender) |>
+  ggplot(aes(x = Disease, y = n, fill = Recipientgender)) +
+  geom_col(position = "dodge", alpha = 0.5, color = "black") +
+  scale_x_discrete(drop = FALSE) + 
+  theme_minimal() +
+  labs(
+    x = "Type of disease",
+    y = "Number of survivors",
+    fill = "Gender"
+  )
+
+```
+
+### The number of deaths per disease among genders
+
+```{r}
+data_clean |>
+  mutate(
+    Recipientgender = case_when(
+      Recipientgender == 1 ~ "male",
+      Recipientgender == 0 ~ "female"
+    ),
+    Disease = factor(Disease, 
+                     levels = sort(unique(Disease)))
+  ) |>
+  filter(survival_status == 1) |>
+  count(Disease, Recipientgender) |>
+  ggplot(aes(x = Disease, y = n, fill = Recipientgender)) +
+  geom_col(position = "dodge", alpha = 0.5, color = "black") +
+  scale_x_discrete(drop = FALSE) + 
+  theme_minimal() +
+  labs(
+    x = "Type of disease",
+    y = "Number of deaths",
+    fill = "Gender"
+  )
+
+```
+
+### Relationship between BMI and survival rate
+
+```{r}
+data_clean |>
+  mutate(
+    Recipientgender = case_when(
+      Recipientgender == 1 ~ "male",
+      Recipientgender == 0 ~ "female"
+    ),
+      Rbodymass = case_when(
+        Rbodymass < 18.5 ~ "Underweight",
+        Rbodymass >= 18.5 & Rbodymass < 25 ~ "Normal weight",
+        Rbodymass >= 25 & Rbodymass < 30 ~ "Overweight",
+        Rbodymass >= 30 ~ "Obese"))|>
+  
+  count(survival_status, Rbodymass) |>
+  ggplot(aes(x = factor(Rbodymass),
+             y = n,
+             fill = factor(survival_status))) +
+  geom_col(position = 'dodge',
+           alpha = 1,
+           color = 'black') + 
+  scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
+  theme_minimal() + 
+  labs(
+    x = 'Survival Status (0 = survivor, 1 = death)', 
+    y = 'Number of recipients',
+    fill = 'Survival Status'
+  )
+
+```
+
+Graph shows that obese patients had the highest mortality, but also the highest survival rate among the different Rbodymass index values. this time we don't differentiate between women and men, since the indicators used are from WHO and it foes not differ among genders.
