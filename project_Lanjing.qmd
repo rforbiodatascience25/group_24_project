@@ -35,6 +35,10 @@ data_lanjing_project <- data_clean |>
     ggplot(aes(x = Recipientgender, y = n, fill = factor(survival_status))) +
   geom_col(position = "dodge", color='black', alpha = 1) +
   scale_fill_manual(values = c("0" = "lightblue", "1" = "purple")) +
+    ggplot(aes(x = Recipientgender, y = n, fill = survival_status)) +
+  geom_col(position = "dodge", alpha = 0.5) +
+  
+ scale_fill_viridis_d() +
   theme_minimal() +
   theme(legend.position = 'bottom')+
   labs(x = "Gender",
@@ -61,9 +65,14 @@ data_clean|>
   theme_minimal() + 
   labs(
     x = 'Survival Status (0 = survivor, 1 = death)', 
+  labs( 
+    title = 'Recipient',
+    x = 'Survival Status', 
     y = 'Age of the recipient',
     fill = 'Survival Status'
   )
+
+  ggsave('Recipient.png', width = 6)
 
 
 ```
@@ -171,9 +180,9 @@ data_clean |>
              y = n,
              fill = factor(survival_status))) +
   geom_col(position = 'dodge',
-           alpha = 1,
+           alpha = 0.5,
            color = 'black') + 
-  scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
+  scale_fill_viridis_d() +
   theme_minimal() + 
   labs(
     x = 'Survival Status (0 = survivor, 1 = death)', 
@@ -205,7 +214,7 @@ data_clean |>
                                   'Underweight',
                                   'Normal weight',
                                   'Overweight',
-                                  'Obeses')
+                                  'Obese')
   ) |>
   filter(!is.na(Rbodymass)) |>                      
   count(survival_status, Rbodymass) |>
@@ -233,5 +242,14 @@ data_clean |>
     y = 'Number of recipients',
     fill = 'Survival Status'
   )
+    title = 'Rbodymass VS Survival rate',
+    x = 'Survival Status', 
+    y = 'Number of recipients',
+    fill = 'Survival Status'
+  )+
+  theme(legend.position = "bottom") 
+
+ ggsave('Rbodymass.png', width = 6)
+
 
 ```

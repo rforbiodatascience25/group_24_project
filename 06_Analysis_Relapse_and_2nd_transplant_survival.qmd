@@ -1,5 +1,5 @@
 ---
-title: "0X_Analysis_Relapse_and_2nd_transplant_survival"
+title: "06_Analysis_Relapse_and_2nd_transplant_survival"
 format: html
 editor: visual
 ---
@@ -8,18 +8,20 @@ editor: visual
 
 Dataset: *Bone Marrow Transplantation: Children*
 
+*Exporatory Anlysis. Not included in the slides.*
+
 We want to look at the relationship between relapse and secondary transplants in patients and how it affects their odds of survival.
 
 To do this, we look at how many relapsed, needed a second transplant, and how many of them survived and when they where observed. This is done using X variables taken from the cleaned augmented dataset, described in table 1, and then performing an analysis of the relationship between them.
 
 | Variable | Description | Value |
-|:--:|:--:|:--:|
+|:--------:|:-----------:|:-----:|
 
-| `Txpostrelapse` | Second Bone Marrow transplantation after relapse | Yes, No |
-| `Relapse` | Reoccurance of disease | Yes, No |
-| `survival_time` | Time of Observation (Alive) or time of event in days (Dead) | Yes, No |
-| `survival_status` | Survival status | Yes, No |
-| `Diseasegroup` | Type of disease | Malignant, Nonmalignant |
+| `Txpostrelapse` \| Second Bone Marrow transplantation after relapse \| Yes, No \|
+| `Relapse` \| Reoccurance of disease \| Yes, No \|
+| `survival_time` \| Time of Observation (Alive) or time of event in days (Dead) \| Yes, No \|
+| `survival_status` \| Survival status \| Yes, No \|
+| `Diseasegroup` \| Type of disease \| Malignant, Nonmalignant \|
 
 : Table 1: The data used for this analysis is from `03_dat_aug` using these variables:`Txpostrelapse`, `Relapse`, `survival_time`, `survival_status` & `Diseasegroup`.
 
@@ -39,7 +41,7 @@ We then load a subset of the cleaned and augmented data frame as a tibble.
 
 ```{r}
 
-bm_data <- read_tsv(file = "data/03_dat_aug.tsv",
+bm_data <- read_tsv(file = "data/03_dat_aug.tsv.gz",
                             show_col_types = FALSE)
 
 ```
@@ -181,15 +183,13 @@ transplant_surv_data |>
 
 We see a difference in the number of surviving patients when we look at the number of patients receiving a second transplantation, with few surviving after having a relapse.
 
-Patients, who need a second transplantation INSERT STASTISTICS and still have not gone into remission (no relapse) have WRITE OUTCOME (A 50/50-ISH FOR MOW) chance of survival.
+Patients, who need a second transplantation and still have not gone into remission (no relapse) have a 50/50-ish chance of survival.
 
-Patients with relapse have INSERT STATISTICS OF BOTH of surviving.
+Patients with relapse have bad odds of surviving.
 
-Patients, who does not need a second transplant have a better outcome with INSERT STASTITICS surviving.
+Patients, who does not need a second transplant have a better outcome with surviving.
 
-**Outcome:** 2nd transplant seem to help some after relapse, but odds are grim in case of relapse.
-
-*Somehow some are getting a transplant without haveing a relapse, either by getting a second transplantation before disease is fully gone... None survived having a second transplant after reoccurance of disease, only survived getting it before having relapse...*
+**Outcome:** 2nd transplant seem to help some after relapse, but odds are grim in case of relapse. Can't say anything definitivly.
 
 ### Look at 'Diseasegroup' in relation to relapse and survival
 
@@ -243,36 +243,6 @@ malign_surv_data |>
                                    vjust = 1))
 ```
 
-See tendencies... Need something else here...
+Possible next clues:
 
-### Look at 'Disease'? or 'Riskgroup'?
-
-## Random Notes (REMOVE LATER!)
-
-Old plots not edited
-
-100000 -\> used as placeholder for nothing in some columns
-
-Augment (PCA): time_to_aGvHD_III_IV,
-
-lm - function,
-
-Gendermatch -\> ung men prefered, sensitation
-
-HLAmatch
-
-**subdataset**
-
-group together to see if dead or observation
-
--   survival_time
-
-Time of observation (if alive) or time to event (if dead) in days
-
--   survival_status
-
-Survival status (0 - alive, 1 - dead)
-
-psudosample number
-
-first or second transplant
+-   Look at 'Disease'? or 'Riskgroup'?
