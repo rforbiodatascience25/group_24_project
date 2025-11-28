@@ -8,6 +8,8 @@ editor: visual
 
 Dataset: *Bone Marrow Transplantation: Children*
 
+*Exporatory Anlysis. Not included in the slides.*
+
 We want to look at the relationship between relapse and secondary transplants in patients and how it affects their odds of survival.
 
 Variables used:

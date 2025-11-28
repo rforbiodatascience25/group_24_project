@@ -8,6 +8,8 @@ editor: visual
 
 Dataset: *Bone Marrow Transplantation: Children*
 
+*Exporatory Anlysis. Not included in the slides.*
+
 We want to look at the relationship between relapse and secondary transplants in patients and how it affects their odds of survival.
 
 To do this, we look at how many relapsed, needed a second transplant, and how many of them survived and when they where observed. This is done using X variables taken from the cleaned augmented dataset, described in table 1, and then performing an analysis of the relationship between them.
