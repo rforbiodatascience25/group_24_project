@@ -1,4 +1,0 @@
-"0","    peptide_meta_data|> filter(str_length(CDR3b)== 15)|> filter(Allele=='B35:03')|> filter(peptide=='ADAGFIKQY') |> pull(CDR3b) |>  ggseqlogo()  "
-"2","Error in ggseqlogo(pull(filter(filter(filter(peptide_meta_data, str_length(CDR3b) ==  : 
-  could not find function ""ggseqlogo""
-"

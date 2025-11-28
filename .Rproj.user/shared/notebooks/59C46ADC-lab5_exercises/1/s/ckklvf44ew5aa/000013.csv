@@ -1,3 +1,0 @@
-"0","    long_peptide |>"
-"0","    count(k_peptide) |> "
-"0","    slice_max(n, n = 1) "
