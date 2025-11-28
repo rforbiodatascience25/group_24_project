@@ -35,9 +35,9 @@ data_lanjing_project <- data_clean_aug |>
   count(Recipientgender, survival_status) |>
   
     ggplot(aes(x = Recipientgender, y = n, fill = survival_status)) +
-  geom_col(position = "dodge", color='black', alpha = 1) +
+  geom_col(position = "dodge", alpha = 0.5) +
   
-  scale_fill_manual(values = c("Alive" = "lightblue", "Dead" = "purple")) +
+ scale_fill_viridis_d() +
   theme_minimal() +
   theme(legend.position = 'bottom')+
   labs(x = "Gender",
@@ -114,9 +114,9 @@ data_clean |>
              y = n,
              fill = factor(survival_status))) +
   geom_col(position = 'dodge',
-           alpha = 1,
+           alpha = 0.5,
            color = 'black') + 
-  scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
+  scale_fill_viridis_d() +
   theme_minimal() + 
   labs(
     x = 'Survival Status (0 = survivor, 1 = death)', 
