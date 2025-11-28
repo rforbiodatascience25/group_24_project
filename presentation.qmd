@@ -134,11 +134,11 @@ include_graphics(images)
 ## Slide 7
 
 **Include:**
-
+::: {layout-ncol="2"}
 ![](CD34+_dose.png)
 
 ![](CD3+_dose.png)
-
+:::
 ## Slide 8
 
 ::: {layout-ncol="2"}
