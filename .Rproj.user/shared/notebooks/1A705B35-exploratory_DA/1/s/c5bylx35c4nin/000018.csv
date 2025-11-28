@@ -1,7 +1,0 @@
-"0","surv_dis_plot <- bm_data |>"
-"0","  group_by(Disease, survival_status) |>"
-"0","  summarise(N = n()) |>"
-"0","  ggplot(aes(x = Disease, y = N, fill = survival_status)) +"
-"0","  geom_col()"
-"2","`summarise()` has grouped output by 'Disease'. You can override using the `.groups` argument."
-"0","surv_dis_plot"

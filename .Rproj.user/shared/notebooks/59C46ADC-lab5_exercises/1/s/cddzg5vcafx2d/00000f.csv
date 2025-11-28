@@ -1,8 +1,0 @@
-"0","new_meta_data <- meta_data |> select(Experiment, Cohort, Gender, Age, Race, matches('^HLA-[ABC]')) |> rename( "
-"0","  A1 = 'HLA-A...9',"
-"0","  A2 = 'HLA-A...10',"
-"0","  B1 = 'HLA-B...11',"
-"0","  B2 = 'HLA-B...12',"
-"0","  C1 = 'HLA-C...13',"
-"0","  C2 = 'HLA-C...14')"
-"0","new_meta_data"

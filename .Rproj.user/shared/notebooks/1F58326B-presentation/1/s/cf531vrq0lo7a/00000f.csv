@@ -1,5 +1,0 @@
-"0","#| echo: false"
-"0","Descriptive_table <- read.table(""Descriptive_table_present.txt"", sep = "","", header = TRUE, row.names = 1)"
-"2","Warning: cannot open file 'Descriptive_table_present.txt': No such file or directory"
-"2","Error in file(file, ""rt"") : cannot open the connection
-"

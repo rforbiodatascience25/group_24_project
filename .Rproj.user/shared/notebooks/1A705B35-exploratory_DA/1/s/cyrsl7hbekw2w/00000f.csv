@@ -1,8 +1,0 @@
-"0","#Loading the .arff file into R using the foreign library"
-"0","bm_data <- read.arff(""data/_raw/bone-marrow.arff"")"
-"2","Warning: line 1 appears to contain an embedded nul"
-"2","Warning: number of items read is not a multiple of the number of columns"
-"2","Warning: embedded nul(s) found in input"
-"0","#Removing the last line, which does not contain data"
-"0","bm_data <- bm_data |> "
-"0","  filter(Stemcellsource != """")"

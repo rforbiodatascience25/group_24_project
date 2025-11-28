@@ -1,7 +1,0 @@
-"0","HLA_data <- bm_data |>"
-"0","  select(HLAmatch, HLAmatch, HLAmismatch, Antigen, Alel, HLAgrI, survival_time, survival_status) |> "
-"0","  mutate(HLAmatch = fct_relevel(HLAmatch, c(""7/10"", ""8/10"", ""9/10"", ""10/10"")))"
-"0",""
-"0","HLA_data |>"
-"0","  count(HLAmatch, survival_status) |>"
-"0","  group_by(HLAmatch)"

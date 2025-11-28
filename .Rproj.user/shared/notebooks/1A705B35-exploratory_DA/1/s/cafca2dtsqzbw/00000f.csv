@@ -1,5 +1,0 @@
-"0","donorage_surv <- bm_data |>"
-"0","  mutate(surv_stat_fact = factor(survival_status, levels = c(0,1))) |>"
-"0","  ggplot(aes(x = surv_stat_fact, y = Donorage)) +"
-"0","  geom_boxplot()"
-"0","donorage_surv"
