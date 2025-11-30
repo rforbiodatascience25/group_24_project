@@ -24,7 +24,9 @@ data_clean <- read_tsv('data/03_dat_aug.tsv.gz')
 
 ## 3.1. CD34+ ANALYSIS
 
-**Description**:
+**Description**: The visualitzation presented is a Scatter Plot generated using ggplot2. It ilustrates the relationship between the administered CD34+ cell dose and post-transplant survival time specifically for patients with a recorded survival status of Dead.
+
+This plot shows a very weak and highly uncertain positive correlation between the CD34+ cell dose ans survival confirmed by the hight data dispersion and the wide confidence interval of the regression line.
 
 ```{r}
 
@@ -43,7 +45,7 @@ ggplot(data,
 
 ```
 
-**Description** :
+**Description** : This plot revealed a slightly higher median CD34+ dose in the 'Alive' group compared to the 'Dead' group. While it suggest a marginal benefit od a higher dose, a formal statistical testing its required.
 
 ```{r}
 data_clean |>
@@ -63,9 +65,7 @@ ggsave('CD34+_dose.png', width = 6)
 
 ## 3.2. CD3 ANALYSIS
 
-**Description**:
-
-CD3+ case (without filtering)
+**Description**: This plot reveals findings analogous to the CD34+ analysis. The linear regression models exhibits a negligible positive slope, indicating a statistically weak and highly uncertain correlation where increased CD3+ dose is barely associated with longer survival. It shows a extremely wide confidence interval which demostrates high data variability and confirm that CD3+ dose is not a reliable predictor of survival time.
 
 ```{r}
 
@@ -85,7 +85,7 @@ ggplot(data,
 
 ```
 
-**Description** :
+**Description** : This boxplot compares the CD3+ cell dose between surviving and non-surviving patients. The median CD3+ dose is notably higher in Alive group. This visual evidence suggest that the CD3+ cell dose is more strongly associated with survival status that the previously analyzed CD34+ dose, positioning it as a potentially more important factor in predicting a successful outcome.
 
 ```{r}
 
@@ -157,52 +157,10 @@ ggplot(data,
     x = 'Doses of CD3+', 
     y = 'Survival time (days)',
     color = 'cGvHD extense'
-  )+
+  ) +
   theme_minimal() +
-   scale_fill_viridis_d() +
+  scale_fill_viridis_d() +
   geom_smooth(aes(group = extcGvHD), 
               method = 'lm', 
               se = FALSE)
-```
-
-```{r}
-
-data <- data_clean |>
-  filter(survival_status == 'Dead', !is.na(extcGvHD))
-  
-
-ggplot(data, 
-       aes(x = CD3dkgx10d8, 
-           y = survival_time, 
-           color = factor(aGvHDIIIIV))) + 
-  geom_point(size = 3, alpha = 0.7) + 
-  scale_fill_viridis_d() +
-  geom_smooth(aes(group = aGvHDIIIIV), 
-              method = 'lm', 
-              se = FALSE) +
-  theme_minimal() 
-```
-
-## 4. CMV VIRUS
-
-### 4.1 .Mixed plot between survival and non-survival groupsd:
-
-```{r}
-
-data_new <- data_clean |>
-  filter(!is.na(CMVstatus), !is.na(survival_time))
-
-ggplot(data_new, aes(
-  x = as.factor(CMVstatus), 
-  y = survival_time,
-  fill = as.factor(CMVstatus))) + 
-  geom_boxplot() +
-  geom_jitter(width = 0.2, alpha = 0.5) +
-  facet_wrap(~survival_status) +  # separate between survival and deceasedy pa
-  labs(title = "Survival time by CMV compatibility and survival status",
-       x = "CMV Compatibility",
-       y = "Survival time (days)",
-       fill = "CMVstatus") +
-  theme_minimal()
-
 ```
