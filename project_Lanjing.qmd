@@ -36,8 +36,16 @@ data_lanjing_project <- data_clean_aug |>
   
     ggplot(aes(x = Recipientgender, y = n, fill = survival_status)) +
   geom_col(position = "dodge", color='black', alpha = 1) +
+<<<<<<< HEAD
   
   scale_fill_manual(values = c("Alive" = "lightblue", "Dead" = "purple")) +
+=======
+  scale_fill_manual(values = c("0" = "lightblue", "1" = "purple")) +
+    ggplot(aes(x = Recipientgender, y = n, fill = survival_status)) +
+  geom_col(position = "dodge", alpha = 0.5) +
+  
+ scale_fill_viridis_d() +
+>>>>>>> 85203e1896de9e445e2437858306d4b0c88c7458
   theme_minimal() +
   theme(legend.position = 'bottom')+
   labs(x = "Gender",
@@ -56,11 +64,19 @@ data_clean_aug|>
   scale_fill_viridis_d() +
   theme_minimal() + 
   labs(
+<<<<<<< HEAD
+=======
+    x = 'Survival Status (0 = survivor, 1 = death)', 
+  labs( 
+    title = 'Recipient',
+>>>>>>> 85203e1896de9e445e2437858306d4b0c88c7458
     x = 'Survival Status', 
     y = 'Age of the recipient',
     fill = 'Survival Status'
   )+
     theme(legend.position = "bottom") 
+
+  ggsave('Recipient.png', width = 6)
 
 
 ```
@@ -114,9 +130,9 @@ data_clean |>
              y = n,
              fill = factor(survival_status))) +
   geom_col(position = 'dodge',
-           alpha = 1,
+           alpha = 0.5,
            color = 'black') + 
-  scale_fill_manual(values = c( "0" = "lightblue", "1" = "purple")) +
+  scale_fill_viridis_d() +
   theme_minimal() + 
   labs(
     x = 'Survival Status (0 = survivor, 1 = death)', 
@@ -146,7 +162,7 @@ data_clean_aug |>
                                   'Underweight',
                                   'Normal weight',
                                   'Overweight',
-                                  'Obeses')
+                                  'Obese')
   ) |>
   filter(!is.na(Rbodymass)) |>                      
   count(survival_status, Rbodymass) |>
@@ -172,8 +188,21 @@ data_clean_aug |>
     x = 'Survival Status', 
     y = 'Number of recipients',
     fill = 'Survival Status'
+<<<<<<< HEAD
   )+
   theme(legend.position = "bottom") 
 
+=======
+  )
+    title = 'Rbodymass VS Survival rate',
+    x = 'Survival Status', 
+    y = 'Number of recipients',
+    fill = 'Survival Status'
+  )+
+  theme(legend.position = "bottom") 
+
+ ggsave('Rbodymass.png', width = 6)
+
+>>>>>>> 85203e1896de9e445e2437858306d4b0c88c7458
 
 ```
