@@ -99,7 +99,7 @@ kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 
 ## PCA analysis
 
-**Include:** (Exploratory Analysis, PCA)
+**Include:** (Exploratory Analysis, PCA) 
 
 ::: {layout-ncol="2"}
 ![](../results/pca_plot.png)
