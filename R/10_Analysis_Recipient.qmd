@@ -11,13 +11,17 @@ Takes the bone-marrow.arff and creates a tidy tibble
 ### Load libraries
 
 ```{r}
+#| message: false
 library("tidyverse")
+library("here")
+library("dplyr")
+library("ggplot2")
 ```
 
 ### Clean data
 
 ```{r}
-data_clean_aug <- read_tsv('data/03_dat_aug.tsv.gz')
+data_clean_aug <- read_tsv(here('data/03_dat_aug.tsv.gz'))
 ```
 
 ### Create graph(s) and visual to explain relation with recipient age, disease type, and BMI
@@ -59,7 +63,7 @@ data_clean_aug |>
     fill = 'Survival Status'
   )
 
-  ggsave('Recipient.png', width = 6)
+  ggsave(here('results/Recipient.png'), width = 6)
 
 
 ```
@@ -80,7 +84,7 @@ data_clean_aug |> count(Disease, survival_status, Recipientgender) |>
     scale_fill_viridis_d() +
   theme_minimal() + 
   labs(
-    x = 'Survival Status (0 = survivor, 1 = death)', 
+    x = 'Survival Status', 
     y = 'Number of patients',
     fill = 'Survival Status'
   )
@@ -141,8 +145,7 @@ data_clean_aug |>
 Graph shows that obese patients had the highest mortality, but also the highest survival rate among the different Rbodymass index values. this time we don't differentiate between women and men, since the indicators used are from WHO and it foes not differ among genders.
 
 ```{r}
-library(dplyr)
-library(ggplot2)
+
 
 data_clean_aug |>
   mutate(
@@ -186,7 +189,7 @@ data_clean_aug |>
   ) +
   theme(legend.position = "bottom")
 
-ggsave("Rbodymass.png", width = 6)
+ggsave(here("results/Rbodymass.png"), width = 6)
 
 
 ```
