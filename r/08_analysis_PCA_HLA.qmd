@@ -10,6 +10,9 @@ Initial analysis of bone-marrow data
 #### Load libraries and data
 
 ```{r}
+#| message: false
+#| warning: false
+
 library(tidyverse)
 library(broom)
 library(ggrepel)
@@ -18,7 +21,7 @@ library(patchwork)
 library(here)
 
 bm_data <- read_tsv(file = here("data/03_dat_aug.tsv.gz"), 
-                    show_col_types = FALSE, na = "100000")  |>
+                    show_col_types = FALSE, na = "1000000")  |>
   mutate(across(c(1:2, 4:22, 24:26, 35), factor)) |>
   mutate(across(c(3,23,27:34), as.integer)) |>
   select(- time_to_aGvHD_III_IV) |>
@@ -90,8 +93,9 @@ rotation_plot
 
 ```
 
-The loading plot shows a strong correlation between the CD34+ and CD3 dosage and the first principal component (PC1). Whereas recipient age and body mass are mainly correlated to PC1, but are also somewhat correlated with PC2.\
-Platelet and neutrophils
+The loading plot shows a strong correlation between the CD34+ and CD3 dosage and the first principal component (PC1). Whereas recipient age and body mass are mainly correlated to PC1, but are also somewhat correlated with the second principal component (PC2).\
+Platelet- and neutrophil recovery and the ratio between CD3 and CD34+ are mainly correlated with PC2.\
+The variation in donor age and survival time are poorly correlated with both principal components.
 
 ```{r}
 var_plot <- pca_fit |>
@@ -170,9 +174,9 @@ The PC-scores plot shows that there is no clear separation between the samples b
 ### Save plots
 
 ```{r}
-ggsave(here("results/pca_plot.png"), width = 6, plot = pca_plot)
-ggsave(here("results/rotation_plot.png"), width = 6, plot = rotation_plot)
-ggsave(here("results/var_plot.png"), width = 6, plot = var_plot)
-ggsave(here("results/match_plot.png"), width = 6, plot = match_plot)
-ggsave(here("results/survival_plot.png"), width = 6, plot = survival_plot)
+ggsave(here("results/plots/pca_plot.png"), width = 6, plot = pca_plot)
+ggsave(here("results/plots/rotation_plot.png"), width = 6, plot = rotation_plot)
+ggsave(here("results/plots/var_plot.png"), width = 6, plot = var_plot)
+ggsave(here("results/plots/match_plot.png"), width = 6, plot = match_plot)
+ggsave(here("results/plots/survival_plot.png"), width = 6, plot = survival_plot)
 ```

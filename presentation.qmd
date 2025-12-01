@@ -101,9 +101,15 @@ kable(Descriptive_table, row.names = TRUE, format = "html", align = "r")
 
 ## Slide 5
 
-**Include:** (Exploratory Analysis) ::: {layout-ncol="2"} ![](PCA_plots.png)
+**Include:** (Exploratory Analysis)
 
-![](rotation_plot.png) :::
+::: {layout-ncol="2"} 
+
+![](results/plots/pca_plot.png)
+
+![](results/plots/rotation_plot.png)
+
+:::
 
 ## Slide 6
 
@@ -145,6 +151,19 @@ The bar plot reveals the relationship between the BMI with survival rate. It sho
 
 -   No clear connection between time for neutrophil or platelet recovery and survival time
 -   Interpretation should be aware of few data points and influence of outliers
+
+
+## HLA-matching
+
+::: {layout-ncol="2"} 
+
+![](results/plots/match_plot.png)
+
+![](results/plots/survival_plot.png)
+
+:::
+
+
 
 ## Slide 9
 
