@@ -31,3 +31,10 @@
 -   Student number: s204637
 
 -   GitHub username: PernilleRenkwitz
+
+
+
+### Data Retrieveal 
+
+All scripts and data retriveal i done from the 00_all.qmd file. 
+The presentation summarizing the analysis can be found in the doc folder. 
