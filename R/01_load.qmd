@@ -25,7 +25,7 @@ data_url <- "https://archive.ics.uci.edu/static/public/565/bone+marrow+transplan
 #Creating folder for data if not already done
 raw_dir <- here("data/_raw/")
 if( !dir.exists(raw_dir) ){
-  dir.create(path = "data")
+  dir.create(path = here("data"))
   dir.create(path = raw_dir)
 }
 
