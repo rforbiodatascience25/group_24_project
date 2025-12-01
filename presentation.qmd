@@ -101,12 +101,9 @@ kable(Descriptive_table, row.names = TRUE, format = "html", align = "r")
 
 ## Slide 5
 
-**Include:** (Exploratory Analysis)
-::: {layout-ncol="2"}
-![](PCA_plots.png)
+**Include:** (Exploratory Analysis) ::: {layout-ncol="2"} ![](PCA_plots.png)
 
-![](rotation_plot.png)
-:::
+![](rotation_plot.png) :::
 
 ## Slide 6
 
@@ -126,20 +123,20 @@ The boxplot plot compares the age distribution of the recipients among the diffe
 
 The bar plot reveals the relationship between the BMI with survival rate. It showed that survival decreases while BMI increases. Underweight patients had the highest amount of survivors, meanwhile, the obese group was the only category which mortality exceeded survival.
 
-```{r}
-library(knitr)
+::: {layout-ncol="2"}
+![](Recipient.png)
 
-images <- c("Recipient age, Disease type VS survival status boxplot.png", "Rbodymass inxed VS survival status.png")
-include_graphics(images)
-
-```
+![](Rbodymass.png)
+:::
 
 ## Slide 7
 
 **Include:**
+::: {layout-ncol="2"}
+![](CD34+_dose.png)
 
--   analysis
-
+![](CD3+_dose.png)
+:::
 ## Slide 8
 
 ::: {layout-ncol="2"}
@@ -155,11 +152,9 @@ include_graphics(images)
 
 ## Slide 9
 
-::: {layout-ncol="2"}
-![](match_plot.png)
+**Include:**
 
-![](survival_plot.png)
-:::
+-   Discussion
 
 ## Slide 10
 
