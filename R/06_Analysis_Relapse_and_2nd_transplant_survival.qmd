@@ -33,6 +33,7 @@ We start by loading the relevant libraries.
 
 ```{r}
 library(tidyverse)
+library(here)
 #library("table1")
 
 ```
@@ -41,7 +42,7 @@ We then load a subset of the cleaned and augmented data frame as a tibble.
 
 ```{r}
 
-bm_data <- read_tsv(file = "data/03_dat_aug.tsv.gz",
+bm_data <- read_tsv(file = here("data/03_dat_aug.tsv.gz"),
                             show_col_types = FALSE)
 
 ```
