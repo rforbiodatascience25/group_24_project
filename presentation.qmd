@@ -97,12 +97,12 @@ kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 
 ## Slide 5
 
-**Include:** (Exploratory Analysis)
+**Include:** (Exploratory Analysis, PCA)
 
 ::: {layout-ncol="2"}
-![](results/plots/pca_plot.png)
+![](results/pca_plot.png)
 
-![](results/plots/rotation_plot.png)
+![](results/rotation_plot.png)
 :::
 
 ## Recipientage, Disease type, Rbodymass index VS Survival rate
@@ -145,9 +145,9 @@ The bar plot reveals the relationship between the BMI with survival rate. It sho
 ## HLA-matching
 
 ::: {layout-ncol="2"}
-![](results/plots/match_plot.png)
+![](results/match_plot.png)
 
-![](results/plots/survival_plot.png)
+![](results/survival_plot.png)
 :::
 
 ## Slide 9
