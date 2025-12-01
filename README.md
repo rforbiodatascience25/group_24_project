@@ -38,3 +38,4 @@
 
 All scripts and data retriveal is done from the 00_all.qmd file. <br>
 The presentation summarizing the analysis can be found in the doc folder and needs to rendered seperately. 
+Link to the presentation: https://github.com/rforbiodatascience25/group_24_project/blob/main/doc/presentation.html
