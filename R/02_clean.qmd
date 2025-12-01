@@ -22,7 +22,7 @@ library(here)
 
 ```{r}
 # Get variable names and clean them
-raw_data <- read_lines("data/_raw/bone-marrow.arff")
+raw_data <- read_lines(here("data/_raw/bone-marrow.arff"))
 var_names <- raw_data |>
   str_subset("@attribute") |>
   str_remove_all(pattern = "@attribute|\\{.*\\}|numeric|\\s")
@@ -33,7 +33,7 @@ meta_data <- raw_data |>
   str_remove(pattern = "%")
 
 # Create tibble
-data_clean <- read_delim("data/_raw/bone-marrow.arff", 
+data_clean <- read_delim(here("data/_raw/bone-marrow.arff"), 
                       delim = ",", 
                       # Start after line that starts with "@data"
                       skip = str_which(raw_data, pattern = "^@data")+1,
@@ -44,7 +44,7 @@ data_clean <- read_delim("data/_raw/bone-marrow.arff",
   mutate(across(c(1:2, 4:22, 24:28, 37), factor))
 
 # write data to gzip tsv file 
-data_clean |> write_tsv("data/02_dat_clean.tsv.gz")
-meta_data |> write_lines("data/02_metadat_clean.txt.gz")
+data_clean |> write_tsv(here("data/02_dat_clean.tsv.gz"))
+meta_data |> write_lines(here("data/02_metadat_clean.txt.gz"))
 
 ```
