@@ -8,8 +8,6 @@ editor: visual
 fontsize: 14pt
 ---
 
-# Presentation
-
 ```{r}
 library(tidyverse)
 library(knitr)
@@ -34,7 +32,7 @@ Analysis of Biological Factors affecting pediatric Patients subjected to Unmanip
 
 Which biological factors affect patent outcome and how can we ensure a good response?
 
-*group names:*
+*Group names:*
 
 Group 24: Christian, Helena, Lanjing, Inma and Pernille
 
@@ -105,9 +103,15 @@ kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 
 -   Median survival time for deceased patients varied from around 2 (lymphoma) to around 9 (AML) months
 
-## Slide 5
+## PCA analysis
 
-**Include:** (Exploratory Analysis)
+**Include:** (Exploratory Analysis, PCA)
+
+::: {layout-ncol="2"}
+![](../results/pca_plot.png)
+
+![](../results/rotation_plot.png)
+:::
 
 ## Slide 6
 
@@ -141,7 +145,13 @@ include_graphics(images)
 
 **Include:**
 
--   analysis
+::: {layout-ncol="2"} 
+
+![](../results/CD34+_dose.png)
+
+![](../results/CD3+_dose.png) 
+
+::: 
 
 ## Neutrophil and platelet recovery time
 
@@ -156,15 +166,18 @@ include_graphics(images)
 -   No clear connection between time for neutrophil or platelet recovery and survival time
 -   Interpretation should be aware of few data points and influence of outliers
 
-## Slide 9
+## HLA matching
 
-**Include:**
+::: {layout-ncol="2"}
+![](../results/match_plot.png)
 
--   Discussion
+![](../results/survival_plot.png)
+:::
 
 ## Slide 10
 
 **Include:**
+-   Discussion
 
 -   Conclusion
 

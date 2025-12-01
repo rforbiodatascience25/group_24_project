@@ -174,9 +174,9 @@ The PC-scores plot shows that there is no clear separation between the samples b
 ### Save plots
 
 ```{r}
-ggsave(here("results/plots/pca_plot.png"), width = 6, plot = pca_plot)
-ggsave(here("results/plots/rotation_plot.png"), width = 6, plot = rotation_plot)
-ggsave(here("results/plots/var_plot.png"), width = 6, plot = var_plot)
-ggsave(here("results/plots/match_plot.png"), width = 6, plot = match_plot)
-ggsave(here("results/plots/survival_plot.png"), width = 6, plot = survival_plot)
+ggsave(here("results/pca_plot.png"), width = 6, plot = pca_plot)
+ggsave(here("results/rotation_plot.png"), width = 6, plot = rotation_plot)
+ggsave(here("results/var_plot.png"), width = 6, plot = var_plot)
+ggsave(here("results/match_plot.png"), width = 6, plot = match_plot)
+ggsave(here("results/survival_plot.png"), width = 6, plot = survival_plot)
 ```
