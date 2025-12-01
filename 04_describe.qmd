@@ -130,3 +130,26 @@ A large number of ALL, AML, chronic and non-malignant patients were included in 
 <br>
 
 Generating table for presentation
+
+```{r}
+#filter rows for table for presentation
+Tab_pres <- Tab_desc_transp[rownames(Tab_desc_transp) %in% 
+                              c("N", "Male patients", "Median recipient age", "Relapse", 
+                                "Deceased patients",
+                                "Median survival time for deceased patients (days)",
+                                "Median follow-up time for survived patients (days)"),]
+ 
+#Export table
+write.csv(Tab_pres, file = "Descriptive_table_present.txt")
+```
+
+<br>
+
+Table 2. Part of Table 1 selected for the project presentation.
+
+```{r}
+#| echo: false
+
+#Show table
+kable(Tab_pres, row.names = TRUE, format = "html", align = "r")
+```
