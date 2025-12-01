@@ -96,7 +96,7 @@ kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 
 -   Median survival time for deceased patients varied from around 2 (lymphoma) to around 9 (AML) months
 
-## Slide 5
+## PCA analysis
 
 **Include:** (Exploratory Analysis, PCA)
 
@@ -121,16 +121,24 @@ The boxplot plot compares the age distribution of the recipients among the diffe
 The bar plot reveals the relationship between the BMI with survival rate. It showed that survival decreases while BMI increases. Underweight patients had the highest amount of survivors, meanwhile, the obese group was the only category which mortality exceeded survival.
 
 ::: {layout-ncol="2"}
-![](Recipient.png)
+![](results/Recipient.png)
 
-![](Rbodymass.png)
+![](results/Rbodymass.png)
 :::
 
 ## Slide 7
 
-**Include:** ::: {layout-ncol="2"} ![](CD34+_dose.png)
+**Include:** 
 
-![](CD3+_dose.png) ::: \## Slide 8
+::: {layout-ncol="2"} 
+
+![](results/CD34+_dose.png)
+
+![](results/CD3+_dose.png) 
+
+::: 
+
+## Slide 8
 
 ::: {layout-ncol="2"}
 ![](results/neutrophils.png)
