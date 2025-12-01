@@ -65,7 +65,7 @@ data_clean_aug|>
     y = 'Age of the recipient',
     fill = 'Survival Status'
   )+
-    theme(legend.position = "bottom") 
+    theme(legend.position = "bottom")
 
 
 ```
@@ -77,7 +77,6 @@ This graphs visualizes the survival rate between genders among their ages. X-axi
 First I'm doing a plot to see the survival rate against the disease type, without gender difference.
 
 ```{r}
-
 data_clean_aug|>
   count(Disease, survival_status, Recipientgender) |>
   ggplot(aes(x = factor(Disease),
@@ -179,6 +178,3 @@ data_clean_aug |>
     fill = 'Survival Status'
   )+
   theme(legend.position = "bottom") 
-
-
-```
