@@ -14,9 +14,11 @@ library(knitr)
 library(here)
 ```
 
-## Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation 
+## Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation
 
 #### Group 24: Christian, Helena, Lanjing, Inma and Pernille
+
+<br>
 
 Which biological factors affect patent outcome and how can we ensure a good response?
 
