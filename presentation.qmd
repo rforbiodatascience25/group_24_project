@@ -15,19 +15,7 @@ library(tidyverse)
 library(knitr)
 ```
 
-The order of the content is not final and will probably change.
-
-*Cursive text* should not be shown in finished presentation!
-
-**Final Output**
-
--   10 slides
-
-## Slide 1
-
-*Title:*
-
-Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation
+## Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation
 
 *Aim:*
 
@@ -53,14 +41,18 @@ R programming language is a powerful tool that allowed us to clean, visualize, o
 
 **File:** bone-marrow.ariff
 
-An Attribute-Relation File format, .ariff, has two destinct sections: Header & Data, and comments use "%".
+An Attribute-Relation File format, .ariff,
+
+**Contain:** two destinct sections: Header & Data
+
+With comments using: "%".
 
 +------------------------+-------------------------------+
 | Header                 | Data                          |
-+:=======================+:==============================+
++:======================:+:=============================:+
 | -   Contains Metadata  | -   Contains Data information |
 |                        |                               |
-| -   Name of Relation   | -   comma seperated entries   |
+| -   Name of Relation   | -   Comma seperated entries   |
 |                        |                               |
 | -   List of Attributes |                               |
 +------------------------+-------------------------------+
@@ -68,7 +60,7 @@ An Attribute-Relation File format, .ariff, has two destinct sections: Header & D
 **Steps:**
 
 1.  Download file into newly created data folders
-2.  Extract metadata & data into two files: a .txt and a .tsv containing tidy data: *metadata.txt.gz & data.tsv.gz*
+2.  Extract metadata & data into two files: *a .txt* and a *.tsv* containing tidy data: *metadata.txt.gz & data.tsv.gz*
 3.  Augment columns & binary values
 
 ## Description of the data
@@ -107,19 +99,13 @@ kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 
 **Include:** (Exploratory Analysis)
 
-::: {layout-ncol="2"} 
-
+::: {layout-ncol="2"}
 ![](results/plots/pca_plot.png)
 
 ![](results/plots/rotation_plot.png)
-
 :::
 
-## Slide 6
-
-**Include:**
-
-### Recipientage, Disease type, Rbodymass index VS Survival rate
+## Recipientage, Disease type, Rbodymass index VS Survival rate
 
 The boxplot plot compares the age distribution of the recipients among the different diseases types, while dividing them by their survival status: alive and dead.
 
@@ -156,18 +142,13 @@ The bar plot reveals the relationship between the BMI with survival rate. It sho
 -   No clear connection between time for neutrophil or platelet recovery and survival time
 -   Interpretation should be aware of few data points and influence of outliers
 
-
 ## HLA-matching
 
-::: {layout-ncol="2"} 
-
+::: {layout-ncol="2"}
 ![](results/plots/match_plot.png)
 
 ![](results/plots/survival_plot.png)
-
 :::
-
-
 
 ## Slide 9
 
