@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-## Clean data
+## Clean data.
 
 Takes the bone-marrow.arff and creates a tidy tibble
 
