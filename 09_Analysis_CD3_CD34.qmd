@@ -11,7 +11,7 @@ editor: visual
 
 library(tidyverse)
 library(ggplot2)
-library(dplyr)
+
 ```
 
 # 2. LOAD DATA
@@ -48,10 +48,9 @@ ggplot(data,
 **Description** : This plot revealed a slightly higher median CD34+ dose in the 'Alive' group compared to the 'Dead' group. While it suggest a marginal benefit od a higher dose, a formal statistical testing its required.
 
 ```{r}
-data_clean |>
-  group_by(survival_status) |>
-  
-  ggplot(aes(x = survival_status, 
+
+  ggplot(data_clean,
+         aes(x = survival_status, 
              y = CD34kgx10d6, 
              fill = survival_status)) + 
   geom_boxplot(alpha = 0.5) +
@@ -89,10 +88,8 @@ ggplot(data,
 
 ```{r}
 
-data_clean |>
-  group_by(survival_status) |>
-  
-ggplot(aes(x = survival_status, 
+ggplot(data_clean,
+       aes(x = survival_status, 
            y = CD3dkgx10d8,
            fill = survival_status)) +
   geom_boxplot(alpha = 0.5) +
