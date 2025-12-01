@@ -18,8 +18,6 @@ library(here)
 
 ## Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation
 
-#### Group 24: Christian, Helena, Lanjing, Inma and Pernille
-
 Aim: The goal of the project is to analyze which biological factors affect the patient survival rate after bone marrow transplant
 
 #### Group 24: 
