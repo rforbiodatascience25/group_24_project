@@ -6,13 +6,15 @@ format: html
 ### Load libraries
 
 ```{r}
+#| message: false
 library(tidyverse)
+library(here)
 ```
 
 ### Load data and augment data
 
 ```{r}
-data_clean_aug <- read_tsv(file = "data/02_dat_clean.tsv.gz", show_col_types = FALSE )  |>
+data_clean_aug <- read_tsv(file = here("data/02_dat_clean.tsv.gz"), show_col_types = FALSE )  |>
   mutate(across(c(1:2, 4:22, 24:28, 37), factor)) |>
   mutate(
     Recipientgender = case_when(
@@ -101,5 +103,5 @@ data_clean_aug <- read_tsv(file = "data/02_dat_clean.tsv.gz", show_col_types = F
   
 
 ### Write augmented data to tsv
-data_clean_aug |> write_tsv("data/03_dat_aug.tsv.gz")
+data_clean_aug |> write_tsv(here("data/03_dat_aug.tsv.gz"))
 ```
