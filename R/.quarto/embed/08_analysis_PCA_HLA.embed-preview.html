@@ -195,7 +195,7 @@
   
 
 
-</header>     <div id="8b0ef9d1-2574-46de-af77-007e56acf264" class="cell markdown">
+</header>     <div id="00408a04-3dfe-4815-af6e-d9852efc19f3" class="cell markdown">
 <section id="pca-and-hla-matching-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="pca-and-hla-matching-analysis">PCA and HLA Matching analysis</h2>
 <p>Initial analysis of bone-marrow data</p>
@@ -204,7 +204,7 @@
 </section>
 </section>
 </div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="fc83aed3-3249-45db-b97e-dbdc7af9509e" class="cell" data-message="false">
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="7c2104da-44a1-4d9d-a0c3-d6e0b19ac159" class="cell" data-message="false">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>library(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>library(broom)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>library(ggrepel)</span>
@@ -219,10 +219,10 @@
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  select(<span class="op">-</span> time_to_aGvHD_III_IV) <span class="op">|&gt;</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  drop_na(where(<span class="kw">is</span>.numeric))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div id="a50f6b2e-2bfc-4166-9a35-c5d95a80f6ea" class="cell markdown">
+<div id="a2d72c87-ba92-42e4-8247-6de7d5254887" class="cell markdown">
 <p>The time to GvGD column has been dropped as only a few number of the patients develop the disease. Thus, to ensure that the PCA analysis is based on as many observations as possible, the variable is left out.</p>
 </div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="abc021a0-4adf-4e8c-9dff-1a6266e626f2" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="4a020249-d6b9-4f64-bff6-d7a3d9cc141c" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pca_fit <span class="op">&lt;-</span> bm_data <span class="op">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  select(where(<span class="kw">is</span>.numeric)) <span class="op">|&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  drop_na() <span class="op">|&gt;</span></span>
@@ -255,10 +255,10 @@
 </div>
 </div>
 </div></div>
-<div id="c3c98647-3c95-4c07-acfb-d27003dce20f" class="cell markdown">
+<div id="400526ce-a31a-4434-8c8b-86237244c5dd" class="cell markdown">
 <p>The PC-scores plot shows that there is no clear separation between the samples based on the survival status and thus, the groups are not distinguishable based on the first two principal components.</p>
 </div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="0471be7b-13b1-44a5-8cd6-2fec596fe256" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="8c6879a5-8250-4262-b02d-255f97914a3d" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define arrow style for plotting</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>arrow_style <span class="op">&lt;-</span> arrow(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  angle <span class="op">=</span> <span class="dv">20</span>, </span>
@@ -295,12 +295,12 @@
 </div>
 </div>
 </div></div>
-<div id="8f9e2d3d-e4ba-4196-a2a5-931b274fb7a8" class="cell markdown">
+<div id="ba74a6e1-b90c-4264-b454-71b4e0e82a82" class="cell markdown">
 <p>The loading plot shows a strong correlation between the CD34+ and CD3 dosage and the first principal component (PC1). Whereas recipient age and body mass are mainly correlated to PC1, but are also somewhat correlated with the second principal component (PC2).<br>
 Platelet- and neutrophil recovery and the ratio between CD3 and CD34+ are mainly correlated with PC2.<br>
 The variation in donor age and survival time are poorly correlated with both principal components.</p>
 </div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="64946c94-0b40-4dc6-a02b-e5d9496dfdda" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="7ba827b8-a1ba-43bb-9bdc-85183e0ac80b" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>var_plot <span class="op">&lt;-</span> pca_fit <span class="op">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  tidy(matrix <span class="op">=</span> <span class="st">"eigenvalues"</span>) <span class="op">|&gt;</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  mutate(Percentage <span class="op">=</span> percent <span class="op">*</span> <span class="dv">100</span>) <span class="op">|&gt;</span></span>
@@ -320,14 +320,14 @@ The variation in donor age and survival time are poorly correlated with both pri
 </div>
 </div>
 </div></div>
-<div id="caf8276f-a057-4e81-a322-ecd5892b0ae8" class="cell markdown">
+<div id="175c0860-5bab-47b6-9ef7-ca014e92cc58" class="cell markdown">
 <p>The first principal component explains 31% of the variance and the second principal component explains 15% of the variance.<br>
 Thus, only 46% of the total variance is explained by the two principal components.</p>
 <section id="hla-matching-impact-on-survival" class="level3">
 <h3 class="anchored" data-anchor-id="hla-matching-impact-on-survival">HLA-matching impact on survival</h3>
 </section>
 </div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="23886b90-d4b2-456c-b14a-6508dc3d0d51" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="c8d5088c-d3c6-4433-949f-cb60d35e0d97" class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>HLA_data <span class="op">&lt;-</span> bm_data <span class="op">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  mutate(HLAmatch <span class="op">=</span> fct_relevel(HLAmatch, c(<span class="st">"7/10"</span>, <span class="st">"8/10"</span>, <span class="st">"9/10"</span>, <span class="st">"10/10"</span>)))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -361,7 +361,7 @@ Thus, only 46% of the total variance is explained by the two principal component
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="00951e51-02a9-4c74-8519-896c3ebfbe1b" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="bf13cf49-985a-411c-8841-35b61ed65413" class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>survival_plot <span class="op">&lt;-</span> ggplot(data <span class="op">=</span> HLA_data, </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                        mapping <span class="op">=</span> aes(x <span class="op">=</span> survival_time, </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                                      y <span class="op">=</span> HLAmatch, </span>
@@ -389,13 +389,13 @@ Thus, only 46% of the total variance is explained by the two principal component
 </div>
 </div>
 </div></div>
-<div id="84abf9f0-0826-4355-a970-8d418cc0293a" class="cell markdown">
+<div id="ea10ed6f-d7a8-4aac-ad08-0ac89f2634da" class="cell markdown">
 <p>The PC-scores plot shows that there is no clear separation between the samples based on the survival status and thus, the groups are not distinguishable based on the first two principal components.</p>
 <section id="save-plots" class="level3">
 <h3 class="anchored" data-anchor-id="save-plots">Save plots</h3>
 </section>
 </div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="a6fa4e32-7c92-4af4-bc0f-5fc73b74062b" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="4d1a618f-2dbb-4ed4-9f26-0e9e1b2ab7fe" class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ggsave(here(<span class="st">"results/pca_plot.png"</span>), width <span class="op">=</span> <span class="dv">6</span>, plot <span class="op">=</span> pca_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Saving 6 x 5 in imageSaving 6 x 5 in imageSaving 6 x 5 in imageSaving 6 x 5 in imageSaving 6 x 5 in image

@@ -10,24 +10,57 @@ editor: visual
 
 Running load, clean, augment, describe, and analysis scripts.
 
-::: content-hidden
-{{< embed 01_load.qmd echo=false >}}
+Load library
 
-{{< embed 02_clean.qmd echo=false >}}
+```{r}
+library(quarto)
+library(here)
+```
 
-{{< embed 03_augment.qmd echo=false >}}
+Render all scripts as HTML
 
-{{< embed 04_describe.qmd echo=false >}}
+```{r}
+#| message: false
+quarto_render("01_load.qmd", 
+              output_file = "01_load.html", 
+              output_format = "html")
+quarto_render("02_clean.qmd", 
+              output_file = "02_clean.html", 
+              output_format = "html")
+quarto_render("03_augment.qmd", 
+              output_file = "03_augment.html", 
+              output_format = "html")
+quarto_render("04_describe.qmd", 
+              output_file = "04_describe.html", 
+              output_format = "html")
+quarto_render("05_Analysis_Graft_vs_Host_disease.qmd", 
+              output_file = "05_Analysis_Graft_vs_Host_diseased.html", 
+              output_format = "html")
+quarto_render("06_Analysis_Relapse_and_2nd_transplant_survival.qmd", 
+              output_file = "06_Analysis_Relapse_and_2nd_transplant_survival.html", 
+              output_format = "html")
+quarto_render("07_Analysis_SCsource_recovery.qmd", 
+              output_file = "07_Analysis_SCsource_recovery.html", 
+              output_format = "html")
+quarto_render("08_analysis_PCA_HLA.qmd", 
+              output_file = "08_analysis_PCA_HLA.html", 
+              output_format = "html")
+quarto_render("09_Analysis_CD3_CD34.qmd", 
+              output_file = "09_Analysis_CD3_CD34.html", 
+              output_format = "html")
+quarto_render("10_Analysis_Recipient.qmd", 
+              output_file = "10_Analysis_Recipient.html", 
+              output_format = "html")
 
-{{< embed 05_Analysis_Graft_vs_Host_disease.qmd echo=false >}}
+```
 
-{{< embed 06_Analysis_Relapse_and_2nd_transplant_survival.qmd echo=false >}}
+Move HTML-files to correct folder
 
-{{< embed 07_Analysis_SCsource_recovery.qmd echo=false >}}
+```{r}
+html_quarto <- list.files(path = here("R"), pattern = "html")
+file.rename(from = html_quarto, to = file.path(here("results"), html_quarto ))
+```
 
-{{< embed 08_analysis_PCA_HLA.qmd echo=false >}}
-
-{{< embed 09_Analysis_CD3_CD34.qmd echo=false >}}
-
-{{< embed 10_Analysis_recipient.qmd echo=false >}}
-:::
+```{r}
+list.dirs(path = here("R"), pattern = "_files$")
+```

@@ -2,6 +2,7 @@
 title: "01_load"
 format: html
 editor: visual
+output-dir: ../doc
 ---
 
 ## Data load
