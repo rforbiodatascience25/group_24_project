@@ -21,6 +21,7 @@ Render all scripts as HTML
 
 ```{r}
 #| message: false
+#| 
 quarto_render("01_load.qmd", 
               output_file = "01_load.html", 
               output_format = "html")
@@ -59,8 +60,4 @@ Move HTML-files to correct folder
 ```{r}
 html_quarto <- list.files(path = here("R"), pattern = "html")
 file.rename(from = html_quarto, to = file.path(here("results"), html_quarto ))
-```
-
-```{r}
-list.dirs(path = here("R"), pattern = "_files$")
 ```

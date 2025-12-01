@@ -126,13 +126,12 @@ The boxplot plot compares the age distribution of the recipients among the diffe
 
 The bar plot reveals the relationship between the BMI with survival rate. It showed that survival decreases while BMI increases. Underweight patients had the highest amount of survivors, meanwhile, the obese group was the only category which mortality exceeded survival.
 
-```{r}
-#| eval: false
 
-library(knitr)
+::: {layout-ncol="2"}
+![](../results/Recipient.png)
 
-images <- c("Recipient age, Disease type VS survival status boxplot.png", "Rbodymass inxed VS survival status.png")
-include_graphics(images)
+![](../results/Rbodymass.png)
+:::
 
 ```
 
@@ -146,7 +145,7 @@ include_graphics(images)
 ![](../results/CD3+_dose.png)
 :::
 <br>
-The survivor group shows a slightly higher median dose in both cell types, more evident for CD3+, suggesting that higher CD34+ and especially CD3+ doses may be associated with improved survival.
+The survivor group shows a slightly higher median dose in both cell types, more evident for CD34+, suggesting that higher CD3+ and especially CD34+ doses may be associated with improved survival.
 
 
 ## Neutrophil and platelet recovery time
@@ -174,6 +173,7 @@ The survivor group shows a slightly higher median dose in both cell types, more 
 
 **Include:** - Discussion
 
--   Conclusion
-
--   perspectivation?
+Conclusion
+- Higher CDC34+ dose and lower BMI appear to be associated with improved survival outcomes
+- CD3+ cell dose, HLA matching, and recovery times for neutrophils and platelets did not show a clear relationship with survival in our dataset
+- Further analysis for more reliable results could be proceed for future research
