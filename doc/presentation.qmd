@@ -4,8 +4,8 @@ author: "Group 24"
 format: 
   revealjs:
     embed-resources: true
-    theme : simple
-    background-color: 'lightyellow'
+    theme: simple
+    background-color: '#253342'
 editor: visual
 fontsize: 14pt
 ---
