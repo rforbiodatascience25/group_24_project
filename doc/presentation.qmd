@@ -23,6 +23,7 @@ library(here)
 <br>
 Aim:
 The goal of the project is to analyze which biological factors affect the patient survival rate after the transplantation
+Data was taken from UC Irvine Machine Learning Repository
 
 ## Slide 2 - Why did we use R?
 
