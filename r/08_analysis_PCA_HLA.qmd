@@ -1,5 +1,5 @@
 ---
-title: "XX_analysis_1"
+title: "08_analysis_PCA_HLA"
 format: html
 ---
 
@@ -15,8 +15,9 @@ library(broom)
 library(ggrepel)
 library(ggridges)
 library(patchwork)
+library(here)
 
-bm_data <- read_tsv(file = "data/03_dat_aug.tsv.gz", 
+bm_data <- read_tsv(file = here("data/03_dat_aug.tsv.gz"), 
                     show_col_types = FALSE, na = "100000")  |>
   mutate(across(c(1:2, 4:22, 24:26, 35), factor)) |>
   mutate(across(c(3,23,27:34), as.integer)) |>
@@ -52,10 +53,6 @@ pca_plot <- pca_fit |>
 
 pca_plot
 
-
-
-
-
 ```
 
 The PC-scores plot shows that there is no clear separation between the samples based on the survival status and thus, the groups are not distinguishable based on the first two principal components.
@@ -90,7 +87,7 @@ rotation_plot <- pca_fit |>
 
 rotation_plot
 
-rotation_plot
+
 ```
 
 The loading plot shows a strong correlation between the CD34+ and CD3 dosage and the first principal component (PC1). Whereas recipient age and body mass are mainly correlated to PC1, but are also somewhat correlated with PC2.\
@@ -109,6 +106,7 @@ var_plot <- pca_fit |>
 
 var_plot
 
+
 ```
 
 The first principal component explains 31% of the variance and the second principal component explains 15% of the variance.\
@@ -117,50 +115,64 @@ Thus, only 46% of the total variance is explained by the two principal component
 ### HLA-matching impact on survival
 
 ```{r}
+
 HLA_data <- bm_data |>
   mutate(HLAmatch = fct_relevel(HLAmatch, c("7/10", "8/10", "9/10", "10/10")))
 
-HLA_data |>
-  count(HLAmatch, survival_status) |>
-  group_by(HLAmatch)
-
-HLA_data |>
-  count(HLAmatch, survival_status) |>
-  group_by(HLAmatch) |>
+match_plot <- HLA_data |> 
+  count(HLAmatch, survival_status) |> 
+  group_by(HLAmatch) |> 
   mutate(survival_pct = str_c(round(n / sum(n) *100, 1), "%")) |> 
   ggplot(aes(x = HLAmatch, 
-             y = n,
-             fill = survival_status)) +
+             y = n, 
+             fill = survival_status)) + 
   geom_col(position = "dodge", 
-           alpha = 0.5) +
-  geom_text(aes(label = survival_pct),
-            vjust = -0.5,
-            position = position_dodge(width = 0.9)) +
-  theme_minimal() +
-  scale_fill_viridis_d() +
+           alpha = 0.5) + 
+  geom_text(aes(label = survival_pct), 
+            vjust = -0.5, 
+            position = position_dodge(width = 0.9)) + 
+  theme_minimal() + 
+  scale_fill_viridis_d() + 
   labs(x = "HLA Match", 
-       y = "Number of Patients",
+       y = "Number of Patients", 
        fill = "Survival Status", 
-       title = "Survival Status of Patients"
-       ) +
-  scale_y_continuous(limits = c(0,55))
-  theme(legend.position = "bottom") 
+       title = "Survival Status of Patients" ) + 
+  scale_y_continuous(limits = c(0,55)) +
+  theme(legend.position = "bottom")
+
+match_plot 
+
+
 ```
 
 ```{r}
-
-ggplot(data = HLA_data, 
-       mapping = aes(x = survival_time,
-                     y = HLAmatch,
-                     fill = HLAmatch)) +
-  stat_density_ridges(quantile_lines = TRUE,
-                      alpha = 0.3) +
-  scale_fill_viridis_d() +
-  theme_minimal() +
+survival_plot <- ggplot(data = HLA_data, 
+                        mapping = aes(x = survival_time, 
+                                      y = HLAmatch, 
+                                      fill = HLAmatch)) + 
+  stat_density_ridges(quantile_lines = TRUE, 
+                      alpha = 0.3) + 
+  scale_fill_viridis_d() + 
+  theme_minimal() + 
   labs(x = "Survival time (days)", 
        y= "HLA Match Grade", 
        fill = "HLA Match", 
-       title = "Survival of Patients Post Stem Cell Transplantation",
-       subtitle = "Distribution of Survival Time Stratified on HLA Match Grade") +
-  theme(legend.position = "bottom") 
+       title = "Survival of Patients Post Stem Cell Transplantation", 
+       subtitle = "Distribution of Survival Time Stratified on HLA Match Grade") + 
+  theme(legend.position = "bottom")
+
+survival_plot 
+
+```
+
+The PC-scores plot shows that there is no clear separation between the samples based on the survival status and thus, the groups are not distinguishable based on the first two principal components.
+
+### Save plots
+
+```{r}
+ggsave(here("results/pca_plot.png"), width = 6, plot = pca_plot)
+ggsave(here("results/rotation_plot.png"), width = 6, plot = rotation_plot)
+ggsave(here("results/var_plot.png"), width = 6, plot = var_plot)
+ggsave(here("results/match_plot.png"), width = 6, plot = match_plot)
+ggsave(here("results/survival_plot.png"), width = 6, plot = survival_plot)
 ```
