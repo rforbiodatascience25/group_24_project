@@ -8,8 +8,6 @@ editor: visual
 fontsize: 14pt
 ---
 
-# Presentation
-
 ```{r}
 library(tidyverse)
 library(knitr)
@@ -34,7 +32,7 @@ Analysis of Biological Factors affecting pediatric Patients subjected to Unmanip
 
 Which biological factors affect patent outcome and how can we ensure a good response?
 
-*group names:*
+*Group names:*
 
 Group 24: Christian, Helena, Lanjing, Inma and Pernille
 
@@ -147,7 +145,13 @@ include_graphics(images)
 
 **Include:**
 
--   analysis
+::: {layout-ncol="2"} 
+
+![](../results/CD34+_dose.png)
+
+![](../results/CD3+_dose.png) 
+
+::: 
 
 ## Neutrophil and platelet recovery time
 
