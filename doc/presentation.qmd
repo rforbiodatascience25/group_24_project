@@ -129,10 +129,11 @@ The bar plot reveals the relationship between the BMI with survival rate. It sho
 ```{r}
 #| eval: false
 
-library(knitr)
+::: {layout-ncol="2"}
+![](Recipient.png)
 
-images <- c("Recipient age, Disease type VS survival status boxplot.png", "Rbodymass inxed VS survival status.png")
-include_graphics(images)
+![](Rbodymass.png)
+:::
 
 ```
 
