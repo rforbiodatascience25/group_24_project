@@ -14,21 +14,11 @@ library(knitr)
 library(here)
 ```
 
-The order of the content is not final and will probably change.
-
-*Cursive text* should not be shown in finished presentation!
-
-**Final Output**
-
--   10 slides
-
 ## Slide 1
 
 *Title:*
 
-Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation
-HELLO
-*Aim:*
+Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation HELLO *Aim:*
 
 Which biological factors affect patent outcome and how can we ensure a good response?
 
@@ -52,11 +42,15 @@ R programming language is a powerful tool that allowed us to clean, visualize, o
 
 **File:** bone-marrow.ariff
 
-An Attribute-Relation File format, .ariff, has two destinct sections: Header & Data, and comments use "%".
+An Attribute-Relation File format, .ariff
+
+**Content:** two destinct sections: Header & Data
+
+With comments using: "%"
 
 +------------------------+-------------------------------+
 | Header                 | Data                          |
-+:=======================+:==============================+
++:======================:+:=============================:+
 | -   Contains Metadata  | -   Contains Data information |
 |                        |                               |
 | -   Name of Relation   | -   comma seperated entries   |
@@ -105,7 +99,7 @@ kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 
 ## PCA analysis
 
-**Include:** (Exploratory Analysis, PCA)
+**Include:** (Exploratory Analysis, PCA) 
 
 ::: {layout-ncol="2"}
 ![](../results/pca_plot.png)
@@ -145,13 +139,11 @@ include_graphics(images)
 
 **Include:**
 
-::: {layout-ncol="2"} 
-
+::: {layout-ncol="2"}
 ![](../results/CD34+_dose.png)
 
-![](../results/CD3+_dose.png) 
-
-::: 
+![](../results/CD3+_dose.png)
+:::
 
 ## Neutrophil and platelet recovery time
 
@@ -176,8 +168,7 @@ include_graphics(images)
 
 ## Slide 10
 
-**Include:**
--   Discussion
+**Include:** - Discussion
 
 -   Conclusion
 
