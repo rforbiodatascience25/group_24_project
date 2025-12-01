@@ -8,7 +8,7 @@ editor: visual
 
 ## Execute all scripts
 
-Running load, clean, augment, describe, and analysis scripts:
+Running load, clean, augment, describe, and analysis scripts.
 
 ::: content-hidden
 {{< embed 01_load.qmd echo=false >}}
@@ -29,5 +29,5 @@ Running load, clean, augment, describe, and analysis scripts:
 
 {{< embed 09_Analysis_CD3_CD34.qmd echo=false >}}
 
-{{< embed 10_Analysis_Recipient.qmd echo=false >}}
+{{< embed 10_Analysis_recipient.qmd echo=false >}}
 :::
