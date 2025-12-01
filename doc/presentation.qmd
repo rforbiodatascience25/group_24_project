@@ -172,4 +172,5 @@ The bar plot reveals the relationship between the BMI with survival rate. It sho
 
 -   CD3+ cell dose, HLA matching, and recovery times for neutrophils and platelets did not show a clear relationship with survival in our dataset
 
--   Further analysis for more reliable results could be proceed for future research
+-   Further analysis could be done with more data 
+
