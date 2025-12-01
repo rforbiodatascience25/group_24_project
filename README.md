@@ -36,5 +36,5 @@
 
 ### Data Retrieveal 
 
-All scripts and data retriveal i done from the 00_all.qmd file. 
+All scripts and data retriveal is done from the 00_all.qmd file. <br>
 The presentation summarizing the analysis can be found in the doc folder. 
