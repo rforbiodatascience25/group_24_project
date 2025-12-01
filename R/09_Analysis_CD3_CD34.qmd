@@ -8,16 +8,17 @@ editor: visual
 # 1. LOAD LIBRARIES
 
 ```{r}
-
+#| message: false
 library(tidyverse)
 library(ggplot2)
 library(dplyr)
+library(here)
 ```
 
 # 2. LOAD DATA
 
 ```{r}
-data_clean <- read_tsv('data/03_dat_aug.tsv.gz')
+data_clean <- read_tsv(here('data/03_dat_aug.tsv.gz'))
 ```
 
 # 3. ANALYSIS
@@ -33,7 +34,7 @@ In this plot, the relationship between CD34+ cell dose and post-transplant survi
 # Filter only the deceased group 
 group_dece <- function(data) {
   data_clean |>
-    filter(survival_status == '1')
+    filter(survival_status == 'Dead')
 }
 
 # Plot using the fuction 
@@ -64,11 +65,13 @@ ggplot(data_clean,
   geom_smooth(method = 'lm', se = TRUE) + 
   labs(title = 'CD34+ dose vs Survival Days',
        x = 'CD34+ cells/kg', 
-       y = 'Days survived post-transplant')
+       y = 'Days survived post-transplant') +
 
 data_clean |>
   group_by(survival_status) |>
-  ggplot(aes(x = survival_status, y = CD34kgx10d6, fill = survival_status)) + 
+  ggplot(aes(x = survival_status, 
+             y = CD34kgx10d6, 
+             fill = survival_status)) + 
   geom_boxplot()
 ```
 
@@ -77,14 +80,13 @@ ggplot(data_clean,
        aes(x = factor(survival_status), 
            y = CD34kgx10d6,
            fill = factor(survival_status))) +
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.5) +
   labs(title = "CD34+ dose for each Survival Status",
-       x = "Survival Status (0 = died, 1 = survived)",
+       x = "Survival Status (Dead, Alive)",
        y = "CD34+ cells/kg") +
   theme_minimal() +
-  scale_fill_brewer(palette = "Set2", 
-                    name = "Survival Status",
-                    labels = c("0" = "Died", "1" = "Survived"))
+  scale_fill_viridis_d(name = "Survival Status")
+
 
 ```
 
@@ -113,7 +115,7 @@ The plot illustrates the relationship between CD3+ dose (cells/kg) and patient s
 # Filter only the survival group 
 group_surv <- function(data) {
   data_clean |>
-    filter(survival_status == '0')
+    filter(survival_status == 'Alive')
 }
 
 # Plot for the filtered data 
@@ -144,7 +146,7 @@ The analysis of post-transplant survival relative to administered CD3+ dose show
 # Filter only the survival group geom_boxplot() 
 group_surv <- function(data_clean) {
   data_clean |>
-    filter(survival_status == '0')
+    filter(survival_status == 'Alive')
 }
 
 ggplot(group_surv(data_clean), 
@@ -167,7 +169,7 @@ This analysis examines the impact of infused CD3+ T-cell dose on post-transplant
 # Filter only the survival group 
 group_surv <- function(data_clean) {
   data_clean |>
-    filter(survival_status == '0')
+    filter(survival_status == 'Alive')
 }
 
 # Plot
@@ -194,9 +196,12 @@ ggplot(data_clean,
            y = survival_time, 
            color = factor(aGvHDIIIIV))) + 
   geom_point(size = 3, alpha = 0.7) + 
-  scale_color_brewer(palette = 'Set1') + 
+  scale_color_viridis_d() + 
 
-  geom_smooth(aes(group = aGvHDIIIIV), method = 'lm', se = FALSE, linetype = 'dashed') +
+  geom_smooth(aes(group = aGvHDIIIIV), 
+              method = 'lm', 
+              se = FALSE, 
+              linetype = 'dashed') +
   theme_minimal() 
 ```
 
@@ -205,14 +210,12 @@ ggplot(data_clean,
        aes(x = factor(survival_status), 
            y = CD3dkgx10d8,
            fill = factor(survival_status))) +
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.5) +
   labs(title = "CD3+ dose for each Survival Status",
-       x = "Survival Status (0 = died, 1 = survived)",
+       x = "Survival Status",
        y = "CD3+ cells/kg") +
   theme_minimal() +
-  scale_fill_brewer(palette = "Set2", 
-                    name = "Survival Status",
-                    labels = c("0" = "Died", "1" = "Survived"))
+  scale_fill_viridis_d(name = "Survival Status")
 
 ```
 
@@ -229,14 +232,15 @@ ggplot(data_new, aes(
   x = as.factor(CMVstatus), 
   y = survival_time,
   fill = as.factor(CMVstatus))) + 
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.5) +
   geom_jitter(width = 0.2, alpha = 0.5) +
   facet_wrap(~survival_status) +  # separate between survival and deceasedy pa
   labs(title = "Survival time by CMV compatibility and survival status",
        x = "CMV Compatibility",
        y = "Survival time (days)",
-       fill = "CMVstatus") +
-  theme_minimal()
+       fill = "CMV status") +
+  theme_minimal() +
+  scale_fill_viridis_d()
 
 ```
 
@@ -248,18 +252,19 @@ In patients who survived the transplant, overall survival times were generally p
 
 data_new <- data_clean |>
   filter(!is.na(CMVstatus), !is.na(survival_time)) |>
-  filter(survival_status == 0)
+  filter(survival_status == 'Alive')
 
 ggplot(data_new, aes(
   x = CMVstatus, 
   y = survival_time,
   fill = factor(CMVstatus))) + 
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.5) +
   geom_jitter(width = 0.2, alpha = 0.5) + 
   labs(title = 'Survival time by CMV compatibility', 
        x = 'CMV Compatibility', 
        y = 'Survival time (days)') +
-  theme_minimal()
+  theme_minimal() +
+  scale_fill_viridis_d()
 ```
 
 ### 4.3. For the deceased group :
@@ -270,18 +275,20 @@ In patients who died after the transplant, survival times were significantly sho
 
 data_new <- data_clean |>
   filter(!is.na(CMVstatus), !is.na(survival_time)) |>
-  filter(survival_status == 1)
+  filter(survival_status == 'Dead')
 
 ggplot(data_new, aes(
   x = CMVstatus, 
   y = survival_time,
   fill = factor(CMVstatus))) + 
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.5) +
   geom_jitter(width = 0.2, alpha = 0.5) + 
   labs(title = 'Survival time by CMV compatibility', 
        x = 'CMV Compatibility', 
-       y = 'Survival time (days)') +
-  theme_minimal()
+       y = 'Survival time (days)',
+       fill = 'CMV status') +
+  theme_minimal() +
+  scale_fill_viridis_d()
 ```
 
 ### 4.4 Donor and Recepient status (
@@ -299,15 +306,16 @@ The data on CMV matching shows unexpected results:
 table_CMVs <- data_clean |>
   group_by(DonorCMV, RecipientCMV) |>
   summarise(count = n(),
-            deaths = sum(survival_status == 1),
-            survival = sum(survival_status == 0))
+            deaths = sum(survival_status == 'Dead'),
+            survival = sum(survival_status == 'Alive'))
 
 ggplot(table_CMVs, aes(x = DonorCMV, y = RecipientCMV, fill = deaths)) +
-  geom_tile() +
+  geom_tile(alpha = 0.5) +
   geom_text(aes(label = count), color = "white") +
   labs(title = "Donor vs Recipient CMV status (number of patients)",
        x = "Donor CMV", y = "Recipient CMV", fill = "Deaths") +
-  theme_minimal()
+  theme_minimal() +
+  scale_fill_viridis_c()
 
 ```
 
@@ -364,13 +372,13 @@ ggplot(data_clean,
        aes(x = factor(survival_status), 
            y = CD3dkgx10d8,
            fill = factor(survival_status))) +
-  geom_boxplot() +
+  geom_boxplot(alpha = 0.5) +
   labs(title = "CD3+ dose for each Survival Status",
        x = "Survival Status",
-       y = "CD3+ cells/kg") +
+       y = "CD3+ cells/kg",
+       fill = "Survival Status") +
   theme_minimal() +
-  scale_fill_brewer(palette = "Set2", 
-                    name = "Survival Status")
+  scale_fill_viridis_d()
 ```
 
 ```{r}
