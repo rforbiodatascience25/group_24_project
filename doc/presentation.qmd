@@ -1,5 +1,5 @@
 ---
-title: "presentation.qmd"
+title: "R bio data science Project"
 author: "Group 24"
 format: 
   revealjs:
@@ -20,9 +20,21 @@ library(here)
 
 #### Group 24: Christian, Helena, Lanjing, Inma and Pernille
 
-<br> Aim: The goal of the project is to analyze which biological factors affect the patient survival rate after bone marrow transplant
+Aim: The goal of the project is to analyze which biological factors affect the patient survival rate after bone marrow transplant
 
-## Slide 2 - Why did we use R?
+#### Group 24: 
+
+#### Christian Hussing
+
+#### Helena Utzon
+
+#### Lanjing Buisan 
+
+#### Inmaculada Echegoyan
+
+#### Pernille Renkwitz
+
+## Biological Background
 
 *Topic:*
 
@@ -97,8 +109,6 @@ kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 
 ## PCA analysis
 
-**Include:** (Exploratory Analysis, PCA)
-
 ::: {layout-ncol="2"}
 ![](../results/pca_plot.png)
 
@@ -106,8 +116,6 @@ kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 :::
 
 ## Slide 6
-
-**Include:**
 
 ### Recipientage, Disease type, Rbodymass index VS Survival rate
 
@@ -132,8 +140,6 @@ The bar plot reveals the relationship between the BMI with survival rate. It sho
 \`\`\`
 
 ## CD34+ and CD3+ Analysis
-
-**Include:**
 
 ::: {layout-ncol="2"}
 ![](../results/CD34+_dose.png)
@@ -166,6 +172,10 @@ The bar plot reveals the relationship between the BMI with survival rate. It sho
 
 ## Slide 10
 
-**Include:** - Discussion
+Conclusion
 
-Conclusion - Higher CDC34+ dose and lower BMI appear to be associated with improved survival outcomes - CD3+ cell dose, HLA matching, and recovery times for neutrophils and platelets did not show a clear relationship with survival in our dataset - Further analysis for more reliable results could be proceed for future research
+-   Higher CDC34+ dose and lower BMI appear to be associated with improved survival outcomes
+
+-   CD3+ cell dose, HLA matching, and recovery times for neutrophils and platelets did not show a clear relationship with survival in our dataset
+
+-   Further analysis for more reliable results could be proceed for future research
