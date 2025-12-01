@@ -113,9 +113,7 @@ kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 ![](../results/rotation_plot.png)
 :::
 
-## Slide 6
-
-### Recipientage, Disease type, Rbodymass index VS Survival rate
+## Recipientage, Disease type, Rbodymass index VS Survival rate
 
 The boxplot plot compares the age distribution of the recipients among the different diseases types, while dividing them by their survival status: alive and dead.
 
@@ -168,9 +166,7 @@ The bar plot reveals the relationship between the BMI with survival rate. It sho
 ![](../results/survival_plot.png)
 :::
 
-## Slide 10
-
-Conclusion
+## Conclusion
 
 -   Higher CDC34+ dose and lower BMI appear to be associated with improved survival outcomes
 
