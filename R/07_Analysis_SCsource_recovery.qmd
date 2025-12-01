@@ -39,7 +39,7 @@ stemcellsource_surv <- data_clean_aug |>
   summarise(N = n()) |>
   ggplot(aes(x = Stemcellsource, y = N, fill = surv_stat_fact)) +
   geom_col(colour = "black") +
-  facet_wrap(~Disease, axes = "all_x") +
+  facet_wrap(~Disease) +#, axes = "all_x") +
   theme_minimal() +
   theme(panel.border = element_rect()) +
   labs(title = "Survived/diseased patients for the different stem cell sources",
