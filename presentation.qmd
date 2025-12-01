@@ -8,26 +8,14 @@ editor: visual
 fontsize: 14pt
 ---
 
-# Presentation
 
 ```{r}
 library(tidyverse)
 library(knitr)
+library(here)
 ```
 
-The order of the content is not final and will probably change.
-
-*Cursive text* should not be shown in finished presentation!
-
-**Final Output**
-
--   10 slides
-
-## Slide 1
-
-*Title:*
-
-Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation
+## Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation
 
 *Aim:*
 
@@ -53,14 +41,18 @@ R programming language is a powerful tool that allowed us to clean, visualize, o
 
 **File:** bone-marrow.ariff
 
-An Attribute-Relation File format, .ariff, has two destinct sections: Header & Data, and comments use "%".
+An Attribute-Relation File format, .ariff,
+
+**Contain:** two destinct sections: Header & Data
+
+With comments using: "%".
 
 +------------------------+-------------------------------+
 | Header                 | Data                          |
-+:=======================+:==============================+
++:======================:+:=============================:+
 | -   Contains Metadata  | -   Contains Data information |
 |                        |                               |
-| -   Name of Relation   | -   comma seperated entries   |
+| -   Name of Relation   | -   Comma seperated entries   |
 |                        |                               |
 | -   List of Attributes |                               |
 +------------------------+-------------------------------+
@@ -68,7 +60,7 @@ An Attribute-Relation File format, .ariff, has two destinct sections: Header & D
 **Steps:**
 
 1.  Download file into newly created data folders
-2.  Extract metadata & data into two files: a .txt and a .tsv containing tidy data: *metadata.txt.gz & data.tsv.gz*
+2.  Extract metadata & data into two files: *a .txt* and a *.tsv* containing tidy data: *metadata.txt.gz & data.tsv.gz*
 3.  Augment columns & binary values
 
 ## Description of the data
@@ -77,8 +69,12 @@ Table 1. Information on the subjects included in the data.
 
 ```{r}
 #| echo: false
-Descriptive_table <- read.table("Descriptive_table_present.txt", sep = ",", header = TRUE, row.names = 1)
-kable(Descriptive_table, row.names = TRUE, format = "html", align = "r")
+
+#read table
+Descriptive_table <- read_tsv(file = here("results/Descriptive_table_present.tsv"), col_names = TRUE)
+
+#show table
+kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 ```
 
 <br>
@@ -99,17 +95,17 @@ kable(Descriptive_table, row.names = TRUE, format = "html", align = "r")
 
 -   Median survival time for deceased patients varied from around 2 (lymphoma) to around 9 (AML) months
 
-## Slide 5
+## PCA analysis
 
-**Include:** (Exploratory Analysis) ::: {layout-ncol="2"} ![](PCA_plots.png)
+**Include:** (Exploratory Analysis, PCA)
 
-![](rotation_plot.png) :::
+::: {layout-ncol="2"}
+![](results/pca_plot.png)
 
-## Slide 6
+![](results/rotation_plot.png)
+:::
 
-**Include:**
-
-### Recipientage, Disease type, Rbodymass index VS Survival rate
+## Recipientage, Disease type, Rbodymass index VS Survival rate
 
 The boxplot plot compares the age distribution of the recipients among the different diseases types, while dividing them by their survival status: alive and dead.
 
@@ -124,31 +120,43 @@ The boxplot plot compares the age distribution of the recipients among the diffe
 The bar plot reveals the relationship between the BMI with survival rate. It showed that survival decreases while BMI increases. Underweight patients had the highest amount of survivors, meanwhile, the obese group was the only category which mortality exceeded survival.
 
 ::: {layout-ncol="2"}
-![](Recipient.png)
+![](results/Recipient.png)
 
-![](Rbodymass.png)
+![](results/Rbodymass.png)
 :::
 
 ## Slide 7
 
-**Include:**
-::: {layout-ncol="2"}
-![](CD34+_dose.png)
+**Include:** 
 
-![](CD3+_dose.png)
-:::
+::: {layout-ncol="2"} 
+
+![](results/CD34+_dose.png)
+
+![](results/CD3+_dose.png) 
+
+::: 
+
 ## Slide 8
 
 ::: {layout-ncol="2"}
-![](neutrophils.png)
+![](results/neutrophils.png)
 
-![](platelets.png)
+![](results/platelets.png)
 :::
 
 <br>
 
 -   No clear connection between time for neutrophil or platelet recovery and survival time
 -   Interpretation should be aware of few data points and influence of outliers
+
+## HLA-matching
+
+::: {layout-ncol="2"}
+![](results/match_plot.png)
+
+![](results/survival_plot.png)
+:::
 
 ## Slide 9
 

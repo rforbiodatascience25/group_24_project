@@ -12,6 +12,8 @@ Takes the bone-marrow.arff and creates a tidy tibble
 
 ```{r}
 library("tidyverse")
+library(dplyr) 
+library(ggplot2)
 ```
 
 ### Clean data
@@ -135,46 +137,37 @@ Graph shows that obese patients had the highest mortality, but also the highest 
 ### Rbodymass index vs survival rate
 
 ```{r}
-library(dplyr)
-library(ggplot2)
-
-data_clean_aug |>
-  mutate(
-    Rbodymass = case_when(
+data_clean_aug |> 
+  mutate( 
+    Rbodymass = case_when( 
       Rbodymass < 18.5 ~ "Underweight",
       Rbodymass >= 18.5 & Rbodymass < 25 ~ "Normal weight",
-      Rbodymass >= 25 & Rbodymass < 30 ~ "Overweight",
-      Rbodymass >= 30 ~ "Obese"
+      Rbodymass >= 25 & Rbodymass < 30 ~ "Overweight", 
+      Rbodymass >= 30 ~ "Obese" 
     ),
     Rbodymass = fct_relevel(Rbodymass,
-                                  'Underweight',
-                                  'Normal weight',
-                                  'Overweight',
-                                  'Obeses')
-  ) |>
-  filter(!is.na(Rbodymass)) |>                      
-  count(survival_status, Rbodymass) |>
+                                  'Underweight', 
+                                  'Normal weight', 
+                                  'Overweight', 
+                                  'Obese') 
+          ) |> 
+  filter(!is.na(Rbodymass)) |>
+  count(survival_status, Rbodymass) |> 
   group_by(Rbodymass) |>
-  
   mutate(Rbodymass_percentage = str_c(round(n / sum(n) * 100, 1), "%")) |>
-  
-  ggplot(aes(x = factor(Rbodymass),
-             y = n,
+  ggplot(aes(x = factor(Rbodymass), 
+             y = n, 
              fill = factor(survival_status))) +
-  
-  geom_col(position = 'dodge',
-           alpha = 0.5) + 
-  
-  geom_text(aes(label = Rbodymass_percentage),
-             position = position_dodge(1),
-            vjust = -0.5,
-            size = 3)+
-  
-  theme_minimal()+
-  scale_fill_viridis_d() +
-  labs(
-    x = 'Survival Status', 
-    y = 'Number of recipients',
-    fill = 'Survival Status'
-  )+
-  theme(legend.position = "bottom") 
+  geom_col(position = 'dodge', 
+           alpha = 0.5) +
+  geom_text(aes(label = Rbodymass_percentage), 
+            position = position_dodge(1), 
+            vjust = -0.5, size = 3)+
+  theme_minimal()+ 
+  scale_fill_viridis_d() + 
+  labs( x = 'Survival Status', 
+        y = 'Number of recipients', 
+        fill = 'Survival Status' )+ 
+  theme(legend.position = "bottom")
+
+```
