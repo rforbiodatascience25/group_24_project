@@ -62,7 +62,7 @@ Create plot for relation between neutrophil/platelet recovery time and survival 
 ```{r}
 #| message: false
 
-#plot with neutrophil revocery time
+#plot with neutrophil recovery time
 neutro_plot <- data_clean_aug |>
   filter(survival_status == "Dead") |>
   filter(ANCrecovery != 1000000) |>
