@@ -1,18 +1,20 @@
 ---
 title: "02_Clean"
-author: "Helena Utzon"
+author: "Group 24"
 format: html
 editor: visual
 ---
 
 ## Clean data
 
-Takes the bone-marrow.arff and creates a tidy tibble
+Takes the bone-marrow.arff and creates a file consisting of a tibble with raw data and a text file containing the meta data
 
 ### Load libraries
 
 ```{r}
-library("tidyverse")
+#| message: false
+library(tidyverse)
+library(here)
 
 ```
 
@@ -45,6 +47,4 @@ data_clean <- read_delim("data/_raw/bone-marrow.arff",
 data_clean |> write_tsv("data/02_dat_clean.tsv.gz")
 meta_data |> write_lines("data/02_metadat_clean.txt.gz")
 
-data_clean|> view()
-meta_data|> view()
 ```
