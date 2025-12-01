@@ -39,9 +39,8 @@ stemcellsource_surv <- data_clean_aug |>
   summarise(N = n()) |>
   ggplot(aes(x = Stemcellsource, y = N, fill = surv_stat_fact)) +
   geom_col(colour = "black") +
-  facet_wrap(~Disease) +#, axes = "all_x") +
+  facet_wrap(~Disease, axes = "all_x") +
   theme_minimal() +
-  theme(panel.border = element_rect()) +
   labs(title = "Survived/diseased patients for the different stem cell sources",
        y = "Number of patients",
        x = "Stem cell source",
@@ -70,7 +69,6 @@ neutro_plot <- data_clean_aug |>
   geom_point() +
   geom_smooth(method = "lm") +
   theme_minimal() +
-  theme(panel.border = element_rect()) +
   facet_wrap(~Disease, axes = "all_x") +
   labs(title = "Time for neutrophil recovery and survival time", 
   x = "Time until neutophil recovery (>0.5 x 10^9/L) (days)", 
@@ -90,7 +88,6 @@ platelet_plot <- data_clean_aug |>
   geom_smooth(method = "lm") +
   facet_wrap(~Disease, axes = "all_x") +
   theme_minimal() +
-  theme(panel.border = element_rect()) +
   labs(title = "Time for platelet recovery and survival time", 
   x = "Time until platelet recovery (>50000/mm3) (days)", 
   y = "Survival time (days)")
