@@ -133,9 +133,9 @@ The bar plot reveals the relationship between the BMI with survival rate. It sho
 ![](CD3+_dose.png) ::: \## Slide 8
 
 ::: {layout-ncol="2"}
-![](neutrophils.png)
+![](results/neutrophils.png)
 
-![](platelets.png)
+![](results/platelets.png)
 :::
 
 <br>
