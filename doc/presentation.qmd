@@ -13,6 +13,7 @@ fontsize: 14pt
 ```{r}
 library(tidyverse)
 library(knitr)
+library(here)
 ```
 
 The order of the content is not final and will probably change.
@@ -77,9 +78,10 @@ Table 1. Information on the subjects included in the data.
 
 ```{r}
 #| echo: false
+#| message: false
 
 #read table
-Descriptive_table <- read_tsv(file = "Descriptive_table_present.tsv", col_names = TRUE)
+Descriptive_table <- read_tsv(file = here("results/Descriptive_table_present.tsv"), col_names = TRUE)
 
 #show table
 kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
@@ -105,9 +107,7 @@ kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 
 ## Slide 5
 
-**Include:** (Exploratory Analysis) ::: {layout-ncol="2"} ![](PCA_plots.png)
-
-![](rotation_plot.png) :::
+**Include:** (Exploratory Analysis)
 
 ## Slide 6
 
@@ -127,22 +127,28 @@ The boxplot plot compares the age distribution of the recipients among the diffe
 
 The bar plot reveals the relationship between the BMI with survival rate. It showed that survival decreases while BMI increases. Underweight patients had the highest amount of survivors, meanwhile, the obese group was the only category which mortality exceeded survival.
 
-::: {layout-ncol="2"}
-![](Recipient.png)
+```{r}
+#| eval: false
 
-![](Rbodymass.png)
-:::
+library(knitr)
+
+images <- c("Recipient age, Disease type VS survival status boxplot.png", "Rbodymass inxed VS survival status.png")
+include_graphics(images)
+
+```
 
 ## Slide 7
 
-**Include:** ::: {layout-ncol="2"} ![](CD34+_dose.png)
+**Include:**
 
-![](CD3+_dose.png) ::: \## Slide 8
+-   analysis
+
+## Neutrophil and platelet recovery time
 
 ::: {layout-ncol="2"}
-![](neutrophils.png)
+![](../results/neutrophils.png)
 
-![](platelets.png)
+![](../results/platelets.png)
 :::
 
 <br>
