@@ -14,17 +14,11 @@ library(knitr)
 library(here)
 ```
 
-## Slide 1
+## Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation 
 
-*Title:*
-
-Analysis of Biological Factors affecting pediatric Patients subjected to Unmanipulated Allogeneic unrelated donor Hematopoietic Stem Cell Transplantation HELLO *Aim:*
+#### Group 24: Christian, Helena, Lanjing, Inma and Pernille
 
 Which biological factors affect patent outcome and how can we ensure a good response?
-
-*Group names:*
-
-Group 24: Christian, Helena, Lanjing, Inma and Pernille
 
 ## Slide 2 - Why did we use R?
 
@@ -99,7 +93,7 @@ kable(Descriptive_table, row.names = FALSE, format = "html", align = "r")
 
 ## PCA analysis
 
-**Include:** (Exploratory Analysis, PCA) 
+**Include:** (Exploratory Analysis, PCA)
 
 ::: {layout-ncol="2"}
 ![](../results/pca_plot.png)
