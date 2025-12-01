@@ -20,18 +20,15 @@ library(here)
 
 #### Group 24: Christian, Helena, Lanjing, Inma and Pernille
 
-<br>
-Aim:
-The goal of the project is to analyze which biological factors affect the patient survival rate after bone marrow transplant
-
+<br> Aim: The goal of the project is to analyze which biological factors affect the patient survival rate after bone marrow transplant
 
 ## Slide 2 - Why did we use R?
 
 *Topic:*
 
-- A bone marrow transplant is the replacement of damaged blood cells for healthy stems cells
-- The success of the transplantion can depend on many different biological factors
-- These factors influences the recovery of the immune system after the transplantion
+-   A bone marrow transplant is the replacement of damaged blood cells for healthy stems cells
+-   The success of the transplantion can depend on many different biological factors
+-   These factors influences the recovery of the immune system after the transplantion
 
 *Methodology:*
 
@@ -126,14 +123,13 @@ The boxplot plot compares the age distribution of the recipients among the diffe
 
 The bar plot reveals the relationship between the BMI with survival rate. It showed that survival decreases while BMI increases. Underweight patients had the highest amount of survivors, meanwhile, the obese group was the only category which mortality exceeded survival.
 
-
 ::: {layout-ncol="2"}
 ![](../results/Recipient.png)
 
 ![](../results/Rbodymass.png)
 :::
 
-```
+\`\`\`
 
 ## CD34+ and CD3+ Analysis
 
@@ -144,9 +140,8 @@ The bar plot reveals the relationship between the BMI with survival rate. It sho
 
 ![](../results/CD3+_dose.png)
 :::
-<br>
-The survivor group shows a slightly higher median dose in both cell types, more evident for CD34+, suggesting that higher CD3+ and especially CD34+ doses may be associated with improved survival.
 
+<br> The survivor group shows a slightly higher median dose in both cell types, more evident for CD34+, suggesting that higher CD3+ and especially CD34+ doses may be associated with improved survival.
 
 ## Neutrophil and platelet recovery time
 
@@ -173,7 +168,4 @@ The survivor group shows a slightly higher median dose in both cell types, more 
 
 **Include:** - Discussion
 
-Conclusion
-- Higher CDC34+ dose and lower BMI appear to be associated with improved survival outcomes
-- CD3+ cell dose, HLA matching, and recovery times for neutrophils and platelets did not show a clear relationship with survival in our dataset
-- Further analysis for more reliable results could be proceed for future research
+Conclusion - Higher CDC34+ dose and lower BMI appear to be associated with improved survival outcomes - CD3+ cell dose, HLA matching, and recovery times for neutrophils and platelets did not show a clear relationship with survival in our dataset - Further analysis for more reliable results could be proceed for future research
